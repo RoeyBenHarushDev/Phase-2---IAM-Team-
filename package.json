@@ -1,0 +1,11 @@
+{
+  "name": "phase2",
+  "version": "1.0.0",
+  "dependencies": {
+    "express": "^4.18.2",
+    "morgan": "^1.10.0"
+  },
+  "scripts": {
+    "start": "node index.js"
+  }
+}
