@@ -40,14 +40,14 @@
             <span class="focus-border"></span>
         </div>
         <div class="formFooter">
-            <button class="submitButton" type="submit" id="submitregisterForm">Register</button>
+            <button class="submitButton" type="submit" id="submitRegisterForm">Register</button>
         </div>
     </form>
     <div class="optionalSection">
         <span class="inputText sizeBack">Already have an account?</span>
         <button class="changeButton" type="button" id="GoLogin">Login</button>
     </div>
-    <div class="boxShadow"></div>
+
 </section>
 <section id="LoginForm" class="sectionForm reSize">
     <div class="formHeader">
@@ -65,12 +65,7 @@
             <input type="password" id="L-Password" class="inputText" required placeholder="password"><br><br>
             </label>
         </div>
-        <div class="acceptSection">
-            <label for="AcceptRelogin">Accept Relogin
-            <input id="AcceptRelogin" class="formBox" type="checkbox">
-            </label>
-            <span class="formText">I want to log in automatically.</span>
-        </div>
+        <button class="forgotPasswordBtn" id="forgotPassword">Forgot Password ?</button>
         <div class="formFooter">
             <button class="submitButton" type="submit" id="SubmitLoginForm">Login</button>
         </div>
@@ -79,7 +74,37 @@
         <span class="inputText sizeBack">No account yet?</span>
         <button class="changeButton" type="button" id="GoRegister">Register</button>
     </div>
-    <div class="boxShadow"></div>
+</section>
+<section id="ForgotPasswordModel" class="sectionForm reSize">
+    <div class="formHeader">
+        <h1 class="formHeading forgotH1">Forgot Password</h1>
+        <button class="backBtn" id="backForgotBtn">&#10006;</button>
+    </div>
+    <form class="ForgotPasswordForm" action="#">
+        <div class="inputSection">
+            <label for="forgotEmail" class="emailLabel">Enter Your Email:
+                <input type="text" id="forgotEmail" class="inputEmail" required placeholder="Email">
+            </label>
+        </div>
+        <div class="formFooter">
+            <button class="submitButton" type="submit" id="SubmitEmailForm">Send</button>
+        </div>
+    </form>
+</section>
+<section id="VerifyByEmail" class="sectionForm reSize">
+    <div class="formHeader">
+        <h1 class="formHeading forgotH1">Verification by email</h1>
+    </div>
+    <form class="VerifyForm" action="#">
+        <div class="inputSection">
+            <label for="VerifyOTP" class="OTPLabel">Enter Your OTP:
+                <input type="text" id="VerifyOTP" class="inputOTP" required placeholder="OTP">
+            </label>
+        </div>
+        <div class="formFooter">
+            <button class="submitButton" type="submit" id="SubmitOTPForm">Send</button>
+        </div>
+    </form>
 </section>
 <script src="script.js"></script>
 </body>

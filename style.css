@@ -8,6 +8,7 @@ body {
     display:flex;
     justify-content: center;
     align-items: center;
+    font-family: 'Righteous', cursive;
     cursor:default;
 }
 
@@ -41,15 +42,17 @@ label,span{
     left: 280px;
     outline: none;
     border:none;
+    border-bottom: 2px solid turquoise;
     color: rgba(0,0,0,.8);
     font-size:16px;
 }
 input{
     text-align: center;
+    border-bottom: 2px solid turquoise;
 }
 
 .acceptSection {
-    margin-bottom:30px;
+    margin-bottom:25px;
     margin-left: 130px;
 }
 
@@ -71,7 +74,7 @@ input{
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     font-family: 'Righteous', cursive;
-    margin-bottom:40px;
+    margin-bottom:20px;
     line-height:60px;
 }
 
@@ -94,6 +97,15 @@ input{
 
 .submitButton:hover {
     transform: scale(1.1);
+}
+.forgotPasswordBtn{
+    border: none;
+    background-color: transparent;
+    font-family: 'Comfortaa', cursive;
+    padding-top: 20px;
+    margin-left: 240px;
+    margin-bottom: 40px;
+    cursor: pointer;
 }
 
 .logoImg {
@@ -139,16 +151,6 @@ input{
     top: 18px;
 }
 
-.boxShadow {
-    position:relative;
-    left: 320px;
-    bottom:50px;
-    height:50px;
-    width:300px;
-    box-shadow: 0 0 15px 5px rgba(0,0,0,.5);
-    z-index: -1;
-}
-
 .reSize {
     width:600px;
     height:340px;
@@ -169,6 +171,7 @@ input{
 }
 
 .selectButton {
+    /*display: none;*/
     border:none;
     outline: none;
     height:70px;
@@ -213,10 +216,82 @@ input{
 }
 
 .backBtn:hover {
-    opacity:0.2;
+    opacity:0.1;
     cursor:pointer;
-    color:gray;
+    color:turquoise;
     transform: rotate(90deg);
-    margin-right:0;
-    margin-top:5px;
+    margin-left:10px;
 }
+#ForgotPasswordModel{
+    display: none;
+    width: 620px;
+    height: 360px;
+
+}
+#VerifyByEmail{
+    display: none;
+    width: 620px;
+    height: 360px;
+}
+.forgotH1{
+    margin-bottom: 40px;
+}
+.emailLabel,.OTPLabel{
+    margin-left: -100px;
+}
+.inputEmail, .inputOTP{
+    border: none;
+    border-bottom: 2px solid turquoise;
+    margin-bottom: 40px;
+    width: 320px;
+    height: 30px;
+}
+#SubmitOTPForm{
+    margin-top: 60px;
+}
+#backForgotBtn, #backVerificationBtn{
+    position: relative;
+    left: 91%;
+    top: -120px;
+}
+
+/*==================================== Home Page ===============================*/
+
+.leftBar{
+    width: 15%;
+    height: 90%;
+    border-radius: 20px;
+    background-color: rgba(238, 238, 238, 0.9);
+    position: absolute;
+    left: 50px;
+}
+.leftBar h1{
+    text-align: center;
+    margin-bottom: 50px;
+}
+ul{
+    list-style: none;
+}
+li{
+    margin-bottom: 40px;
+}
+.adminCrud{
+    font-family: 'Righteous', cursive;
+    border: none;
+    background: none;
+    cursor: pointer;
+    color: black;
+    font-size: 30px;
+}
+.adminCrud:hover{
+    color: rgba(64, 224, 208, 0.84);
+}
+.mainDetails{
+    width: 77%;
+    height: 90%;
+    border-radius: 20px;
+    background-color: rgba(238, 238, 238, 0.9);
+    position: absolute;
+    left: 400px
+}
+
