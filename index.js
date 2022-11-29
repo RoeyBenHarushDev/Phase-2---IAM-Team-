@@ -1,5 +1,5 @@
 const express = require("express");
-const app = require("routers/mainRouter");
+const {app} = require("routers/mainRouter");
 const logger = require("morgan"); // NOTE: for debugging
 const port = process.env.PORT || 3000;
 
