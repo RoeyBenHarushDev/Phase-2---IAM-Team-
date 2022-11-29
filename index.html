@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link href="https://fonts.googleapis.com/css?family=Comfortaa|Pacifico|Righteous|Teko" rel="stylesheet">
+    <link href="style.css" rel="stylesheet">
+    <title>Login and register</title>
+</head>
+<body>
+<section id="SelectButton" class="selectButtonArea">
+    <button id="SelectRegister" class="selectButton">Register</button>
+    <button id="SelectLogin" class="selectButton">Login</button>
+</section>
+<section id="RegisterForm" class="sectionForm">
+    <div class="formHeader">
+        <h1 class="formHeading">Register</h1>
+        <button class="backBtn" id="backRegisterBtn">&#10006;</button>
+    </div>
+    <form class="Register" action="#">
+        <div class="inputSection">
+            <label for="Username">Username: </label>
+            <input type="text" id="Username" class="inputText" required placeholder="username">
+            <span class="focus-border"></span>
+        </div>
+        <div class="inputSection">
+            <label for="Email">Email: </label>
+            <input type="email" id="Email" class="inputText" required placeholder="email">
+            <span class="focus-border"></span>
+        </div>
+        <div class="inputSection">
+            <label for="Password">Password: </label>
+            <input type="password" id="Password" class="inputText" required placeholder="password">
+            <span class="focus-border"></span>
+        </div>
+        <div class="inputSection">
+            <label for="C-Password">Confirm Password: </label>
+            <input type="password" id="C-Password" class="inputText" required placeholder="password"><br><br>
+            <span class="focus-border"></span>
+        </div>
+        <div class="formFooter">
+            <button class="submitButton" type="submit" id="submitregisterForm">Register</button>
+        </div>
+    </form>
+    <div class="optionalSection">
+        <span class="inputText sizeBack">Already have an account?</span>
+        <button class="changeButton" type="button" id="GoLogin">Login</button>
+    </div>
+    <div class="boxShadow"></div>
+</section>
+<section id="LoginForm" class="sectionForm reSize">
+    <div class="formHeader">
+        <h1 class="formHeading">Login</h1>
+        <button class="backBtn" id="backLoginBtn">&#10006;</button>
+    </div>
+    <form class="Register" action="#">
+        <div class="inputSection">
+            <label for="Email">Email:
+            <input type="email" id="L-Email" class="inputText" required placeholder="email">
+            </label>
+        </div>
+        <div class="inputSection">
+            <label for="Password">Password:
+            <input type="password" id="L-Password" class="inputText" required placeholder="password"><br><br>
+            </label>
+        </div>
+        <div class="acceptSection">
+            <label for="AcceptRelogin">Accept Relogin
+            <input id="AcceptRelogin" class="formBox" type="checkbox">
+            </label>
+            <span class="formText">I want to log in automatically.</span>
+        </div>
+        <div class="formFooter">
+            <button class="submitButton" type="submit" id="SubmitLoginForm">Login</button>
+        </div>
+    </form>
+    <div class="optionalSection">
+        <span class="inputText sizeBack">No account yet?</span>
+        <button class="changeButton" type="button" id="GoRegister">Register</button>
+    </div>
+    <div class="boxShadow"></div>
+</section>
+<script src="script.js"></script>
+</body>
+</html>

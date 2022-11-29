@@ -1,0 +1,222 @@
+body {
+    width:100%;
+    height:100vh;
+    overflow:hidden;
+    background: rgb(0,255,226);
+    background: linear-gradient(146deg, rgba(0,255,226,1) 27%, rgba(10,129,134,1) 50%, rgba(2,0,36,1) 50%, rgba(38,214,255,1) 100%);
+    background-size: cover;
+    display:flex;
+    justify-content: center;
+    align-items: center;
+    cursor:default;
+}
+
+.sectionForm {
+    height:400px;
+    width: 600px;
+    background: #ffffff;
+    box-shadow: 0 0 15px 5px rgba(0,0,0,.5);
+}
+
+#Register {
+    padding: 15px 15px 15px 15px;
+    font-family: 'Comfortaa', cursive;
+    position: relative;
+}
+label,span{
+    font-family: 'Comfortaa', cursive;
+    color: #000000;
+
+}
+
+.inputSection {
+
+    margin-bottom:12px;
+    margin-left: 170px;
+}
+
+.inputText {
+    position:absolute;
+    font-family: 'Comfortaa', cursive;
+    left: 280px;
+    outline: none;
+    border:none;
+    color: rgba(0,0,0,.8);
+    font-size:16px;
+}
+input{
+    text-align: center;
+}
+
+.acceptSection {
+    margin-bottom:30px;
+    margin-left: 130px;
+}
+
+.formBox {
+    height:20px;
+    width:20px;
+    position:relative;
+    top:5px;
+}
+
+.formHeader {
+    margin-top:-20px;
+}
+
+.formHeading {
+    padding-left: 15px;
+    font-size: 50px;
+    background-image:linear-gradient(120deg, turquoise, rgba(0, 0, 0, 0.9));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-family: 'Righteous', cursive;
+    margin-bottom:40px;
+    line-height:60px;
+}
+
+
+.submitButton {
+    background-image:linear-gradient(120deg, turquoise, rgba(0, 0, 0, 0.9));
+    margin:auto;
+    display:flex;
+    width:180px;
+    height:45px;
+    color: #FFF;
+    font-size: 30px;
+    font-family: 'Righteous', cursive;
+    cursor:pointer;
+    border: none;
+    border-radius: 20px;
+    transition: transform 0.5s;
+    justify-content:center;
+}
+
+.submitButton:hover {
+    transform: scale(1.1);
+}
+
+.logoImg {
+    position:absolute;
+    height: 250px;
+    width:auto;
+    top: -90px;
+    right: 10px;
+}
+
+.optionalSection {
+    height:50px;
+    width:300px;
+    background-color: transparent;
+    position: absolute;
+    left: 200px;
+    bottom: 0;
+}
+
+.changeButton {
+    border:none;
+    outline: none;
+    background-color: transparent;
+    font-family: 'Righteous', cursive;
+    background-image:linear-gradient(120deg, turquoise, rgba(0, 0, 0, 0.9));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    cursor:pointer;
+    position:absolute;
+    right: 0;
+    top: 12px;
+    font-size: 20px;
+    transition: transform 0.5s;
+}
+
+.changeButton:hover {
+    transform: scale(1.1);
+}
+
+.sizeBack {
+    position:absolute;
+    left: 10px;
+    top: 18px;
+}
+
+.boxShadow {
+    position:relative;
+    left: 320px;
+    bottom:50px;
+    height:50px;
+    width:300px;
+    box-shadow: 0 0 15px 5px rgba(0,0,0,.5);
+    z-index: -1;
+}
+
+.reSize {
+    width:600px;
+    height:340px;
+}
+
+#LoginForm {
+    display:none;
+    position:relative;
+    width: 620px;
+    height: 360px;
+}
+
+#RegisterForm {
+    display:none;
+    position:relative;
+    width: 620px;
+    height: 360px;
+}
+
+.selectButton {
+    border:none;
+    outline: none;
+    height:70px;
+    width:200px;
+    margin-right:20px;
+    margin-left:20px;
+    font-size:30px;
+    color:#FFF;
+    transition: transform 0.5s;
+    cursor:pointer;
+    font-family: 'Righteous', cursive;
+}
+
+#SelectRegister {
+    background-image:linear-gradient(140deg, black, turquoise 90%);
+    border-radius: 20px;
+}
+
+#SelectLogin {
+    background-image:linear-gradient(140deg, turquoise , black 90%);
+    border-radius: 20px;
+}
+
+.selectButton:hover {
+    transform: scale(1.2);
+}
+
+.backBtn {
+    height:30px;
+    width:30px;
+    font-size:30px;
+    margin-right:10px;
+    background-color:transparent;
+    color:#111;
+    position:absolute;
+    top:0;
+    right:0;
+    z-index:1;
+    outline:none;
+    border:none;
+    transition: all 250ms ease-in-out;
+}
+
+.backBtn:hover {
+    opacity:0.2;
+    cursor:pointer;
+    color:gray;
+    transform: rotate(90deg);
+    margin-right:0;
+    margin-top:5px;
+}
