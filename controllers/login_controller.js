@@ -12,8 +12,8 @@ function isAfter(date1, date2) {
 }
 
 const isSuspend = (user)=> {
-    if (user.suspensionTime == '0' && user.suspensionDate == null && user.status != 'suspended') {
-        console.log(`user: ${user["email"]} is not suspended- login succeeded`);
+    if (user.suspensionTime == '0' && user.suspensionDate == 'null' && user.status != 'suspended') {
+        console.log(`user: ${user["email"]} is not suspended`);
         return 0;
     }
     const today = new Date();

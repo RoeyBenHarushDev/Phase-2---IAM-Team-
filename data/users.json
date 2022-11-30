@@ -1,7 +1,7 @@
 [{
   "name": "admin",
   "email": "admin@admin.com",
-  "password": "adminPass",
+  "password": "$2b$10$gb6mJAdRqI35ZzgPPfAKLOYZp5pUrOBdWr.gn8Whv22SnbmFf.WGy",
   "lastLoginDate": "null",
   "type": "admin",
   "status": "active",
