@@ -1,17 +1,11 @@
+const js = require("../data/users.json")
+const list = require("../data/OTP-pass.json")
+const fs = require("fs");
+const path = require("path");
+const signUp = require("../services/signUpService")
 
 
-function userExist(email){
-    list.table.forEach(function (i) {
-        if (JSON.stringify(i.mail) === JSON.stringify(email)) {
-            throw new Error("Email already exists")
-        }
-    })
-    return
-}
-
-
-
-function handleSignUp(request,response) {
+async function handleSignUp(request,response) {
     let body = [];
     request
         .on("error", (err) => {
@@ -23,16 +17,19 @@ function handleSignUp(request,response) {
         .on("end", () => {
             body = Buffer.concat(body).toString();
             body = JSON.parse(body);
+            try {
+                console.log(body);
+                signUp.userExist(body.mail)
+                signUp.sendEmail(body.mail)
+                // return constructResponse(response, {}, 200);
+
+            } catch (e) {
+                console.log(e);
+                // return constructResponse(response, {error: e.message}, 401);
+            }
         })
 
-    try {
-        console.log(body);
-        userExist(body.mail)
-        sendEmail(body.mail)
-        return constructResponse(response, {}, 200);
-
-    } catch (e) {
-        console.log(e);
-        return constructResponse(response, {error: e.message}, 401);
-    }
 }
+
+
+module.exports =  { handleSignUp }

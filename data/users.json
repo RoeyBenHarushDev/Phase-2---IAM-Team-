@@ -1,0 +1,10 @@
+{
+  "name":"admin",
+  "email":"admin@admin.com",
+  "password":"adminPass",
+  "loginDate":"null" ,
+  "type":"admin",
+  "status":"active",
+  "suspensionTime":"0",
+  "suspensionDate":"null"
+}
