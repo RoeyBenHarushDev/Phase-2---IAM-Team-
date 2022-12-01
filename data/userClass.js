@@ -1,5 +1,4 @@
-/*
-module.exports = /!*class User {
+class User{
     constructor(
         name,
         email,
@@ -19,5 +18,6 @@ module.exports = /!*class User {
         this.suspensionTime = suspensionTime;
         this.suspensionDate = suspensionDate;
     }
+}
 
-}*!/*/
+module.exports={User};
