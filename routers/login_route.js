@@ -3,7 +3,6 @@ const loginRouter = new express.Router();
 const login_controller = require('../controllers/login_controller');
 const bcrypt = require('bcrypt');
 const bodyParser = require('body-parser');
-const users = require("../data/users.json");
 
 /*    bcrypt.genSalt(10, function(err, salt) {
         bcrypt.hash(users[0].password, salt, function(err, hash) {

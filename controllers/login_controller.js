@@ -1,6 +1,5 @@
 const bcrypt = require('bcrypt');
-const users= require('../data/users.json');
-
+const dbHandler = require('../data/dbHandler');
 function isSuspend(user){
     if (user.suspensionTime == '0' && user.suspensionDate == 'null' && user.status != 'suspended') {
         console.log(`user: ${user["email"]} is not suspended`);
@@ -50,10 +49,7 @@ const handleLogin = async (req,res,next)=>{
     }
     else return res.json({status: 'error', error: 'Invalid password'})
 }
-const getUserByEmail = (email)=>{
-    const user = users.find(user => user.email === email);
-    return user ? user : "User does'nt exist";
-}
+
 
 function isAfter(date1, date2) {
     return date1 > date2;
@@ -64,7 +60,7 @@ module.exports = {getUserByEmail,isSuspend,handleLogin}
 
 
 
-/*const usrs = require('cata/users.json');*/
+/*const usrs = require('data/users.json');*/
 /*const validateUser = (req,res) => {
     try {
         const user = getUserByEmail(req.body.email);
