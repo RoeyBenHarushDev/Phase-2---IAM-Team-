@@ -1,4 +1,4 @@
-const {app} = require("./routers/mainRouter");
+const { app } = require("./routers/mainRouter");
 const logger = require("morgan"); // NOTE: for debugging
 const port = process.env.PORT || 3000;
 
@@ -7,5 +7,4 @@ const port = process.env.PORT || 3000;
 // app.use(logger("dev"));
 
 app.listen(port, () => console.log(`Express server is running on port ${port}`));
-
 

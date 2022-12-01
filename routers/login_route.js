@@ -15,33 +15,9 @@ const users = require("../data/users.json");
     });*/
 
 loginRouter.use(bodyParser.json());
-loginRouter.post('/login',async(req,res)=> {
-    const userEmail=req.body.email;
-    const userPassword=req.body.password;
-    const user = login_controller.getUserByEmail(userEmail) //maybe needs await in the start and in the end.lean()
-    if (!user) {
-        return res.json({ status: 'error', error: 'Invalid username/password' })
-    }
-    const isSuspend = login_controller.isSuspend(user);
-    if(isSuspend){
-        return res.json({ status: 'error', error: `User is suspended until ${isSuspend}`})
-    }
-    if (await bcrypt.compare(userPassword, user.password)) {
-        /*password is correct
-        const token = 1;
-                    jwt.sign(
-        {
-            id: user._id,
-                username: user.username
-        },
-        JWT_SECRET
-    )
-        return res.json({ status: 'ok', data: token })
-        */
-        res.send('/homePage')
-    }
-    else return res.json({status: 'error', error: 'Invalid password'})
-})
+loginRouter.post('/', login_controller.handleLogin)
+
+
 
 
 module.exports = {loginRouter};
