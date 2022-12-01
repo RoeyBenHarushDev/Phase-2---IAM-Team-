@@ -1,5 +1,6 @@
 const bcrypt = require('bcrypt');
 const dbHandler = require('../data/dbHandler');
+
 function isSuspend(user){
     if (user.suspensionTime == '0' && user.suspensionDate == 'null' && user.status != 'suspended') {
         console.log(`user: ${user["email"]} is not suspended`);
@@ -44,7 +45,9 @@ const handleLogin = async (req,res,next)=>{
         */
         //return res.json({status: 'ok'}); //works
         // return res.send('/home') // works
-        console.log("loginHandle")
+        console.log("loginHandle",userEmail)
+        const today=new Date();
+        dbHandler.updateUser(userEmail,{"lastLoginDate":today.toString()})
         return res.redirect(200,"/api/login/home"); //doesnt work
     }
     else return res.json({status: 'error', error: 'Invalid password'})
