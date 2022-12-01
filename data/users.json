@@ -1,10 +1,1 @@
-{
-  "name":"admin",
-  "email":"admin@admin.com",
-  "password":"adminPass",
-  "loginDate":"null" ,
-  "type":"admin",
-  "status":"active",
-  "suspensionTime":"0",
-  "suspensionDate":"null"
-}
+[{"name":"admin","email":"admin@admin.com","password":"adminPass","loginDate":"null","type":"admin","status":"active","suspensionTime":"0","suspensionDate":"null"},{"name":"Tomer","email":"tomerduchovni@gmail.com","password":"12345","loginDate":"2022-12-01T20:53:45.632Z","type":"active","status":"user","suspensionTime":"0","suspensionDate":null},{"name":"Tomer","email":"tomerduchovni@gmail.com","password":"12345","loginDate":"2022-12-01T20:54:31.067Z","type":"active","status":"user","suspensionTime":"0","suspensionDate":null}]
