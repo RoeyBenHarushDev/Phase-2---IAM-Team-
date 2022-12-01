@@ -120,10 +120,10 @@ function appendData(data) {
     for (let i = 0; i < data.length; i++) {
         const li = document.createElement("li");
         li.classList.add("userRow");
-        li.innerHTML = 'Name: ' + data[i].name + '&nbsp &nbsp &nbsp &nbsp &nbspEmail: ' + data[i].email + '&nbsp &nbsp &nbsp &nbsp &nbspType: ' + data[i].type +  '&nbsp &nbsp &nbsp &nbsp &nbspstatus: ' + data[i].status
-            + '&nbsp &nbsp &nbsp &nbsp &nbsp<button class="removeUser"><span class="material-symbols-outlined" id="removeUser">\n' +
+        li.innerHTML = 'Name: ' + data[i].name + '&nbsp&nbsp&nbsp&nbsp&nbspEmail: ' + data[i].email + '&nbsp&nbsp&nbsp&nbsp&nbspType: ' + data[i].type +  '&nbsp&nbsp&nbsp&nbsp&nbspstatus: ' + data[i].status
+            + '&nbsp&nbsp&nbsp&nbsp&nbsp<button class="removeUser"><span class="material-symbols-outlined" id="removeUser">\n' +
             'delete\n' +
-            '</span></button>' + '<button class="editUser"><span class="material-symbols-outlined" id="editUser">\n' +
+            '</span></button>' + '<button class="editUser" id="{{$i}}"><span class="material-symbols-outlined" id="editUser">\n' +
             'edit_note\n' +
             '</span></button>';
         console.log(data);
@@ -131,6 +131,149 @@ function appendData(data) {
     }
 }
 
+//login
+
+
+const sendLoginData = async () => {
+    const data = {
+        mail: document.getElementById("userEmail").value,
+        pass: document.getElementById("userPass").value,
+    };
+    const response = await fetch("http://localhost:3000/api/login", {
+        method: "POST",
+        body: JSON.stringify(data),
+    });
+    const handleResponse = {
+        200: ({ location = "index.html" }) => {
+            window.location.href = location;
+        },
+        401: () => {
+
+            alert("Verification Error");
+        },
+        403:()=>
+        {
+            alert("user in suspention!");
+        }
+    };
+    const body = await response.json();
+    const handler = handleResponse[response.status];
+    if (handler) {
+        handler(body);
+    }
+};
+
+//signup fetch
+
+const sendSignUpData= async  () => {
+
+    const data = {
+        "name": document.getElementById("newUsername").value,
+        "mail": document.getElementById("newUserEmail").value,
+        "pass": document.getElementById("pass").value,
+        // "rePass": document.getElementById("repass").value
+    }
+    await fetch("http://localhost:3000/api/signUp", {
+        method: 'POST',
+        body: JSON.stringify(data)
+    })
+        .then(response => {
+            //console.log(response))
+            // window.location.href=response.headers.Location;
+            if (response.status === 401) {
+                location.reload();
+                alert("ERROR 401: Email already exists");
+            }
+        })
+}
+
+
+
+const forgotPassword= () => {
+    const data = {
+        "mail":document.getElementById("emailForgetPass").value,
+    }
+    fetch("http://localhost:3000/api/forgotPassword", {
+        method: 'POST',
+        body: JSON.stringify(data)
+    })
+        .then(response => {
+            //console.log(response))
+            // window.location.href=response.headers.Location;
+            if (response.status===401){
+                alert("email not found");
+            }
+        })
+}
+
+
+const emailConfirmation = async () => {
+    const data = {
+        "name":document.getElementById("newUsername").value,
+        "mail":document.getElementById("newUserEmail").value,
+        "pass": document.getElementById("pass").value,
+        "code":document.getElementById("OTPtext").value
+    };
+    const response = await fetch("http://localhost:3000/api/confirm", {
+        method: "POST",
+        body: JSON.stringify(data),
+    });
+
+    const handleResponse = {
+        200: ({ location = "index.html" }) => {
+            window.location.href = location;
+            alert("User was added")
+        },
+        403: () => {
+            alert("OTP code is false");
+        },
+        401: () => {
+            alert("Verification Error");
+        }
+    };
+    const body = await response.json();
+    const handler = handleResponse[response.status];
+    if (handler) {
+        handler(body);
+    }
+};
+
+//LOGOUT & DELETING COOKIES
+
+const userLogOut = document.getElementById('logOutBtn');
+if(userLogOut){
+
+    userLogOut.addEventListener('click', () =>{
+        function get_cookie(name){
+            return document.cookie.split(';').some(c => {
+                return c.trim().startsWith(name + '=');
+            });
+        }
+
+        function delete_cookie( name, path, domain ) {
+            if( get_cookie( name ) ) {
+                document.cookie = name + "=" +
+                    ((path) ? ";path="+path:"")+
+                    ((domain)?";domain="+domain:"") +
+                    ";expires=Thu, 01 Jan 1970 00:00:01 GMT";
+            }
+        }
+        window.location = "index.html";
+    })
+}
+
+
+
+const suspension = async () => {
+    const data = {
+        "mail":document.getElementById("userEmail").value,
+        "suspensionDate": document.getElementById("start").value,
+    };
+    const response = await fetch("http://localhost:3000/api/suspension", {
+        method: "POST",
+        body: JSON.stringify(data),
+    });
+}
 
 
 

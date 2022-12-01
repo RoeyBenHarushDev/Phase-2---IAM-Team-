@@ -34,4 +34,22 @@
   "status": "active",
   "suspensionTime": "0",
   "suspensionDate": "null"
+  },{
+  "name": "Roey",
+  "email": "Roey@admin.com",
+  "password": "RoeyPass",
+  "lastLoginDate": "null",
+  "type": "user",
+  "status": "active",
+  "suspensionTime": "0",
+  "suspensionDate": "null"
+},{
+  "name": "Tomer",
+  "email": "Tomer@admin.com",
+  "password": "TomerPass",
+  "lastLoginDate": "null",
+  "type": "user",
+  "status": "active",
+  "suspensionTime": "0",
+  "suspensionDate": "null"
   }]

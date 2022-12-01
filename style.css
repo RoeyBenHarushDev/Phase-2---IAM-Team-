@@ -306,7 +306,8 @@ li{
 }
 .usersTable{
     width: 90%;
-    max-height: 300px;
+    height: auto;
+    max-height: 550px;
     background-color: rgba(147, 146, 146, 0.35);
     border-radius: 20px;
     margin-left: 5%;
@@ -320,9 +321,8 @@ li{
 }
 .showUsers{
     display: none;
-}.showUsers.active{
-    display: block;
 }
+
 .removeUser{
     margin-right: 20px;
     margin-top: 2px;
@@ -349,7 +349,7 @@ li{
     transform: scale(1.2);
 }
 #editUser{
-    color: yellow;
+    color: black;
 }
 #editUser:hover , .editUser:hover{
     transform: scale(1.2);
