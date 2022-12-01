@@ -76,6 +76,7 @@ const addUsers = document.getElementById('addUsers');
 const backAddUsers = document.getElementById('backAddUsers');
 const welcomeMessage = document.getElementById('welcomeMessage');
 const backShowUsers = document.getElementById('backShowUsers');
+const logOutBtn = document.getElementById('logOutBtn');
 
 showUserBtn.addEventListener('click',  ()=>{
     addUsers.style.display = 'none';
@@ -97,6 +98,9 @@ backShowUsers.addEventListener('click',  ()=>{
     addUsers.style.display = 'none';
     showUser.style.display = 'none';
     welcomeMessage.style.display = 'block';
+})
+logOutBtn.addEventListener('click', ()=>{
+    window.location.href = 'index.html';
 })
 
 

@@ -482,3 +482,16 @@ h3{
     margin-top: 20%;
     font-size: 70px;
 }
+.logOut{
+    font-family: 'Righteous', cursive;
+    position: absolute;
+    border: none;
+    background: none;
+    cursor: pointer;
+    color: black;
+    font-size: 30px;
+    bottom: 10%;
+}
+.logOut:hover{
+    color: turquoise;
+}
