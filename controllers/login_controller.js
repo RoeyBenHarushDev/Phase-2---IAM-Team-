@@ -1,19 +1,9 @@
 const bcrypt = require('bcrypt');
 const users= require('../data/users.json');
 
-
-const getUserByEmail = (email)=>{
-    const user = users.find(user => user.email === email);
-    return user ? user : "User does'nt exist";
-}
-
-function isAfter(date1, date2) {
-    return date1 > date2;
-}
-
-const isSuspend = (user)=> {
-    if (user.suspensionTime == '0' && user.suspensionDate == null && user.status != 'suspended') {
-        console.log(`user: ${user["email"]} is not suspended- login succeeded`);
+function isSuspend(user){
+    if (user.suspensionTime == '0' && user.suspensionDate == 'null' && user.status != 'suspended') {
+        console.log(`user: ${user["email"]} is not suspended`);
         return 0;
     }
     const today = new Date();
@@ -26,7 +16,50 @@ const isSuspend = (user)=> {
     }
 }
 
-module.exports = {getUserByEmail,isSuspend}
+
+const handleLogin = async (req,res,next)=>{
+/*    console.log("loginHandle1")
+    res.writeHead(200,{'Access-Control-Allow-Origin':'*'})*/
+    const userEmail=req.body.email;
+    const userPassword=req.body.password;
+    console.log(userPassword,userPassword);
+    const user = getUserByEmail(userEmail) //maybe needs await in the start and in the end.lean()
+    if (!user) {
+        return res.json({ status: 'error', error: 'Invalid username/password' })
+    }
+    const suspend = isSuspend(user);
+    if(suspend){
+        return res.json({ status: 'error', error: `User is suspended until ${isSuspend}`})
+    }
+    if (await bcrypt.compare(userPassword, user.password)) {
+        /*password is correct
+        const token = 1;
+                    jwt.sign(
+        {
+            id: user._id,
+                username: user.username
+        },
+        JWT_SECRET
+    )
+        return res.json({ status: 'ok', data: token })
+        */
+        //return res.json({status: 'ok'}); //works
+        // return res.send('/home') // works
+        console.log("loginHandle")
+        return res.redirect(200,"/api/login/home"); //doesnt work
+    }
+    else return res.json({status: 'error', error: 'Invalid password'})
+}
+const getUserByEmail = (email)=>{
+    const user = users.find(user => user.email === email);
+    return user ? user : "User does'nt exist";
+}
+
+function isAfter(date1, date2) {
+    return date1 > date2;
+}
+
+module.exports = {getUserByEmail,isSuspend,handleLogin}
 
 
 

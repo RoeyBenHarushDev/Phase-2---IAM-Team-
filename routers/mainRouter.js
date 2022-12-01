@@ -1,26 +1,37 @@
 const express = require("express");
 const app = express();
-bodyParser = require('body-parser');
-const login_route =  require('./login_route')
-
-/*const {signUp} = require("./routers/signUp_route");
-const {forgotPassword} = require("./routers/forgotPassword_route");
-const {suspend} = require("./routers/suspend_route");
-const {changePassword} = require("./routers/changePassword_route");
-const {confirmCode} = require("./routers/confirmCode_refactor");
-const {adminCRUD} = require("./routers/adminCRUD_route");*/
+const login =  require('./login_route')
+const session = require('express-session');
+const login_controller = require('../controllers/login_controller');
+const bodyParser = require('body-parser');
 
 
-app.use('/login', login_route.loginRouter);
+app.use('/api/login',login.loginRouter);
 
-/*app.use('/api/signUp', signUp);
-app.use('/api/forgotPassword', forgotPassword);
-app.use('/api/suspend', suspend);
-app.use('/api/changePassword', changePassword);
-app.use('/api/confirmCode', confirmCode);
-app.use('/api/adminCRUD', adminCRUD);
+const signUp = require("./signUp_route");
+// const {forgotPassword} = require("./routers/forgotPassword_route");
+// const {suspend} = require("./routers/suspend_route");
+// const {changePassword} = require("./routers/changePassword_route");
+const confirmCode = require("./confirmCode_route");
+// const {adminCRUD} = require("./routers/adminCRUD_route");
+
+app.use('/api/signUp', signUp.signupRoute);
+// app.use('/api/login', login);
+// app.use('/api/forgotPassword', forgotPassword);
+// app.use('/api/suspend', suspend);
+// app.use('/api/changePassword', changePassword);
+app.use('/api/confirmCode', confirmCode.confirmCodeRoute);
+// app.use('/api/adminCRUD', adminCRUD);
+/*
 app.use((req, res) => {
     res.status(400).send('Something is broken!');
-});*/
+});
+*/
 
-module.exports = {app}
+
+module.exports = { app }
+/*app.use(session({
+    secret:"key",
+    resave:false,
+    saveUninitialized:false
+})*/
