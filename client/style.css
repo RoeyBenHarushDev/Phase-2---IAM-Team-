@@ -1,0 +1,505 @@
+body {
+    width:100%;
+    height:100vh;
+    overflow:hidden;
+    background: rgb(0,255,226);
+    background: linear-gradient(146deg, rgba(0,255,226,1) 27%, rgba(10,129,134,1) 50%, rgba(2,0,36,1) 50%, rgba(38,214,255,1) 100%);
+    background-size: cover;
+    display:flex;
+    justify-content: center;
+    align-items: center;
+    font-family: 'Righteous', cursive;
+    cursor:default;
+}
+
+.sectionForm {
+    height:400px;
+    width: 600px;
+    background: #ffffff;
+    box-shadow: 0 0 15px 5px rgba(0,0,0,.5);
+}
+
+#Register {
+    padding: 15px 15px 15px 15px;
+    font-family: 'Comfortaa', cursive;
+    position: relative;
+}
+label,span{
+    font-family: 'Comfortaa', cursive;
+    color: #000000;
+
+}
+
+.inputSection {
+
+    margin-bottom:12px;
+    margin-left: 170px;
+}
+
+.inputText {
+    position:absolute;
+    font-family: 'Comfortaa', cursive;
+    left: 280px;
+    outline: none;
+    border:none;
+    border-bottom: 2px solid turquoise;
+    color: rgba(0,0,0,.8);
+    font-size:16px;
+}
+input{
+    text-align: center;
+    border-bottom: 2px solid turquoise;
+}
+
+.acceptSection {
+    margin-bottom:25px;
+    margin-left: 130px;
+}
+
+.formBox {
+    height:20px;
+    width:20px;
+    position:relative;
+    top:5px;
+}
+
+.formHeader {
+    margin-top:-20px;
+}
+
+.formHeading {
+    padding-left: 15px;
+    font-size: 50px;
+    background-image:linear-gradient(120deg, turquoise, rgba(0, 0, 0, 0.9));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-family: 'Righteous', cursive;
+    margin-bottom:20px;
+    line-height:60px;
+}
+
+
+.submitButton {
+    background-image:linear-gradient(120deg, turquoise, rgba(0, 0, 0, 0.9));
+    margin:auto;
+    display:flex;
+    width:180px;
+    height:45px;
+    color: #FFF;
+    font-size: 30px;
+    font-family: 'Righteous', cursive;
+    cursor:pointer;
+    border: none;
+    border-radius: 20px;
+    transition: transform 0.5s;
+    justify-content:center;
+}
+
+.submitButton:hover {
+    transform: scale(1.1);
+}
+.loginByGoogle{
+    display: flex;
+    margin: auto auto 10px;
+    justify-content: center;
+    border: none;
+    background: transparent;
+    cursor: pointer;
+}
+.forgotPasswordBtn{
+    border: none;
+    background-color: transparent;
+    font-family: 'Comfortaa', cursive;
+    padding-top: 20px;
+    margin-left: 240px;
+    margin-bottom: 10px;
+    cursor: pointer;
+}
+
+.logoImg {
+    position:absolute;
+    height: 250px;
+    width:auto;
+    top: -90px;
+    right: 10px;
+}
+
+.optionalSection {
+    height:50px;
+    width:300px;
+    background-color: transparent;
+    position: absolute;
+    left: 200px;
+    bottom: 0;
+}
+
+.changeButton {
+    border:none;
+    outline: none;
+    background-color: transparent;
+    font-family: 'Righteous', cursive;
+    background-image:linear-gradient(120deg, turquoise, rgba(0, 0, 0, 0.9));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    cursor:pointer;
+    position:absolute;
+    right: 0;
+    top: 12px;
+    font-size: 20px;
+    transition: transform 0.5s;
+}
+
+.changeButton:hover {
+    transform: scale(1.1);
+}
+
+.sizeBack {
+    position:absolute;
+    left: 10px;
+    top: 18px;
+}
+
+.reSize {
+    width:600px;
+    height:340px;
+}
+
+#LoginForm {
+    display:none;
+    position:relative;
+    width: 620px;
+    height: 360px;
+}
+
+#RegisterForm {
+    display:none;
+    position:relative;
+    width: 620px;
+    height: 360px;
+}
+
+.selectButton {
+    /*display: none;*/
+    border:none;
+    outline: none;
+    height:70px;
+    width:200px;
+    margin-right:20px;
+    margin-left:20px;
+    font-size:30px;
+    color:#FFF;
+    transition: transform 0.5s;
+    cursor:pointer;
+    font-family: 'Righteous', cursive;
+}
+
+#SelectRegister {
+    background-image:linear-gradient(140deg, black, turquoise 90%);
+    border-radius: 20px;
+}
+
+#SelectLogin {
+    background-image:linear-gradient(140deg, turquoise , black 90%);
+    border-radius: 20px;
+}
+
+.selectButton:hover {
+    transform: scale(1.2);
+}
+
+.backBtn {
+    height:30px;
+    width:30px;
+    font-size:30px;
+    margin-right:10px;
+    background-color:transparent;
+    color:#111;
+    position:absolute;
+    top:0;
+    right:0;
+    z-index:1;
+    outline:none;
+    border:none;
+    transition: all 250ms ease-in-out;
+}
+
+.backBtn:hover {
+    opacity:0.1;
+    cursor:pointer;
+    color:turquoise;
+    transform: rotate(90deg);
+    margin-left:10px;
+}
+#ForgotPasswordModel{
+    display: none;
+    width: 620px;
+    height: 360px;
+
+}
+#VerifyByEmail{
+    display: none;
+    width: 620px;
+    height: 360px;
+}
+.forgotH1{
+    margin-bottom: 40px;
+}
+.emailLabel,.OTPLabel{
+    margin-left: -100px;
+}
+.inputEmail, .inputOTP{
+    border: none;
+    border-bottom: 2px solid turquoise;
+    margin-bottom: 40px;
+    width: 320px;
+    height: 30px;
+}
+#SubmitOTPForm{
+    margin-top: 60px;
+}
+#backForgotBtn, #backVerificationBtn{
+    position: relative;
+    left: 91%;
+    top: -120px;
+}
+
+/*==================================== Home Page ===============================*/
+
+.leftBar{
+    width: 15%;
+    height: 90%;
+    border-radius: 20px;
+    background-color: rgba(238, 238, 238, 0.9);
+    position: absolute;
+    left: 50px;
+}
+.leftBar h1{
+    text-align: center;
+    margin-bottom: 50px;
+}
+ul{
+    list-style: none;
+}
+li{
+    margin-bottom: 40px;
+}
+.adminCrud{
+    font-family: 'Righteous', cursive;
+    border: none;
+    background: none;
+    cursor: pointer;
+    color: black;
+    font-size: 30px;
+}
+.adminCrud:hover{
+    color: rgba(64, 224, 208, 0.84);
+}
+.mainDetails{
+    width: 60%;
+    height: 90%;
+    border-radius: 20px;
+    background-color: rgba(238, 238, 238, 0.9);
+    position: absolute;
+    left: 20%;
+}
+.mainDetailsHeader{
+    text-align: center;
+    font-size: 50px;
+    background-image:linear-gradient(120deg, turquoise, rgba(0, 0, 0, 0.96));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-family: 'Righteous', cursive;
+    margin-bottom:20px;
+    line-height:60px;
+}
+.usersTable{
+    width: 90%;
+    height: auto;
+    max-height: 550px;
+    background-color: rgba(147, 146, 146, 0.35);
+    border-radius: 20px;
+    margin-left: 5%;
+    padding-top: 20px;
+    overflow-x: hidden;
+    overflow-y: auto;
+}
+.userRow{
+    list-style: none;
+    margin-left: 120px;
+}
+.showUsers{
+    display: none;
+}
+
+.removeUser{
+    margin-right: 20px;
+    margin-top: 2px;
+    border: 2px solid pink;
+    border-radius: 10px;
+    background-color: red;
+    cursor: pointer;
+    transition: transform 0.5s;
+}
+.editUser{
+    margin-top: 2px;
+    width: 37px;
+    border: 2px solid yellow;
+    border-radius: 10px;
+    background-color: orange;
+    cursor: pointer;
+    transition: transform 0.5s;
+}
+#removeUser{
+    color: #3a0101;
+    transition: transform 0.5s;
+}
+#removeUser:hover , .removeUser:hover{
+    transform: scale(1.2);
+}
+#editUser{
+    color: black;
+}
+#editUser:hover , .editUser:hover{
+    transform: scale(1.2);
+}
+
+.rightBar{
+    width: 15%;
+    height: 90%;
+    border-radius: 20px;
+    background-color: rgba(238, 238, 238, 0.9);
+    position: absolute;
+    right: 50px;
+}
+.rightBar h1{
+    text-align: center;
+}
+
+input[type=checkbox]{
+    height: 0;
+    width: 0;
+    visibility: hidden;
+}
+
+.switchLabel {
+    cursor: pointer;
+    text-indent: -9999px;
+    width: 50px;
+    height: 30px;
+    background: grey;
+    display: block;
+    border-radius: 100px;
+    position: relative;
+    bottom: 8px;
+}
+
+.switchLabel:after {
+    content: '';
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    width: 25px;
+    height: 25px;
+    background: #fff;
+    border-radius: 25px;
+    transition: 0.3s;
+}
+
+input:checked + .switchLabel {
+    background: rgba(64, 224, 208, 0.84);
+}
+input:checked + .switchLabel:after {
+    left: calc(100% - 2.5px);
+    transform: translateX(-100%);
+}
+
+.switchLabel:active:after {
+    width: 25px;
+}
+.switchLabel{
+    display: inline-block;
+}
+h4{
+    display: inline-block;
+    font-size: 20px;
+    margin-left: 20px;
+}
+.checkListDetails{
+    padding-top: 20px;
+    margin-bottom: -22px;
+}
+.must{
+    font-size: 20px;
+    color: red;
+}
+.addUsers{
+    text-align: center;
+    display: none;
+}
+.addUserHeader{
+    margin-top: -10px;
+    font-size: 45px;
+}
+h3{
+    font-size: 20px;
+}
+.addUsers input{
+    width: 450px;
+    border: none;
+    border-radius: 20px;
+    height: 40px;
+    background-color: rgba(180, 194, 193, 0.56);
+    text-align: center;
+}
+.addUsers input::placeholder{
+    color: rgba(22, 98, 126, 0.84);
+}
+#backAddUsers{
+    padding-right: 80%;
+    margin-bottom: 0;
+    font-size: 50px;
+    cursor: pointer;
+}
+#backShowUsers{
+    position: relative;
+    left: 8.3%;
+    margin-bottom: 20px;
+    font-size: 50px;
+    cursor: pointer;
+}
+#backAddUsers:hover, #backShowUsers:hover{
+    color: turquoise;
+}
+.createUser{
+    border: 2px solid black;
+    padding: 15px;
+    border-radius: 15px;
+    margin-top: 40px;
+    background: transparent;
+    font-family: 'Comfortaa', cursive;
+    cursor: pointer;
+    transition: transform 0.5s;
+}
+.createUser:hover{
+    background-color: black;
+    color: white;
+    transform: scale(1.1);
+}
+.welcomeMessage h1{
+    text-align: center;
+    margin-top: 20%;
+    font-size: 70px;
+}
+.logOut{
+    font-family: 'Righteous', cursive;
+    position: absolute;
+    border: none;
+    background: none;
+    cursor: pointer;
+    color: black;
+    font-size: 30px;
+    bottom: 10%;
+}
+.logOut:hover{
+    color: turquoise;
+}
