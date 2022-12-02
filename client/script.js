@@ -78,73 +78,78 @@ const welcomeMessage = document.getElementById('welcomeMessage');
 const backShowUsers = document.getElementById('backShowUsers');
 const logOutBtn = document.getElementById('logOutBtn');
 
-// showUserBtn.addEventListener('click',  ()=>{
-//     addUsers.style.display = 'none';
-//     welcomeMessage.style.display = 'none';
-//     showUser.style.display = 'block';
-// })
-//
-// addUserBtn.addEventListener('click',  ()=>{
-//     showUser.style.display = 'none';
-//     welcomeMessage.style.display = 'none';
-//     addUsers.style.display = 'block';
-// })
-// backAddUsers.addEventListener('click',  ()=>{
-//     addUsers.style.display = 'none';
-//     showUser.style.display = 'none';
-//     welcomeMessage.style.display = 'block';
-// })
-// backShowUsers.addEventListener('click',  ()=>{
-//     addUsers.style.display = 'none';
-//     showUser.style.display = 'none';
-//     welcomeMessage.style.display = 'block';
-// })
-// logOutBtn.addEventListener('click', ()=>{
-//     window.location.href = 'index.html';
-// })
-
-
-
-fetch('./data/users.json')
-    .then(function (response) {
-        return response.json();
+if(showUserBtn) {
+    showUserBtn.addEventListener('click', () => {
+        addUsers.style.display = 'none';
+        welcomeMessage.style.display = 'none';
+        showUser.style.display = 'block';
     })
-    .then(function (data) {
-        appendData(data);
+
+    addUserBtn.addEventListener('click', () => {
+        showUser.style.display = 'none';
+        welcomeMessage.style.display = 'none';
+        addUsers.style.display = 'block';
     })
-    .catch(function (err) {
-        console.log('error: ' + err);
-    });
-function appendData(data) {
-    const mainContainer = document.getElementById("myData");
-    for (let i = 0; i < data.length; i++) {
-        const li = document.createElement("li");
-        li.classList.add("userRow");
-        li.innerHTML = 'Name: ' + data[i].name + '&nbsp&nbsp&nbsp&nbsp&nbspEmail: ' + data[i].email + '&nbsp&nbsp&nbsp&nbsp&nbspType: ' + data[i].type +  '&nbsp&nbsp&nbsp&nbsp&nbspstatus: ' + data[i].status
-            + '&nbsp&nbsp&nbsp&nbsp&nbsp<button class="removeUser"><span class="material-symbols-outlined" id="removeUser">\n' +
-            'delete\n' +
-            '</span></button>' + '<button class="editUser" id="{{$i}}"><span class="material-symbols-outlined" id="editUser">\n' +
-            'edit_note\n' +
-            '</span></button>';
-        console.log(data);
-        mainContainer.appendChild(li);
+    backAddUsers.addEventListener('click', () => {
+        addUsers.style.display = 'none';
+        showUser.style.display = 'none';
+        welcomeMessage.style.display = 'block';
+    })
+    backShowUsers.addEventListener('click', () => {
+        addUsers.style.display = 'none';
+        showUser.style.display = 'none';
+        welcomeMessage.style.display = 'block';
+    })
+    logOutBtn.addEventListener('click', () => {
+        window.location.href = 'index.html';
+    })
+
+
+    fetch('./data/users.json')
+        .then(function (response) {
+            return response.json();
+        })
+        .then(function (data) {
+            appendData(data);
+        })
+        .catch(function (err) {
+            console.log('error: ' + err);
+        });
+
+    function appendData(data) {
+        const mainContainer = document.getElementById("myData");
+        for (let i = 0; i < data.length; i++) {
+            const li = document.createElement("li");
+            li.classList.add("userRow");
+            li.innerHTML = 'Name: ' + data[i].name + '&nbsp&nbsp&nbsp&nbsp&nbspEmail: ' + data[i].email + '&nbsp&nbsp&nbsp&nbsp&nbspType: ' + data[i].type + '&nbsp&nbsp&nbsp&nbsp&nbspstatus: ' + data[i].status
+                + '&nbsp&nbsp&nbsp&nbsp&nbsp<button class="removeUser"><span class="material-symbols-outlined" id="removeUser">\n' +
+                'delete\n' +
+                '</span></button>' + '<button class="editUser" id="{{$i}}"><span class="material-symbols-outlined" id="editUser">\n' +
+                'edit_note\n' +
+                '</span></button>';
+            console.log(data);
+            mainContainer.appendChild(li);
+        }
     }
 }
-
 //login
 
 
-const sendLoginData = async () => {
+const LoginData = async () => {
     const data = {
-        mail: document.getElementById("L-Email").value,
-        pass: document.getElementById("L-Password").value,
+        email: document.getElementById("L-Email").value,
+        password: document.getElementById("L-Password").value,
     };
     const response = await fetch("http://localhost:3000/api/login", {
         method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
         body: JSON.stringify(data),
     });
     const handleResponse = {
-        200: ({ location = "index.html" }) => {
+        200:
+            ({ location = "homePage.html" }) => {
             window.location.href = location;
         },
         401: () => {
@@ -165,16 +170,18 @@ const sendLoginData = async () => {
 
 //signup fetch
 
-const sendSignUpData= async  () => {
+const signupData= async  () => {
 
     const data = {
-        "name": document.getElementById("newUsername").value,
-        "mail": document.getElementById("newUserEmail").value,
-        "pass": document.getElementById("pass").value,
-        // "rePass": document.getElementById("repass").value
+        name: document.getElementById("Username").value,
+        email: document.getElementById("Email").value,
+        password: document.getElementById("C-Password").value,
     }
     await fetch("http://localhost:3000/api/signUp", {
         method: 'POST',
+        headers: {
+            "Content-Type": "application/json",
+        },
         body: JSON.stringify(data)
     })
         .then(response => {
@@ -182,7 +189,7 @@ const sendSignUpData= async  () => {
             // window.location.href=response.headers.Location;
             if (response.status === 401) {
                 location.reload();
-                alert("ERROR 401: Email already exists");
+                alert("ERROR 401:" + response.data);
             }
         })
 }
@@ -206,28 +213,32 @@ const forgotPassword= () => {
         })
 }
 
-
 const emailConfirmation = async () => {
     const data = {
-        "name":document.getElementById("newUsername").value,
-        "mail":document.getElementById("newUserEmail").value,
-        "pass": document.getElementById("pass").value,
-        "code":document.getElementById("OTPtext").value
+        name: document.getElementById("Username").value,
+        email: document.getElementById("Email").value,
+        password: document.getElementById("C-Password").value,
+        code: document.getElementById("VerifyOTP").value
     };
-    const response = await fetch("http://localhost:3000/api/confirm", {
+    const response = await fetch("http://localhost:3000/api/confirmCode", {
         method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
         body: JSON.stringify(data),
     });
 
     const handleResponse = {
-        200: ({ location = "index.html" }) => {
-            window.location.href = location;
+        200: () => {
+                location.reload();
             alert("User was added")
         },
         403: () => {
             alert("OTP code is false");
         },
         401: () => {
+            console.log("401")
+            location.reload();
             alert("Verification Error");
         }
     };

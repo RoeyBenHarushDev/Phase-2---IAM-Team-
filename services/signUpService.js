@@ -32,17 +32,13 @@ function userExist(email){
             throw new Error("Email already exists")
         }
     })
-    return
 }
 
 ///////////////////////////////////////////////////////////////
 
 async function sendEmail(email) {
-    //parses the Postman JSON
-    // let mail = JSON.parse(email)
     //create an OTP Code
     let OTP = otpGenerator.generate(6, {upperCaseAlphabets: false, lowerCaseAlphabets: false, specialChars: false})
-
     //puts the ejs file into a var (the email structure)
     const data = await ejs.renderFile(process.cwd() + "/data/OTP-mail.ejs", {name: 'Stranger', code: OTP});
 
@@ -61,15 +57,14 @@ async function sendEmail(email) {
     list.table.push({mail: mainOptions.to, code: OTP});
 
     json = JSON.stringify(list)
-    fs.writeFile(process.cwd() + "/data/OTP-pass.json", json, 'utf-8', callback => {
-        // server.logger.log("wrote file successfully")
+    fs.writeFile(process.cwd() + "/data/OTP-pass.json", json, 'utf-8', function(err){
+        if (err) throw new Error('error writing file: ' + err);
     })
-
 
     // send the mail with the OTP to the client email
     await transporter.sendMail(mainOptions, (err, info) => {
         if (err) {
-            console.log(err)
+            throw new Error("transporter error: mail was not sent")
             // server.logger.log(err);
         } else {
             console.log("message sent")

@@ -12,7 +12,7 @@ const fs = require("fs");
 const JSON = require("JSON");
 const userJson = require("./users.json");
 
-const getUserByEmail = (email)=>{
+const getUserByEmail = (email) => {
     const user = userJson.find(user => user.email === email);
     return user ? user : "User doesn't exist";
 }
@@ -33,5 +33,28 @@ function updateUser(email, params) {
     console.log(userJson);
 }
 
+const addUser = (new_user) => {
+    try {
+        let json
+        let obj = {
+            name: new_user.name,
+            email: new_user.email,
+            password: new_user.password,
+            loginDate: new_user.loginDate,
+            type: new_user.status,
+            status: new_user.type,
+            suspensionTime: new_user.suspensionTime,
+            suspensionDate: new_user.suspensionDate
+        }
+        userJson.push(obj)
 
-module.exports={getUserByEmail,updateUser};
+        json = JSON.stringify(userJson)
+        fs.writeFile(process.cwd() + "/data/users.json", json, 'utf-8', callback => {
+            // server.logger.log("wrote file successfully")
+        })
+    } catch (err) {
+        console.error({err});
+    }
+}
+
+module.exports = {getUserByEmail, updateUser, addUser};
