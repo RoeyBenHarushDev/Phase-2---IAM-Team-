@@ -1,6 +1,6 @@
 const js = require("../data/users.json")
 const list = require("../data/OTP-pass.json")
-const suspend = require("../services/suspendService")
+const suspend = require("../data/dbHandler")
 const fs = require("fs");
 
 

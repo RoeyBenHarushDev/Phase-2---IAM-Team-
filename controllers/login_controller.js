@@ -2,7 +2,7 @@ const bcrypt = require('bcrypt');
 const dbHandler = require('../data/dbHandler');
 
 function isSuspend(user){
-    if (user.suspensionTime == '0' && user.suspensionDate == 'null' && user.status != 'suspended') {
+    if (user.suspensionTime === '0' && user.suspensionDate === 'null' && user.status !== 'suspended') {
         console.log(`user: ${user["email"]} is not suspended`);
         return 0;
     }

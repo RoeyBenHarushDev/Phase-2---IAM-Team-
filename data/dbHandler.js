@@ -1,39 +1,37 @@
-const users = require('./users.json');
+// const path = require("path");
+// const fs = require("fs");
+// const { channel } = require("diagnostics_channel");
+// const { stringify } = require("querystring");
+// const userJson = require("../data/users.json")
+// const JSON = require("JSON");
+
+
+// module.exports =  { updateUser }
+
 const fs = require("fs");
 const JSON = require("JSON");
-const {User} = require('./userClass');
+const userJson = require("./users.json");
 
 const getUserByEmail = (email)=>{
-    const user = users["users"].find(user => user.email === email);
-    return user ? user : "User does'nt exist";
+    const user = userJson.find(user => user.email === email);
+    return user ? user : "User doesn't exist";
 }
 
+// Update user from JSON
 function updateUser(email, params) {
-    const keys = Object.keys(params);
-    const keyForChange = keys[0];
-    let value = params[keyForChange];
-    const oldUser = getUserByEmail(email);
-    users["users"].forEach((obj)=>{
-        if(email === obj.email) {
-            obj[keyForChange] = value;
+    userJson.forEach(function (i) {
+        if (i.email === email) {
+            Object.keys(params).forEach(key => {
+                i[key] = params[key];
+            })
         }
     })
-    let json = JSON.stringify(users)
-
-    fs.writeFile(__dirname + "/users.json", json, 'utf-8', callback => {
+    const json = JSON.stringify(userJson)
+    fs.writeFile(process.cwd() + "/data/users.json", json, 'utf-8', callback => {
         // server.logger.log("wrote file successfully")
-    });
-    console.log(oldUser);
-}
-async function addUser(user) {
-    const newUser = new User(user.name,user.email,user.password,user.lastLoginDate,user.type,
-        user.status,user.suspensionTime,user.suspensionDate);
-    console.log(JSON.stringify(newUser));
-    users["users"].push(newUser);
-    let json = JSON.stringify(users)
-
-    fs.writeFile(__dirname + "/users.json", json, 'utf-8', callback => {
-    });
+    })
+    console.log(userJson);
 }
 
-module.exports={getUserByEmail,addUser,updateUser};
+
+module.exports={getUserByEmail,updateUser};

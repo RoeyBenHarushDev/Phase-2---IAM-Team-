@@ -136,8 +136,8 @@ function appendData(data) {
 
 const sendLoginData = async () => {
     const data = {
-        mail: document.getElementById("userEmail").value,
-        pass: document.getElementById("userPass").value,
+        mail: document.getElementById("L-Email").value,
+        pass: document.getElementById("L-Password").value,
     };
     const response = await fetch("http://localhost:3000/api/login", {
         method: "POST",

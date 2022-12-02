@@ -4,6 +4,7 @@ const confirmCode = require("../services/confirmCodeService")
 
 
 function handleConfirmCode(request,response) {
+    console.log("in handleConfirm");
     let body = [];
     request
         .on("error", (err) => {
