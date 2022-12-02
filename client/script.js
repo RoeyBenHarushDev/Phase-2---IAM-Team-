@@ -78,30 +78,30 @@ const welcomeMessage = document.getElementById('welcomeMessage');
 const backShowUsers = document.getElementById('backShowUsers');
 const logOutBtn = document.getElementById('logOutBtn');
 
-showUserBtn.addEventListener('click',  ()=>{
-    addUsers.style.display = 'none';
-    welcomeMessage.style.display = 'none';
-    showUser.style.display = 'block';
-})
-
-addUserBtn.addEventListener('click',  ()=>{
-    showUser.style.display = 'none';
-    welcomeMessage.style.display = 'none';
-    addUsers.style.display = 'block';
-})
-backAddUsers.addEventListener('click',  ()=>{
-    addUsers.style.display = 'none';
-    showUser.style.display = 'none';
-    welcomeMessage.style.display = 'block';
-})
-backShowUsers.addEventListener('click',  ()=>{
-    addUsers.style.display = 'none';
-    showUser.style.display = 'none';
-    welcomeMessage.style.display = 'block';
-})
-logOutBtn.addEventListener('click', ()=>{
-    window.location.href = 'index.html';
-})
+// showUserBtn.addEventListener('click',  ()=>{
+//     addUsers.style.display = 'none';
+//     welcomeMessage.style.display = 'none';
+//     showUser.style.display = 'block';
+// })
+//
+// addUserBtn.addEventListener('click',  ()=>{
+//     showUser.style.display = 'none';
+//     welcomeMessage.style.display = 'none';
+//     addUsers.style.display = 'block';
+// })
+// backAddUsers.addEventListener('click',  ()=>{
+//     addUsers.style.display = 'none';
+//     showUser.style.display = 'none';
+//     welcomeMessage.style.display = 'block';
+// })
+// backShowUsers.addEventListener('click',  ()=>{
+//     addUsers.style.display = 'none';
+//     showUser.style.display = 'none';
+//     welcomeMessage.style.display = 'block';
+// })
+// logOutBtn.addEventListener('click', ()=>{
+//     window.location.href = 'index.html';
+// })
 
 
 

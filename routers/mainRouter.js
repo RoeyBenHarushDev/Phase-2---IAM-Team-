@@ -10,7 +10,7 @@ app.use('/api/login',login.loginRouter);
 
 const signUp = require("./signUp_route");
 // const {forgotPassword} = require("./routers/forgotPassword_route");
-// const {suspend} = require("./routers/suspend_route");
+const suspend = require("./suspend_route");
 // const {changePassword} = require("./routers/changePassword_route");
 const confirmCode = require("./confirmCode_route");
 // const {adminCRUD} = require("./routers/adminCRUD_route");
@@ -18,7 +18,7 @@ const confirmCode = require("./confirmCode_route");
 app.use('/api/signUp', signUp.signupRoute);
 // app.use('/api/login', login);
 // app.use('/api/forgotPassword', forgotPassword);
-// app.use('/api/suspend', suspend);
+app.use('/api/suspend', suspend.suspendRoute);
 // app.use('/api/changePassword', changePassword);
 app.use('/api/confirmCode', confirmCode.confirmCodeRoute);
 // app.use('/api/adminCRUD', adminCRUD);
