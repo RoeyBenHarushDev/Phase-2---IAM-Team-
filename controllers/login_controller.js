@@ -1,5 +1,5 @@
 const bcrypt = require('bcrypt');
-const users= require('../data/users.json');
+const dbHandler = require('../data/dbHandler');
 
 function isSuspend(user){
     if (user.suspensionTime == '0' && user.suspensionDate == 'null' && user.status != 'suspended') {
@@ -23,7 +23,7 @@ const handleLogin = async (req,res,next)=>{
     const userEmail=req.body.email;
     const userPassword=req.body.password;
     console.log(userPassword,userPassword);
-    const user = getUserByEmail(userEmail) //maybe needs await in the start and in the end.lean()
+    const user = dbHandler.getUserByEmail(userEmail) //maybe needs await in the start and in the end.lean()
     if (!user) {
         return res.json({ status: 'error', error: 'Invalid username/password' })
     }
@@ -45,41 +45,17 @@ const handleLogin = async (req,res,next)=>{
         */
         //return res.json({status: 'ok'}); //works
         // return res.send('/home') // works
-        console.log("loginHandle")
+        console.log("loginHandle",userEmail)
+        const today=new Date();
+        dbHandler.updateUser(userEmail,{"lastLoginDate":today.toString()})
         return res.redirect(200,"/api/login/home"); //doesnt work
     }
     else return res.json({status: 'error', error: 'Invalid password'})
 }
-const getUserByEmail = (email)=>{
-    const user = users.find(user => user.email === email);
-    return user ? user : "User does'nt exist";
-}
+
 
 function isAfter(date1, date2) {
     return date1 > date2;
 }
 
-module.exports = {getUserByEmail,isSuspend,handleLogin}
-
-
-
-
-/*const usrs = require('cata/users.json');*/
-/*const validateUser = (req,res) => {
-    try {
-        const user = getUserByEmail(req.body.email);
-        if (user==null){
-            throw new ReferenceError('No user with that mail');
-        }
-        //const hashedPass = bcrypt.hash(req.body.password,10);
-        if (await bcrypt.compare(req.body.password,user.password)){
-
-        }else {
-            throw new Error('Incorrect password');
-        }
-
-    } catch(e){
-        console.log(e.message);
-    }
-}*/
-
+module.exports = {handleLogin}
