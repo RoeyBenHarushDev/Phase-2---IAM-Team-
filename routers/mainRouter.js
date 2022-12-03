@@ -22,7 +22,8 @@ app.use((req, res, next) => {
     res.set('Content-Type', 'application/json');
     next();
 });
-
+// app.get('/',(req, res)=>{res.sendFile(process.cwd() + "/client/index.html")})
+// app.get('/',(req, res) =>{'<h1>Hello World!</h1>'})
 app.use(bodyParser.json());
 app.use('/api/login',login.loginRouter);
 app.use('/api/signUp', signUp.signupRoute);
