@@ -353,9 +353,15 @@ if (userLogOut) {
 
 
 const suspension = async () => {
+    const suspendedBut = document.querySelector( 'input[name="userStatus"]:checked').value;
+    let suspensionTime = 0
+    if(suspendedBut == "suspended") {
+        suspensionTime = document.getElementById("start").value
+    }
     const data = {
         "email": document.getElementById("userChangeEmail").value,
-        "suspensionTime": document.getElementById("start").value,
+        "suspensionTime": suspensionTime,
+        "userStatus": suspendedBut
     };
 
     const response = await fetch("http://localhost:5000/api/suspension", {

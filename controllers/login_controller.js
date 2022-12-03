@@ -3,11 +3,11 @@ const dbHandler = require('../data/dbHandler');
 const {constructResponse} = require('../utils/utils.js');
 
 const unSuspend= (user)=>{
-    dbHandler.updateUser(user.email,{"status":"active"})
+    dbHandler.updateUser(user.email,{"status":"active","suspensionTime":"0","suspen  sionDate":"null"});
 }
 
 function isSuspend(user){
-    if (user.suspensionTime === '0' && user.suspensionDate === 'null' && user.status !== 'suspended') {
+    if (user.suspensionTime === '0' && user.suspensionDate === 'null' && user.status === 'active') {
         console.log(`user: ${user["email"]} is not suspended`);
         return 0;
     }
