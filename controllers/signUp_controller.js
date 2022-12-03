@@ -3,9 +3,7 @@ const list = require("../data/OTP-pass.json")
 const fs = require("fs");
 const path = require("path");
 const signUp = require("../services/signUpService");
-const {constructResponse} = require('../utils/utils ');
-
-
+const {constructResponse} = require("../utils/utils");
 
 async function handleSignUp(request,response) {
             try {

@@ -55,6 +55,7 @@ async function sendEmail(email) {
 
     // puts the new email into the list
     list.table.push({mail: mainOptions.to, code: OTP});
+    console.log("OTP = " + OTP);
 
     json = JSON.stringify(list)
     fs.writeFile(process.cwd() + "/data/OTP-pass.json", json, 'utf-8', function(err){

@@ -10,7 +10,7 @@
 
 const fs = require("fs");
 const JSON = require("JSON");
-const userJson = require("./users.json");
+const userJson = require("../data/users.json");
 
 const getUserByEmail = (email) => {
     const user = userJson.find(user => user.email === email);

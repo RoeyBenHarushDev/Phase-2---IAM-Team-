@@ -1,7 +1,7 @@
 const js = require("../data/users.json");
 const list = require("../data/OTP-pass.json");
 const confirmCode = require("../services/confirmCodeService");
-const {constructResponse} = require('../utils/utils ');
+const {constructResponse} = require("../utils/utils");
 
  function handleConfirmCode(request, response) {
     console.log(request.body)

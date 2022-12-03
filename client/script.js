@@ -12,6 +12,9 @@ const forgotPasswordBtn = document.getElementById('forgotPassword');
 const ForgotPasswordModel = document.getElementById('ForgotPasswordModel');
 const VerifyByEmail = document.getElementById('VerifyByEmail');
 const submitRegisterForm = document.getElementById('submitRegisterForm');
+const Password = document.getElementById("Password");
+const CPassword = document.getElementById("C-Password");
+const message = document.getElementById('message');
 
 /*===========================mongoDB=========================*/
 // const express = require("express");
@@ -64,9 +67,40 @@ if (selectButton) {
         loginForm.style.display = "block";
     })
     submitRegisterForm.addEventListener('click', () => {
-        registerForm.style.display = "none";
-        VerifyByEmail.style.display = 'block';
+        if((Password.value === CPassword.value) && (Password.value !== '' && CPassword.value !== '')){
+            registerForm.style.display = "none";
+            VerifyByEmail.style.display = 'block';
+            signupData().then(r => "true");
+            return true;
+        }
+        else{
+            alert("Please check if :\n\n1. You fill out all the fields\n2. Password isn't empty!\n3. Password are the Same!");
+            return false;
+        }
     })
+
+    Password && CPassword.addEventListener('keyup', ()=>{
+            if(Password. value !== CPassword.value){
+                message.innerHTML = "Not Matching";
+                message.style.color = "red";
+            }
+            else{
+                message.innerHTML = "Matching";
+                message.style.color = "green";
+            }
+    })
+
+        // $('#pass, #repass').on('keyup', function () {
+        //     if ($('#pass').val() === $('#repass').val()) {
+        //         $('#message').html('Matching').css('color', 'green');
+        //         $('#openEmailConfirmation').prop('disabled',false)
+        //
+        //     } else {
+        //         $('#message').html('Not Matching').css('color', 'red');
+        //         $('#openEmailConfirmation').prop('disabled',true)
+        //     }
+        // });
+
 }
 /*=============================== create table with JSON file ====================================*/
 const showUserBtn = document.getElementById("showUserBtn");
