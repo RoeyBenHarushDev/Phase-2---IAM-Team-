@@ -199,8 +199,7 @@ const LoginData = async () => {
                 window.location.href = location;
             },
         401: () => {
-
-            alert("Verification Error");
+            alert(response.status +": "+response.statusText);
         },
         403: () => {
             alert("user in suspention!");
