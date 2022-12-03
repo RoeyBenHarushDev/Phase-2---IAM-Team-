@@ -198,7 +198,7 @@ const forgotPassword = async () => {
     const data = {
         "email": document.getElementById("forgotEmail").value,
     }
-    const response = await fetch("http://localhost:3000/api/login", {
+    const response = await fetch("http://localhost:3000/api/forgotPassword", {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
@@ -211,7 +211,7 @@ const forgotPassword = async () => {
                 location.reload();
                 alert("A new password has been sent to the email");
             },
-        401:
+        403:
             () => {
                 location.reload();
                 alert("Email does not exist");
@@ -254,6 +254,31 @@ const emailConfirmation = async () => {
         handler(body);
     }
 };
+
+// const changePassword = async () => {
+//     const data = {
+//         "email": document.getElementById("forgotEmail").value,
+//     }
+//     const response = await fetch("http://localhost:3000/api/changePassword", {
+//         method: "POST",
+//         headers: {
+//             "Content-Type": "application/json",
+//         },
+//         body: JSON.stringify(data),
+//     });
+//     const handleResponse = {
+//         200:
+//             () => {
+//                 location.reload();
+//                 alert("A new password has been sent to the email");
+//             },
+//         403:
+//             () => {
+//                 location.reload();
+//                 alert("Email does not exist");
+//             },
+//     };
+// }
 
 //LOGOUT & DELETING COOKIES
 
