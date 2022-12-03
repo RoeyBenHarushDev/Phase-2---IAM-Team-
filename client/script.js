@@ -16,6 +16,7 @@ const Password = document.getElementById("Password");
 const CPassword = document.getElementById("C-Password");
 const message = document.getElementById('message');
 
+const googleLogIn = document.getElementById('googleLogIn');
 /*===========================mongoDB=========================*/
 // const express = require("express");
 // const path = require('path');
@@ -66,6 +67,9 @@ if (selectButton) {
         ForgotPasswordModel.style.display = 'none';
         loginForm.style.display = "block";
     })
+    googleLogIn.addEventListener('click', () => {
+        window.location.href = 'http://localhost:5000/api/googleLogIn';
+    })
     submitRegisterForm.addEventListener('click', () => {
         if((Password.value === CPassword.value) && (Password.value !== '' && CPassword.value !== '')){
             registerForm.style.display = "none";
@@ -78,6 +82,7 @@ if (selectButton) {
             return false;
         }
     })
+
 
     Password && CPassword.addEventListener('keyup', ()=>{
         if(Password. value !== CPassword.value){
@@ -132,6 +137,8 @@ if (showUserBtn) {
 
 
 
+
+
     fetch('../data/users.json')
         .then(function (response) {
             return response.json();
@@ -179,7 +186,7 @@ const LoginData = async () => {
         email: document.getElementById("L-Email").value,
         password: document.getElementById("L-Password").value,
     };
-    const response = await fetch("http://localhost:3000/api/login", {
+    const response = await fetch("http://localhost:5000/api/login", {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
@@ -215,7 +222,7 @@ const signupData = async () => {
         email: document.getElementById("Email").value,
         password: document.getElementById("C-Password").value,
     }
-    await fetch("http://localhost:3000/api/signUp", {
+    await fetch("http://localhost:5000/api/signUp", {
         method: 'POST',
         headers: {
             "Content-Type": "application/json",
@@ -237,7 +244,7 @@ const forgotPassword = async () => {
     const data = {
         "email": document.getElementById("forgotEmail").value,
     }
-    const response = await fetch("http://localhost:3000/api/forgotPassword", {
+    const response = await fetch("http://localhost:5000/api/forgotPassword", {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
@@ -265,7 +272,7 @@ const emailConfirmation = async () => {
         password: document.getElementById("C-Password").value,
         code: document.getElementById("VerifyOTP").value
     };
-    const response = await fetch("http://localhost:3000/api/confirmCode", {
+    const response = await fetch("http://localhost:5000/api/confirmCode", {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
@@ -350,8 +357,9 @@ const suspension = async () => {
         "email": document.getElementById("userChangeEmail").value,
         "suspensionTime": document.getElementById("start").value,
     };
-    console.log(data);
-    const response = await fetch("http://localhost:3000/api/suspend", {
+
+    const response = await fetch("http://localhost:5000/api/suspension", {
+
         method: "POST",
         headers: {
             "Content-Type": "application/json",

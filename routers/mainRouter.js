@@ -1,5 +1,6 @@
 const express = require("express");
 const app = express();
+require('../services/AuthService')
 const login =  require('./login_route')
 const session = require('express-session');
 const login_controller = require('../controllers/login_controller');
@@ -9,22 +10,51 @@ const signUp = require("./signUp_route");
 const changePassword = require("./changePassword_route")
 const suspend = require("./suspend_route");
 const confirmCode = require("./confirmCode_route");
+const passport = require('passport')
+const send = require("send")
+const path = require("path");
 
 
 // const {forgotPassword} = require("./routers/forgotPassword_route");
 // const {changePassword} = require("./routers/changePassword_route");
 // const {adminCRUD} = require("./routers/adminCRUD_route");
 
+
+require("dotenv").config({ path: path.join(process.cwd() + "/data/",".env") });
+const SESSION_SECRET = process.env.secret;
+
+function isLoggedIn(req, res, next) {
+    req.user ? next() : res.sendStatus(401)
+}
+
+app.use(session({secret: SESSION_SECRET,resave:false,
+    saveUninitialized: true}))
+app.use(passport.initialize());
+app.use(passport.session());
+
 app.use((req, res, next) => {
     res.header('Access-Control-Allow-Origin', '*');
     res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
     res.header("Referrer-Policy: no-referrer-when-downgrade")
-    res.set('Content-Type', 'application/json');
+    // res.set('Content-Type', 'application/json');
     next();
 });
-// app.get('/',(req, res)=>{res.sendFile(process.cwd() + "/client/index.html")})
-// app.get('/',(req, res) =>{'<h1>Hello World!</h1>'})
+app.use(express.static('client'));
 app.use(bodyParser.json());
+app.get('/',(req,res)=>{
+    res.sendFile(path.join(__dirname ,"index.html"))
+});
+app.use('/api/googleLogIn',passport.authenticate('google', {scope : ['email','profile']}));
+app.use('/google/callback',passport.authenticate('google', {successRedirect : '/homePage',failureRedirect:'/authFailure'}));
+app.get('/homePage', isLoggedIn, (req,res)=>{
+    console.log("google Auth Succeeded")
+    res.sendFile(path.join(__dirname ,"../client/homePage.html"))
+});
+app.get('/authFailure',(req,res)=>{
+    console.log("google auth failed")
+    res.send('Something Went Wrong..')
+    // res.sendFile(path.join(__dirname ,"index.html"))
+});
 app.use('/api/login',login.loginRouter);
 app.use('/api/signUp', signUp.signupRoute);
 app.use('/api/suspend', suspend.suspendRoute);
@@ -40,8 +70,3 @@ app.use((req, res) => {
 
 
 module.exports = { app }
-/*app.use(session({
-    secret:"key",
-    resave:false,
-    saveUninitialized:false
-})*/
