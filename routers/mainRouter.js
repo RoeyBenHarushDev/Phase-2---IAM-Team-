@@ -26,7 +26,8 @@ function isLoggedIn(req, res, next) {
     req.user ? next() : res.sendStatus(401)
 }
 
-app.use(session({secret: SESSION_SECRET}))
+app.use(session({secret: SESSION_SECRET,resave:false,
+    saveUninitialized: true}))
 app.use(passport.initialize());
 app.use(passport.session());
 
@@ -46,7 +47,7 @@ app.use('/api/googleLogIn',passport.authenticate('google', {scope : ['email','pr
 app.use('/google/callback',passport.authenticate('google', {successRedirect : '/homePage',failureRedirect:'/authFailure'}));
 app.get('/homePage', isLoggedIn, (req,res)=>{
     console.log("google Auth Succeeded")
-    res.sendFile(path.join(__dirname ,"homePage.html"))
+    res.sendFile(path.join(__dirname ,"../client/homePage.html"))
 });
 app.get('/authFailure',(req,res)=>{
     console.log("google auth failed")
