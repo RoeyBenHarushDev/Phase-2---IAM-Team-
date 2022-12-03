@@ -15,6 +15,7 @@ const submitRegisterForm = document.getElementById('submitRegisterForm');
 const Password = document.getElementById("Password");
 const CPassword = document.getElementById("C-Password");
 const message = document.getElementById('message');
+
 /*===========================mongoDB=========================*/
 // const express = require("express");
 // const path = require('path');
@@ -90,6 +91,7 @@ if (selectButton) {
     })
 
 }
+// editUser
 /*=============================== create table with JSON file ====================================*/
 const showUserBtn = document.getElementById("showUserBtn");
 const showUser = document.getElementById("showUsers");
@@ -99,6 +101,8 @@ const backAddUsers = document.getElementById('backAddUsers');
 const welcomeMessage = document.getElementById('welcomeMessage');
 const backShowUsers = document.getElementById('backShowUsers');
 const logOutBtn = document.getElementById('logOutBtn');
+const userStatusModel = document.getElementById('userStatusModel');
+
 
 if (showUserBtn) {
     showUserBtn.addEventListener('click', () => {
@@ -127,7 +131,8 @@ if (showUserBtn) {
     })
 
 
-    fetch('./data/users.json')
+
+    fetch('../data/users.json')
         .then(function (response) {
             return response.json();
         })
@@ -154,6 +159,18 @@ if (showUserBtn) {
         }
     }
 }
+const editUser = document.getElementById('editUser');
+if(editUser){
+    console.log("nkedbkc");
+    editUser.addEventListener('click' , ()=>{
+        showUser.style.display = 'none';
+        userStatusModel.style.display = 'block';
+    })
+}
+
+
+
+
 //login
 
 
@@ -330,75 +347,34 @@ if (userLogOut) {
 
 const suspension = async () => {
     const data = {
-        "mail": document.getElementById("userEmail").value,
-        "suspensionDate": document.getElementById("start").value,
+        "mail": `${document.getElementById("userChangeEmail").value}`,
+        "suspensionTime": `${document.getElementById("start").value}`,
     };
-    const response = await fetch("http://localhost:3000/api/suspension", {
+    console.log(data);
+    const response = await fetch("http://localhost:3000/api/suspend", {
+        // mode: "cors",
+        // headers: {Accept: "application/json"},
         method: "POST",
         body: JSON.stringify(data),
     });
 }
 
 
-// const el_up = document.getElementById("GFG_UP");
-//
-// const list = [
-//     { "col_1": "val_11", "col_3": "val_13" },
-//     { "col_2": "val_22", "col_3": "val_23" },
-//     { "col_1": "val_31", "col_3": "val_33" }
-// ];
-//
-// el_up.innerHTML = "Click on the button to create "
-//     +   "the table from the JSON data.<br><br>"
-//     + JSON.stringify(list[0]) + "<br>"
-//     + JSON.stringify(list[1]) + "<br>"
-//     + JSON.stringify(list[2]);
-//
-// function constructTable(selector) {
-//     // Getting the all column names
-//     let cols = Headers(list, selector);
-//
-//     // Traversing the JSON data
-//     for (let i = 0; i < list.length; i++) {
-//         let row = $('<tr/>');
-//         for (let colIndex = 0; colIndex < cols.length; colIndex++)
-//         {
-//             let val = list[i][cols[colIndex]];
-//
-//             // If there is any key, which is matching
-//             // with the column name
-//             if (val == null) val = "";
-//             row.append($('<td/>').html(val));
-//         }
-//
-//         // Adding each row to the table
-//         $(selector).append(row);
-//     }
-// }
-//
-// function Headers(list, selector) {
-//     const columns = [];
-//     const header = $('<tr/>');
-//
-//     for (let i = 0; i < list.length; i++) {
-//         let row = list[i];
-//
-//         for (let k in row) {
-//             if ($.inArray(k, columns) === -1) {
-//                 columns.push(k);
-//
-//                 // Creating the header
-//                 header.append($('<th/>').html(k));
-//             }
-//         }
-//     }
-//
-//     // Appending the header to the table
-//     $(selector).append(header);
-//     return columns;
-// }
+function openDateForm() {
+    let checkRadio = document.querySelector(
+        'input[name="userStatus"]:checked');
 
-
+    if (checkRadio.value === "suspended") {
+        document.getElementById("disp").innerHTML = checkRadio.value + " button checked" + `<br><input type="number" id="start" name="trip-start"
+        value="1"
+        min="0">`;
+    } else if (checkRadio.value !== "suspended") {
+        document.getElementById("disp").innerHTML = checkRadio.value + " button checked"
+    } else {
+        document.getElementById("disp").innerHTML
+            = "No one selected";
+    }
+}
 /*=================================== create table with mongoDB==================================*/
 // app.use(express.static('./public'));
 // app.use(bodyParser.json());

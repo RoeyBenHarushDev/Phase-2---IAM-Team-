@@ -30,6 +30,7 @@
             arrow_back
         </span>
         <div class="usersTable" id="myData">
+
         </div>
     </div>
     <div class="addUsers" id="addUsers">
@@ -38,6 +39,7 @@
         </span>
         <form action="#" method="post">
             <h1 class="addUserHeader">Add New User</h1>
+            <div class="leftForm">
             <label for="userFullName">
                 <h3>Full Name <span class="must">*</span></h3>
                 <input type="text" id="userFullName" placeholder="Full Name" required>
@@ -54,10 +56,35 @@
                 <h3>Re-Password <span class="must">*</span></h3>
                 <input type="password" id="userRe-Password" placeholder="Re-Password" required>
             </label><br>
+            </div>
+            <div class="rightBtn">
             <button type="submit" class="createUser">Add New User</button>
-
+            </div>
         </form>
     </div>
+    <form name="userStatusForm" class="userForm" action="#">
+        <div class="userStatusModel" id="userStatusModel">
+            <label for="userChangeEmail" class="current">
+                <h1>Change User Status :</h1>
+                <h3>Enter User Email <span class="required">*</span></h3>
+                <input type="email" id="userChangeEmail" placeholder="User Email " required/>
+            </label>
+            <div class="radioUserStatus">
+                <form>
+                    <label for="active">Active</label>
+                    <input type="radio" id="active" onchange="openDateForm()" name="userStatus" value="active">
+                    <label for="pending">Pending</label>
+                    <input type="radio" id="pending" onchange="openDateForm()" name="userStatus" value="pending">
+                    <label for="closed">Closed</label>
+                    <input type="radio" id="closed" onchange="openDateForm()" name="userStatus" value="closed">
+                    <label for="suspended">Suspended</label>
+                    <input type="radio" id="suspended" onchange="openDateForm()" name="userStatus" value="suspended">
+                </form>
+            </div>
+            <div id="disp"></div>
+            <input type="submit" value="SEND" id="sendStatus" onclick="suspension()">
+        </div>
+    </form>
 </section>
 <section class="rightBar">
     <h1>Weekly tasks</h1>
