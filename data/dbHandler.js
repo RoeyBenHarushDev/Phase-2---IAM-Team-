@@ -42,8 +42,8 @@ const addUser = (new_user) => {
             email: new_user.email,
             password: new_user.password,
             loginDate: new_user.loginDate,
-            type: new_user.status,
-            status: new_user.type,
+            type: new_user.type,
+            status: new_user.status,
             suspensionTime: new_user.suspensionTime,
             suspensionDate: new_user.suspensionDate
         }
