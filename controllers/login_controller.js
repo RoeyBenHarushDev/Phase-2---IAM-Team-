@@ -28,10 +28,15 @@ function isSuspend(user){
 const handleLogin = async (req,res,next)=>{
     const userEmail=req.body.email;
     const userPassword=req.body.password;
+    let user;
+try {
+    user = dbHandler.getUserByEmail(userEmail) //maybe needs await in the start and in the end.lean()
+}catch(e) {
+    return res.status(401).send({
+        message: e
+    })
 
-    const user = dbHandler.getUserByEmail(userEmail) //maybe needs await in the start and in the end.lean()
-    if (!user) {
-        return constructResponse(res, {error: 'Invalid username/password'}, 401);}
+}
 
     const suspend = isSuspend(user);
     if(suspend){
