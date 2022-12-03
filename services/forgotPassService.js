@@ -1,12 +1,22 @@
+const list = require("../data/OTP-pass.json");
 const User = require("../user/User");
 const dbHandler = require('../data/dbHandler');
-const transporter = require("nodemailer/lib/mailer");
-const node = require("nodemailer")
-const smtp = require("nodemailer-smtp-transport")
-const otpGenerator = require('otp-generator')
-const fs = require('fs')
+const node = require("nodemailer");
+const smtp = require("nodemailer-smtp-transport");
 const ejs = require("ejs");
+const path = require("path");
 
+require("dotenv").config({ path: path.join(process.cwd() + "/data/",".env") });
+const emailSMTP = process.env.email;
+
+const transporter = node.createTransport(smtp({
+    service: 'gmail',
+    host: 'smtp.gmail.com',
+    auth: {
+        user: 'IamTeamShenkar@gmail.com',
+        pass: emailSMTP
+    }
+}));
 
 function generatePassword() {
     let length = 12,
@@ -19,7 +29,7 @@ function generatePassword() {
 }
 
 async function sendPassword(newPass, user) {
-    let data = await ejs.renderFile(__dirname + "/OTP-mail.ejs", {name: 'Stranger', code: newPass});
+    const data = await ejs.renderFile(process.cwd() + "/data/OTP-mail.ejs", {name: `${user.name}`, code: newPass});
     //the mailing metadata
     const mainOptions = {
         from: 'IamShenkar@gmail.com',
@@ -28,13 +38,15 @@ async function sendPassword(newPass, user) {
         // text: 'Your OTP is: ' + OTP
         html: data
     };
-     await transporter.sendMail(mainOptions, (err, info) => {
-         if (err) {
-             // server.logger.log(err);
-         } else {
-             // server.logger.log('Message sent: ' + info.response + "\nwith new Pass: " + pass);
-         }
-
-     })}
+    await transporter.sendMail(mainOptions, (err, info) => {
+        if (err) {
+            console.log(err);
+            // server.logger.log(err);
+        } else {
+            console.log("message sent");
+            // server.logger.log('Message sent: ' + info.response + "\nwith new Pass: " + pass);
+        }
+    });
+}
 
 module.exports ={generatePassword, sendPassword }

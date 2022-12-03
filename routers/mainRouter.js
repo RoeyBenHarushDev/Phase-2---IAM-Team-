@@ -6,9 +6,9 @@ const login_controller = require('../controllers/login_controller');
 const bodyParser = require('body-parser');
 const forgotPassword= require("./forgotPassword_route")
 const signUp = require("./signUp_route");
+const changePassword = require("./changePassword_route")
 const suspend = require("./suspend_route");
 const confirmCode = require("./confirmCode_route");
-
 
 // const {forgotPassword} = require("./routers/forgotPassword_route");
 // const {changePassword} = require("./routers/changePassword_route");
@@ -17,18 +17,19 @@ const confirmCode = require("./confirmCode_route");
 app.use((req, res, next) => {
     res.header('Access-Control-Allow-Origin', '*');
     res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
+    res.header("Referrer-Policy: no-referrer-when-downgrade")
     res.set('Content-Type', 'application/json');
     next();
 });
+
 app.use(bodyParser.json());
 app.use('/api/login',login.loginRouter);
 app.use('/api/signUp', signUp.signupRoute);
 app.use('/api/suspend', suspend.suspendRoute);
 app.use('/api/confirmCode', confirmCode.confirmCodeRoute);
-app.use('/api/forgotPassword', forgotPassword.forgotPasseordRoute);
-// app.use('/api/changePassword', changePassword);
+app.use('/api/forgotPassword', forgotPassword.forgotPasswordRoute);
+app.use('/api/changePassword', changePassword.changePasswordRoute);
 // app.use('/api/adminCRUD', adminCRUD);
-
 
 app.use((req, res) => {
     res.status(400).send('Something is broken!');
