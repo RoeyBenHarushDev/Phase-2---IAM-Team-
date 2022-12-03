@@ -21,7 +21,7 @@ const submitRegisterForm = document.getElementById('submitRegisterForm');
 // const MongoClient = require('mongodb').MongoClient;
 // const url = "mongodb://localhost:/";
 
-if(selectButton) {
+if (selectButton) {
     openLoginForm.addEventListener('click', () => {
         selectButton.style.display = "none";
         loginForm.style.display = "block"
@@ -68,7 +68,7 @@ if(selectButton) {
         VerifyByEmail.style.display = 'block';
     })
 }
-    /*=============================== create table with JSON file ====================================*/
+/*=============================== create table with JSON file ====================================*/
 const showUserBtn = document.getElementById("showUserBtn");
 const showUser = document.getElementById("showUsers");
 const addUserBtn = document.getElementById('addUserBtn');
@@ -78,7 +78,7 @@ const welcomeMessage = document.getElementById('welcomeMessage');
 const backShowUsers = document.getElementById('backShowUsers');
 const logOutBtn = document.getElementById('logOutBtn');
 
-if(showUserBtn) {
+if (showUserBtn) {
     showUserBtn.addEventListener('click', () => {
         addUsers.style.display = 'none';
         welcomeMessage.style.display = 'none';
@@ -149,15 +149,14 @@ const LoginData = async () => {
     });
     const handleResponse = {
         200:
-            ({ location = "homePage.html" }) => {
-            window.location.href = location;
-        },
+            ({location = "homePage.html"}) => {
+                window.location.href = location;
+            },
         401: () => {
 
             alert("Verification Error");
         },
-        403:()=>
-        {
+        403: () => {
             alert("user in suspention!");
         }
     };
@@ -170,7 +169,7 @@ const LoginData = async () => {
 
 //signup fetch
 
-const signupData= async  () => {
+const signupData = async () => {
 
     const data = {
         name: document.getElementById("Username").value,
@@ -189,28 +188,35 @@ const signupData= async  () => {
             // window.location.href=response.headers.Location;
             if (response.status === 401) {
                 location.reload();
-                alert("ERROR 401:" + response.data);
+                alert("ERROR 401: Email already exists");
             }
         })
 }
 
 
-
-const forgotPassword= () => {
+const forgotPassword = async () => {
     const data = {
-        "mail":document.getElementById("emailForgetPass").value,
+        "email": document.getElementById("forgotEmail").value,
     }
-    fetch("http://localhost:3000/api/forgotPassword", {
-        method: 'POST',
-        body: JSON.stringify(data)
-    })
-        .then(response => {
-            //console.log(response))
-            // window.location.href=response.headers.Location;
-            if (response.status===401){
-                alert("email not found");
-            }
-        })
+    const response = await fetch("http://localhost:3000/api/login", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+    });
+    const handleResponse = {
+        200:
+            () => {
+                location.reload();
+                alert("A new password has been sent to the email");
+            },
+        401:
+            () => {
+                location.reload();
+                alert("Email does not exist");
+            },
+    };
 }
 
 const emailConfirmation = async () => {
@@ -230,7 +236,7 @@ const emailConfirmation = async () => {
 
     const handleResponse = {
         200: () => {
-                location.reload();
+            location.reload();
             alert("User was added")
         },
         403: () => {
@@ -252,32 +258,32 @@ const emailConfirmation = async () => {
 //LOGOUT & DELETING COOKIES
 
 const userLogOut = document.getElementById('logOutBtn');
-if(userLogOut){
+if (userLogOut) {
 
-    userLogOut.addEventListener('click', () =>{
-        function get_cookie(name){
+    userLogOut.addEventListener('click', () => {
+        function get_cookie(name) {
             return document.cookie.split(';').some(c => {
                 return c.trim().startsWith(name + '=');
             });
         }
 
-        function delete_cookie( name, path, domain ) {
-            if( get_cookie( name ) ) {
+        function delete_cookie(name, path, domain) {
+            if (get_cookie(name)) {
                 document.cookie = name + "=" +
-                    ((path) ? ";path="+path:"")+
-                    ((domain)?";domain="+domain:"") +
+                    ((path) ? ";path=" + path : "") +
+                    ((domain) ? ";domain=" + domain : "") +
                     ";expires=Thu, 01 Jan 1970 00:00:01 GMT";
             }
         }
+
         window.location = "index.html";
     })
 }
 
 
-
 const suspension = async () => {
     const data = {
-        "mail":document.getElementById("userEmail").value,
+        "mail": document.getElementById("userEmail").value,
         "suspensionDate": document.getElementById("start").value,
     };
     const response = await fetch("http://localhost:3000/api/suspension", {
@@ -285,8 +291,6 @@ const suspension = async () => {
         body: JSON.stringify(data),
     });
 }
-
-
 
 
 // const el_up = document.getElementById("GFG_UP");
@@ -346,7 +350,6 @@ const suspension = async () => {
 //     $(selector).append(header);
 //     return columns;
 // }
-
 
 
 /*=================================== create table with mongoDB==================================*/

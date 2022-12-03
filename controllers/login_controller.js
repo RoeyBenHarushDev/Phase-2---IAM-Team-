@@ -2,6 +2,10 @@ const bcrypt = require('bcrypt');
 const dbHandler = require('../data/dbHandler');
 const {constructResponse} = require('../utils/utils ');
 
+const unSuspend= (user)=>{
+    dbHandler.updateUser(user.email,{"status":"active"})
+}
+
 function isSuspend(user){
     if (user.suspensionTime === '0' && user.suspensionDate === 'null' && user.status !== 'suspended') {
         console.log(`user: ${user["email"]} is not suspended`);
@@ -14,7 +18,12 @@ function isSuspend(user){
     if (isSuspend) {
         console.log(`user: ${user["email"]} is suspended- login failed`, 'ERROR');
         return suspendStartDate + parseInt(suspendTime);
-    }
+    }else {
+        unSuspend(user);
+        console.log(`user: ${user["email"]} is no longer suspended`);
+        return 0;
+    };
+
 }
 
 

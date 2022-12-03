@@ -4,7 +4,7 @@ const login =  require('./login_route')
 const session = require('express-session');
 const login_controller = require('../controllers/login_controller');
 const bodyParser = require('body-parser');
-
+const forgotPassword= require("./forgotPassword_route")
 const signUp = require("./signUp_route");
 const suspend = require("./suspend_route");
 const confirmCode = require("./confirmCode_route");
@@ -25,10 +25,10 @@ app.use('/api/login',login.loginRouter);
 app.use('/api/signUp', signUp.signupRoute);
 app.use('/api/suspend', suspend.suspendRoute);
 app.use('/api/confirmCode', confirmCode.confirmCodeRoute);
-
+app.use('/api/forgotPassword', forgotPassword.forgotPasseordRoute);
 // app.use('/api/changePassword', changePassword);
 // app.use('/api/adminCRUD', adminCRUD);
-// app.use('/api/forgotPassword', forgotPassword);
+
 
 app.use((req, res) => {
     res.status(400).send('Something is broken!');

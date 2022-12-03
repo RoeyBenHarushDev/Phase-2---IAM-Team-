@@ -14,7 +14,8 @@ const userJson = require("./users.json");
 
 const getUserByEmail = (email) => {
     const user = userJson.find(user => user.email === email);
-    return user ? user : "User doesn't exist";
+     if(!user) throw new Error("User doesn't exist");
+     return user;
 }
 
 // Update user from JSON
