@@ -347,14 +347,15 @@ if (userLogOut) {
 
 const suspension = async () => {
     const data = {
-        "mail": `${document.getElementById("userChangeEmail").value}`,
-        "suspensionTime": `${document.getElementById("start").value}`,
+        "email": document.getElementById("userChangeEmail").value,
+        "suspensionTime": document.getElementById("start").value,
     };
     console.log(data);
     const response = await fetch("http://localhost:3000/api/suspend", {
-        // mode: "cors",
-        // headers: {Accept: "application/json"},
         method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
         body: JSON.stringify(data),
     });
 }

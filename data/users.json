@@ -1,1 +1,22 @@
-[{"name":"admin","email":"admin@admin.com","password":"$2b$10$gb6mJAdRqI35ZzgPPfAKLOYZp5pUrOBdWr.gn8Whv22SnbmFf.WGy","loginDate":"Sat Dec 03 2022 01:06:43 GMT+0200 (Israel Standard Time)","type":"admin","status":"active","suspensionTime":"0","suspensionDate":"null"},{"name":"racheli","email":"dkracheli135@gmail.com","password":"$2b$12$7wWAAmXcPKbVAyWnWWEduu1pecFE0TDHm.HM41J3UrYTY6kHn831a","loginDate":"2022-12-03T01:26:12.434Z","type":"active","status":"user","suspensionTime":"0","suspensionDate":"null"}]
+[
+  {
+    "name": "admin",
+    "email": "admin@admin.com",
+    "password": "$2b$10$gb6mJAdRqI35ZzgPPfAKLOYZp5pUrOBdWr.gn8Whv22SnbmFf.WGy",
+    "loginDate": "Sat Dec 03 2022 01:06:43 GMT+0200 (Israel Standard Time)",
+    "type": "admin",
+    "status": "active",
+    "suspensionTime": "0",
+    "suspensionDate": "null"
+  },
+  {
+    "name": "racheli",
+    "email": "dkracheli135@gmail.com",
+    "password": "$2b$12$Tbve0tHkmrYn3ddiu3emRe9.fAQOmvvltHv079xTKUwh.WYee8jGm",
+    "loginDate": "Sat Dec 03 2022 22:07:27 GMT+0200 (Israel Standard Time)",
+    "type": "active",
+    "status": "active",
+    "suspensionTime": "3",
+    "suspensionDate": "2022-12-03T20:07:09.091Z"
+  }
+]
