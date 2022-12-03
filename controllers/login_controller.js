@@ -23,9 +23,7 @@ function isSuspend(user){
         console.log(`user: ${user["email"]} is no longer suspended`);
         return 0;
     };
-
 }
-
 
 const handleLogin = async (req,res,next)=>{
     const userEmail=req.body.email;
