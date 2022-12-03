@@ -35,6 +35,9 @@ label,span{
     margin-bottom:12px;
     margin-left: 100px;
 }
+.inputSection input{
+    margin-left: 100px;
+}
 .loginSection{
     margin-left: 100px;
 }
@@ -52,7 +55,6 @@ label,span{
 input{
     width: 300px;
     text-align: center;
-    margin-left: 100px;
     border-bottom: 2px solid turquoise;
 }
 #message{
@@ -89,7 +91,7 @@ input{
 }
 
 
-.submitButton {
+.submitButton, #sendStatus {
     background-image:linear-gradient(120deg, turquoise, rgba(0, 0, 0, 0.9));
     margin: 15px auto auto;
     display:flex;
@@ -105,7 +107,7 @@ input{
     justify-content:center;
 }
 
-.submitButton:hover {
+.submitButton:hover ,#sendStatus:hover {
     transform: scale(1.1);
 }
 .loginByGoogle{
@@ -448,12 +450,17 @@ h4{
     display: none;
 }
 .addUserHeader{
-    margin-top: -10px;
+    margin-top: -60px;
     font-size: 45px;
+}
+.leftForm{
+    float: left;
+    margin-left: 200px;
 }
 h3{
     font-size: 20px;
 }
+
 .addUsers input{
     width: 450px;
     border: none;
@@ -482,16 +489,21 @@ h3{
     color: turquoise;
 }
 .createUser{
-    border: 2px solid black;
+    border: 5px solid black;
     padding: 15px;
     border-radius: 15px;
     margin-top: 40px;
     background: transparent;
     font-family: 'Comfortaa', cursive;
+    font-size: 60px;
+    font-weight: bolder;
     cursor: pointer;
     transition: transform 0.5s;
+    height: 400px;
+    width: 200px;
 }
 .createUser:hover{
+    border: 6px solid gray;
     background-color: black;
     color: white;
     transform: scale(1.1);
@@ -500,6 +512,7 @@ h3{
     text-align: center;
     margin-top: 20%;
     font-size: 70px;
+    display: none;
 }
 .logOut{
     font-family: 'Righteous', cursive;
@@ -514,3 +527,50 @@ h3{
 .logOut:hover{
     color: turquoise;
 }
+
+.teamLogo img{
+    position: absolute;
+    width: 110px;
+    height: 110px;
+    bottom: 50px;
+    left: 70px;
+    border-radius: 20px;
+}
+#userStatusModel{
+    display: block;
+}
+.current{
+    text-align: center;
+}
+.current h1{
+    font-size: 30px;
+    margin-bottom: 80px;
+}
+.current h3{
+    font-size: 25px;
+}
+#userChangeEmail{
+    position: relative;
+    left: 370px;
+    width: 390px;
+    border: none;
+    text-align: center;
+    border-bottom: 2px solid turquoise;
+    height: 30px;
+    background: rgba(255, 255, 255, 0.75);
+}
+.radioUserStatus{
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    margin-top: 20px;
+}
+.radioUserStatus input[type="radio"]{
+    position: relative;
+    width: 40px;
+    margin-top: 40px;
+    right: 53px;
+}
+
+
