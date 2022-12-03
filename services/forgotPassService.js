@@ -29,7 +29,7 @@ function generatePassword() {
 }
 
 async function sendPassword(newPass, user) {
-    const data = await ejs.renderFile(process.cwd() + "/data/OTP-mail.ejs", {name: `${user.name}`, code: newPass});
+    const data = await ejs.renderFile(process.cwd() + "/data/OTP-mail.ejs", {name: `${user.name}`, code: newPass,mailBody: 'Here is your new Password:'});
     //the mailing metadata
     const mainOptions = {
         from: 'IamShenkar@gmail.com',
@@ -37,6 +37,11 @@ async function sendPassword(newPass, user) {
         subject: 'New Password for IAM',
         // text: 'Your OTP is: ' + OTP
         html: data
+        // attachment : [{
+        //     filename: 'IAM_logo.jpeg',
+        //     path: '../data/',
+        //     cid: 'IAM_LOGO@test.ee'
+        // }]
     };
     await transporter.sendMail(mainOptions, (err, info) => {
         if (err) {
