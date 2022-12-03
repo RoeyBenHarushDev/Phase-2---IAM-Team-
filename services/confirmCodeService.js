@@ -1,7 +1,7 @@
 const list = require("../data/OTP-pass.json");
 const User = require("../user/User");
 const bcrypt = require('bcrypt');
-const dbHandler = require('./dbHandler');
+const dbHandler = require('../data/dbHandler');
 
 async function otpCompare(userName, email, pass, code) {
 

@@ -1,6 +1,6 @@
-const bcrypt = require("bcrypt");
-const dbHandler = require("../services/dbHandler");
-const {constructResponse} = require("../utils/utils.js");
+const bcrypt = require('bcrypt');
+const dbHandler = require('../data/dbHandler');
+const {constructResponse} = require('../utils/utils ');
 
 const unSuspend= (user)=>{
     dbHandler.updateUser(user.email,{"status":"active"})

@@ -31,16 +31,15 @@ label,span{
 }
 
 .inputSection {
+
     margin-bottom:12px;
-    margin-left: 100px;
+    margin-left: 170px;
 }
-.loginSection{
-    margin-left: 100px;
-}
+
 .inputText {
     position:absolute;
     font-family: 'Comfortaa', cursive;
-    left: 160px;
+    left: 280px;
     outline: none;
     border:none;
     border-bottom: 2px solid turquoise;
@@ -48,16 +47,10 @@ label,span{
     font-size:16px;
 }
 input{
-    width: 300px;
     text-align: center;
-    margin-left: 100px;
     border-bottom: 2px solid turquoise;
 }
-#message{
-    display: flex;
-    justify-content: center;
-    margin-top: -20px;
-}
+
 .acceptSection {
     margin-bottom:25px;
     margin-left: 130px;
@@ -88,7 +81,7 @@ input{
 
 .submitButton {
     background-image:linear-gradient(120deg, turquoise, rgba(0, 0, 0, 0.9));
-    margin: 15px auto auto;
+    margin:auto;
     display:flex;
     width:180px;
     height:45px;
@@ -252,14 +245,13 @@ input{
     margin-bottom: 40px;
 }
 .emailLabel,.OTPLabel{
-    margin-left: -20px;
+    margin-left: -100px;
 }
 .inputEmail, .inputOTP{
     border: none;
     border-bottom: 2px solid turquoise;
     margin-bottom: 40px;
-    margin-left: 30px;
-    width: 300px;
+    width: 320px;
     height: 30px;
 }
 #SubmitOTPForm{
