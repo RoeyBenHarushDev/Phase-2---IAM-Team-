@@ -1,5 +1,10 @@
 const bcrypt = require('bcrypt');
 const dbHandler = require('../data/dbHandler');
+const {constructResponse} = require('../utils/utils ');
+
+const unSuspend= (user)=>{
+    dbHandler.updateUser(user.email,{"status":"active"})
+}
 
 function isSuspend(user){
     if (user.suspensionTime === '0' && user.suspensionDate === 'null' && user.status !== 'suspended') {
@@ -13,24 +18,26 @@ function isSuspend(user){
     if (isSuspend) {
         console.log(`user: ${user["email"]} is suspended- login failed`, 'ERROR');
         return suspendStartDate + parseInt(suspendTime);
-    }
+    }else {
+        unSuspend(user);
+        console.log(`user: ${user["email"]} is no longer suspended`);
+        return 0;
+    };
+
 }
 
 
 const handleLogin = async (req,res,next)=>{
-/*    console.log("loginHandle1")
-    res.writeHead(200,{'Access-Control-Allow-Origin':'*'})*/
     const userEmail=req.body.email;
     const userPassword=req.body.password;
-    console.log(userPassword,userPassword);
+
     const user = dbHandler.getUserByEmail(userEmail) //maybe needs await in the start and in the end.lean()
     if (!user) {
-        return res.json({ status: 'error', error: 'Invalid username/password' })
-    }
+        return constructResponse(res, {error: 'Invalid username/password'}, 401);}
+
     const suspend = isSuspend(user);
     if(suspend){
-        return res.json({ status: 'error', error: `User is suspended until ${isSuspend}`})
-    }
+        return constructResponse(res, {error: `User is suspended until ${isSuspend}`}, 401);}
     if (await bcrypt.compare(userPassword, user.password)) {
         /*password is correct
         const token = 1;
@@ -45,12 +52,13 @@ const handleLogin = async (req,res,next)=>{
         */
         //return res.json({status: 'ok'}); //works
         // return res.send('/home') // works
-        console.log("loginHandle",userEmail)
+
         const today=new Date();
-        dbHandler.updateUser(userEmail,{"lastLoginDate":today.toString()})
-        return res.redirect(200,"/api/login/home"); //doesnt work
+        dbHandler.updateUser(userEmail,{"loginDate":today.toString()})
+        return constructResponse(res, {}, 200);
+        //return res.redirect(200,"/api/login/homePage.html"); //doesnt work
     }
-    else return res.json({status: 'error', error: 'Invalid password'})
+    return constructResponse(res, {error: 'Invalid password'}, 401);
 }
 
 

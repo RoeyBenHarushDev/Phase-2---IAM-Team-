@@ -4,29 +4,36 @@ const login =  require('./login_route')
 const session = require('express-session');
 const login_controller = require('../controllers/login_controller');
 const bodyParser = require('body-parser');
-
-
-app.use('/api/login',login.loginRouter);
-
+const forgotPassword= require("./forgotPassword_route")
 const signUp = require("./signUp_route");
-// const {forgotPassword} = require("./routers/forgotPassword_route");
 const suspend = require("./suspend_route");
-// const {changePassword} = require("./routers/changePassword_route");
 const confirmCode = require("./confirmCode_route");
+
+
+// const {forgotPassword} = require("./routers/forgotPassword_route");
+// const {changePassword} = require("./routers/changePassword_route");
 // const {adminCRUD} = require("./routers/adminCRUD_route");
 
+app.use((req, res, next) => {
+    res.header('Access-Control-Allow-Origin', '*');
+    res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
+    res.set('Content-Type', 'application/json');
+    next();
+});
+app.use(bodyParser.json());
+app.use('/api/login',login.loginRouter);
 app.use('/api/signUp', signUp.signupRoute);
-// app.use('/api/login', login);
-// app.use('/api/forgotPassword', forgotPassword);
 app.use('/api/suspend', suspend.suspendRoute);
-// app.use('/api/changePassword', changePassword);
 app.use('/api/confirmCode', confirmCode.confirmCodeRoute);
+app.use('/api/forgotPassword', forgotPassword.forgotPasseordRoute);
+// app.use('/api/changePassword', changePassword);
 // app.use('/api/adminCRUD', adminCRUD);
-/*
+
+
 app.use((req, res) => {
     res.status(400).send('Something is broken!');
 });
-*/
+
 
 
 module.exports = { app }

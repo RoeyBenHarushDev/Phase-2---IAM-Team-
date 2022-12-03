@@ -1,34 +1,19 @@
-const js = require("../data/users.json")
-const list = require("../data/OTP-pass.json")
-const confirmCode = require("../services/confirmCodeService")
+const js = require("../data/users.json");
+const list = require("../data/OTP-pass.json");
+const confirmCode = require("../services/confirmCodeService");
+const {constructResponse} = require('../utils/utils ');
 
+ function handleConfirmCode(request, response) {
+    console.log(request.body)
 
-function handleConfirmCode(request,response) {
-    console.log("in handleConfirm");
-    let body = [];
-    request
-        .on("error", (err) => {
-            console.error(err);
-        })
-        .on("data", (chunk) => {
-            body.push(chunk);
-        })
-        .on("end", () => {
-            body = Buffer.concat(body).toString();
-            body = JSON.parse(body);
-            try {
-                console.log(body);
-                confirmCode.otpCompare(body.name, body.email, body.password, body.code)
-                // return constructResponse(response, {}, 200);
-
-            } catch (e) {
-                console.log(e);
-                // return constructResponse(response, {error: e.message}, 401);
-            }
-        })
-
+    const otp = confirmCode.otpCompare(request.body.name, request.body.email, request.body.password, request.body.code)
+    console.log(otp)
+    if(otp){
+        return constructResponse(response, {}, 200);
+    } else {
+        return constructResponse(response, {error: otp}, 401);
+    }
 }
 
-
-module.exports =  { handleConfirmCode }
+module.exports = {handleConfirmCode}
 

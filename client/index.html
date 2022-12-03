@@ -41,7 +41,7 @@
             <span class="focus-border"></span>
         </div>
         <div class="formFooter">
-            <button onclick="sendSignUpData()" class="submitButton" type="submit" id="submitRegisterForm">Register</button>
+            <button onclick="signupData()" class="submitButton" type="submit" id="submitRegisterForm">Register</button>
         </div>
     </form>
     <div class="optionalSection">
@@ -66,10 +66,10 @@
             <input type="password" id="L-Password" class="inputText" required placeholder="password"><br><br>
             </label>
         </div>
-        <button class="forgotPasswordBtn" id="forgotPassword">Forgot Password ?</button>
+        <button class="forgotPasswordBtn" id="forgotPassword" >Forgot Password ?</button>
         <div class="formFooter">
            <button class="loginByGoogle">Login by &nbsp<i class="fa fa-google"></i></button>
-            <button class="submitButton" type="submit" id="SubmitLoginForm">Login</button>
+            <button class="submitButton" type="submit" id="SubmitLoginForm" onclick="LoginData()">Login</button>
         </div>
     </form>
     <div class="optionalSection">
@@ -89,7 +89,7 @@
             </label>
         </div>
         <div class="formFooter">
-            <button class="submitButton" type="submit" id="SubmitEmailForm">Send</button>
+            <button class="submitButton" type="submit" id="SubmitEmailForm" onclick="forgotPassword()">Send</button>
         </div>
     </form>
 </section>
@@ -104,7 +104,7 @@
             </label>
         </div>
         <div class="formFooter">
-            <button class="submitButton" type="submit" id="SubmitOTPForm">Send</button>
+            <button class="submitButton" type="submit" id="SubmitOTPForm" onclick="emailConfirmation()">Send</button>
         </div>
     </form>
 </section>
