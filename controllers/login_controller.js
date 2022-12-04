@@ -3,7 +3,7 @@ const dbHandler = require('../data/dbHandler');
 const {constructResponse} = require('../utils/utils.js');
 
 const unSuspend= (user)=>{
-    dbHandler.updateUser(user.email,{"status":"active","suspensionTime":"0","suspen  sionDate":"null"});
+    dbHandler.updateUser(user.email,{"status":"active","suspensionTime":"0","suspend  sionDate":"null"});
 }
 
 function isSuspend(user){

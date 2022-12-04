@@ -20,7 +20,7 @@ const path = require("path");
 // const {adminCRUD} = require("./routers/adminCRUD_route");
 
 
-require("dotenv").config({ path: path.join(process.cwd() + "/data/",".env") });
+require('dotenv').config({ path: path.join(process.cwd() + "/data/",".env") });
 const SESSION_SECRET = process.env.secret;
 
 function isLoggedIn(req, res, next) {
