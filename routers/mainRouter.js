@@ -27,7 +27,7 @@ const SESSION_SECRET = process.env.secret;
 function isLoggedIn(req, res, next) {
     req.user ? next() : res.sendStatus(401)
 }
-app.use(express.json());
+//app.use(express.json());
 app.use(logger(" :method :url :status :res[content-length] - :response-time ms :date[web]",
     {stream: accessLogStream}));
 app.use(session({secret: SESSION_SECRET,resave:false,
