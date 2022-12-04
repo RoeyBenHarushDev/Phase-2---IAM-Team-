@@ -7,10 +7,10 @@ async function otpCompare(user) {
     const hashedPassword = await bcrypt.hash(user.password, 12);
     const domain = typeUser(user)
     list.table.forEach(function (i) {
-        if (user.email === i.mail) {
+        if (user.email.toLowerCase() === i.mail) {
             if (user.code === i.code) {
                 // server.logger.log("user in create: " + user);
-                let newUser =  new User(user.name, user.email, hashedPassword,domain);
+                let newUser =  new User(user.name, user.email.toLowerCase(), hashedPassword,domain);
                 dbHandler.addUser(newUser);
                 return 1;
             } else {

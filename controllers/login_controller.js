@@ -26,7 +26,7 @@ function isSuspend(user){
 }
 
 const handleLogin = async (req,res,next)=>{
-    const userEmail=req.body.email;
+    const userEmail=req.body.email.toLowerCase();
     const userPassword=req.body.password;
     let user;
 try {

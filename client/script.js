@@ -206,7 +206,7 @@ const LoginData = async () => {
         email: document.getElementById("L-Email").value,
         password: document.getElementById("L-Password").value,
     };
-    const response = await fetch('${host}/api/login', {
+    const response = await fetch(`${host}/api/login`, {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
@@ -240,7 +240,7 @@ const signupData = async () => {
         email: document.getElementById("Email").value,
         password: document.getElementById("C-Password").value,
     }
-    await fetch(`${host}/api/signUp`, {
+    await fetch(host + '/api/signUp', {
         method: 'POST',
         headers: {
             "Content-Type": "application/json",
@@ -382,7 +382,7 @@ const suspension = async () => {
         "userStatus": suspendedBut
     };
 
-    const response = await fetch(`{host}/api/suspension`, {
+    const response = await fetch(`${host}/api/suspension`, {
 
         method: "POST",
         headers: {
