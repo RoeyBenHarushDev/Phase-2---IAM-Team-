@@ -9,11 +9,11 @@ module.exports = class User {
       name,
       email,
       password,
+      type,
       loginDate = new Date(),
       suspensionDate = "null",
       suspensionTime = "0",
-      status = "active",
-      type= "user"
+      status = "active"
   ) {
     this.name = name;
     this.email = email;
