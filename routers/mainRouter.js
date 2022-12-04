@@ -13,12 +13,13 @@ const confirmCode = require("./confirmCode_route");
 const passport = require('passport')
 const send = require("send")
 const path = require("path");
-
+const logger = require("morgan");
+const fs = require('fs');
+const accessLogStream = fs.createWriteStream(path.join(__dirname,'logs.log'),{flags: 'a'})
 
 // const {forgotPassword} = require("./routers/forgotPassword_route");
 // const {changePassword} = require("./routers/changePassword_route");
 // const {adminCRUD} = require("./routers/adminCRUD_route");
-
 
 require("dotenv").config({ path: path.join(process.cwd() + "/data/",".env") });
 const SESSION_SECRET = process.env.secret;
@@ -26,7 +27,9 @@ const SESSION_SECRET = process.env.secret;
 function isLoggedIn(req, res, next) {
     req.user ? next() : res.sendStatus(401)
 }
-
+app.use(express.json());
+app.use(logger(" :method :url :status :res[content-length] - :response-time ms :date[web]",
+    {stream: accessLogStream}));
 app.use(session({secret: SESSION_SECRET,resave:false,
     saveUninitialized: true}))
 app.use(passport.initialize());
