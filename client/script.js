@@ -20,6 +20,8 @@ const Password = document.getElementById("Password");
 const CPassword = document.getElementById("C-Password");
 const message = document.getElementById('message');
 const googleLogIn = document.getElementById('googleLogIn');
+// const host = process.env.clientHost || 'http://localhost:5000';
+const host = window.location.origin
 /*===========================mongoDB=========================*/
 // const express = require("express");
 // const path = require('path');
@@ -71,7 +73,7 @@ if (selectButton) {
         loginForm.style.display = "block";
     })
     googleLogIn.addEventListener('click', () => {
-        window.location.href = 'http://localhost:5000/api/googleLogIn';
+        window.location.href = `${host}/api/googleLogIn`;
     })
     SubmitLoginForm.addEventListener('click', () => {
         LoginData();
@@ -82,12 +84,16 @@ if (selectButton) {
     SubmitOTPForm.addEventListener('click', () => {
         emailConfirmation();
     })
-    submitRegisterForm.addEventListener('click', () => {
+    submitRegisterForm.addEventListener('click', async () => {
         if ((Password.value === CPassword.value) && (Password.value !== '' && CPassword.value !== '')) {
             registerForm.style.display = "none";
             VerifyByEmail.style.display = 'block';
-            signupData();
-            return true;
+            try {
+                await signupData();
+                return true;
+            }catch(err){
+                console.log(err)
+            }
         } else {
             alert("Please check if :\n\n1. You fill out all the fields\n2. Password isn't empty!\n3. Password are the Same!");
             return false;
@@ -200,7 +206,7 @@ const LoginData = async () => {
         email: document.getElementById("L-Email").value,
         password: document.getElementById("L-Password").value,
     };
-    const response = await fetch("http://localhost:5000/api/login", {
+    const response = await fetch('${host}/api/login', {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
@@ -234,7 +240,7 @@ const signupData = async () => {
         email: document.getElementById("Email").value,
         password: document.getElementById("C-Password").value,
     }
-    await fetch("http://localhost:5000/api/signUp", {
+    await fetch(`${host}/api/signUp`, {
         method: 'POST',
         headers: {
             "Content-Type": "application/json",
@@ -256,7 +262,7 @@ const forgotPassword = async () => {
     const data = {
         "email": document.getElementById("forgotEmail").value,
     }
-    const response = await fetch("http://localhost:5000/api/forgotPassword", {
+    const response = await fetch(`${host}/api/forgotPassword`, {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
@@ -284,7 +290,7 @@ const emailConfirmation = async () => {
         password: document.getElementById("C-Password").value,
         code: document.getElementById("VerifyOTP").value
     };
-    const response = await fetch("http://localhost:5000/api/confirmCode", {
+    const response = await fetch(`${host}/api/confirmCode`, {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
@@ -376,7 +382,7 @@ const suspension = async () => {
         "userStatus": suspendedBut
     };
 
-    const response = await fetch("http://localhost:5000/api/suspension", {
+    const response = await fetch(`{host}/api/suspension`, {
 
         method: "POST",
         headers: {
