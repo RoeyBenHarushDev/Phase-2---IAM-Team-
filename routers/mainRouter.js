@@ -21,7 +21,8 @@ const accessLogStream = fs.createWriteStream(path.join(__dirname,'logs.log'),{fl
 // const {changePassword} = require("./routers/changePassword_route");
 // const {adminCRUD} = require("./routers/adminCRUD_route");
 
-require("dotenv").config({ path: path.join(process.cwd() + "/data/",".env") });
+
+require('dotenv').config({ path: path.join(process.cwd() + "/data/",".env") });
 const SESSION_SECRET = process.env.secret;
 
 function isLoggedIn(req, res, next) {

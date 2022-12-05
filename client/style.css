@@ -281,7 +281,7 @@ input{
 .leftBar{
     width: 15%;
     height: 90%;
-    border-radius: 20px;
+    border-radius: 10px;
     background-color: rgba(238, 238, 238, 0.9);
     position: absolute;
     left: 50px;
@@ -310,8 +310,8 @@ li{
 .mainDetails{
     width: 60%;
     height: 90%;
-    border-radius: 20px;
-    background-color: rgba(238, 238, 238, 0.9);
+    border-radius: 10px;
+    background-color: rgba(238, 238, 238, 0.96);
     position: absolute;
     left: 20%;
 }
@@ -354,6 +354,7 @@ li{
     transition: transform 0.5s;
 }
 .editUser{
+    position: relative;
     margin-top: 2px;
     width: 37px;
     border: 2px solid yellow;
@@ -379,7 +380,7 @@ li{
 .rightBar{
     width: 15%;
     height: 90%;
-    border-radius: 20px;
+    border-radius: 10px;
     background-color: rgba(238, 238, 238, 0.9);
     position: absolute;
     right: 50px;
@@ -530,11 +531,10 @@ h3{
 
 .teamLogo img{
     position: absolute;
-    width: 110px;
-    height: 110px;
+    width: 190px;
+    height: 190px;
     bottom: 50px;
     left: 70px;
-    border-radius: 20px;
 }
 #userStatusModel{
     display: block;
@@ -573,4 +573,7 @@ h3{
     right: 53px;
 }
 
+.REBtns{
+    display: inline-block;
+}
 
