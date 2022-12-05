@@ -199,7 +199,7 @@ const LoginData = async () => {
                 window.location.href = location;
             },
         401: () => {
-            alert(response.status +": "+response.statusText);
+            alert(response.status +": "+response.message);
         },
         403: () => {
             alert("user in suspention!");
@@ -262,6 +262,11 @@ const forgotPassword = async () => {
                 alert("Email does not exist");
             },
     };
+    const body = await response.json();
+    const handler = handleResponse[response.status];
+    if (handler) {
+        handler(body);
+    }
 }
 
 const emailConfirmation = async () => {
@@ -336,16 +341,6 @@ if (userLogOut) {
                 return c.trim().startsWith(name + '=');
             });
         }
-
-        function delete_cookie(name, path, domain) {
-            if (get_cookie(name)) {
-                document.cookie = name + "=" +
-                    ((path) ? ";path=" + path : "") +
-                    ((domain) ? ";domain=" + domain : "") +
-                    ";expires=Thu, 01 Jan 1970 00:00:01 GMT";
-            }
-        }
-
         window.location = "index.html";
     })
 }

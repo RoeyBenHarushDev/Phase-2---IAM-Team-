@@ -29,7 +29,7 @@ function generatePassword() {
 }
 
 async function sendPassword(newPass, user) {
-    const data = await ejs.renderFile(process.cwd() + "/data/OTP-mail.ejs", {name: `${user.name}`, code: newPass,mailBody: 'Here is your new Password:'});
+    const data = await ejs.renderFile(process.cwd() + "/data/newPass-mail.ejs", {name: `${user.name}`, code: newPass});
     //the mailing metadata
     const mainOptions = {
         from: 'IamShenkar@gmail.com',

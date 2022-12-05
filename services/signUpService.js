@@ -36,16 +36,16 @@ function userExist(email){
 
 ///////////////////////////////////////////////////////////////
 
-async function sendEmail(email) {
+async function sendEmail(user) {
     //create an OTP Code
     let OTP = otpGenerator.generate(6, {upperCaseAlphabets: false, lowerCaseAlphabets: false, specialChars: false})
     //puts the ejs file into a var (the email structure)
-    const data = await ejs.renderFile(process.cwd() + "/data/OTP-mail.ejs", {name: 'Stranger', code: OTP,mailBody: 'Here is your OTP code:'});
+    const data = await ejs.renderFile(process.cwd() + "/data/otp-email.ejs", {name: `${user.name}`, code: OTP});
 
     //the mailing metadata
     const mainOptions = {
         from: 'IamTeamShenkar@gmail.com',
-        to: email,   //mail.emailId,
+        to: user.email,   //mail.emailId,
         subject: 'Please Verify you Account',
         // text: 'Your OTP is: ' + OTP
         html: data

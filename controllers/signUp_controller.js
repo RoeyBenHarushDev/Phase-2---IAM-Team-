@@ -8,7 +8,7 @@ const {constructResponse} = require('../utils/utils');
 async function handleSignUp(request, response) {
     try {
         signUp.userExist(request.body.email)
-        await signUp.sendEmail(request.body.email)
+        await signUp.sendEmail(request.body)
         // return constructResponse(response, {}, 200);
 
     } catch (e) {
