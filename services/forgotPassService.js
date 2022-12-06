@@ -1,5 +1,3 @@
-const list = require("../data/OTP-pass.json");
-const dbHandler = require('../data/dbHandler');
 const node = require("nodemailer");
 const smtp = require("nodemailer-smtp-transport");
 const ejs = require("ejs");

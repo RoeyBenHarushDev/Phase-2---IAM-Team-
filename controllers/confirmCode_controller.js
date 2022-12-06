@@ -7,6 +7,9 @@ const {constructResponse} = require('../utils/utils');
          await confirmCode.otpCompare(request.body);
      } catch (e) {
       //       response.status(404).send("Error saving new user");
+         if (e=='code is expired"'){
+             return constructResponse(response, e, 403);
+         }
          return constructResponse(response, e, 401);
      }
      return constructResponse(response, {}, 200);

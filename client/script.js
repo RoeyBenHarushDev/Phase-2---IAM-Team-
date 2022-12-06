@@ -310,7 +310,7 @@ const emailConfirmation = async () => {
             alert("User was added")
         },
         403: () => {
-            alert("OTP code is false");
+            alert("code is expired, please sign up again");
         },
         401: () => {
             location.reload();

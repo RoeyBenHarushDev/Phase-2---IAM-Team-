@@ -7,15 +7,18 @@ const unSuspend= async (user) => {
 }
 
 async function isSuspend(user){
+    console.log(user.status);
     if (user.status === 'active') {
         console.log(`user: ${user["email"]} is not suspended`);
         return 0;
     }
     else if (user.status==='suspended') {
         const today = new Date();
-        const suspendTime = user.suspensionTime;
+        const suspendTime = parseInt(user.suspensionTime);
         const suspendStartDate = user.suspensionDate;
-        const isSuspend = isAfter(suspendStartDate +suspendTime, today);
+        let dateExpired=suspendStartDate;
+        dateExpired.setDate(suspendStartDate.getDate() +suspendTime)
+        const isSuspend = isAfter(dateExpired, today);
         if (isSuspend) {
             console.log(`user: ${user["email"]} is suspended- login failed`, 'ERROR');
             return suspendStartDate + parseInt(suspendTime);
@@ -37,6 +40,7 @@ const handleLogin = async (req,res,next)=>{
     let user;
 try {
     user = await dbHandler.getUserByEmail(userEmail) //maybe needs await in the start and in the end.lean()
+    console.log(user);
     const suspend = await isSuspend(user);
     if(suspend){
         return constructResponse(res, {error: `User is suspended until ${isSuspend}`}, 401);}
@@ -47,7 +51,7 @@ try {
         return constructResponse(res, {}, 200);
     }
     else {
-        return res.status(401).data("password incorrect");
+        return res.status(401).send("password incorrect");
     }
 }catch(e) {
     console.log(e);
