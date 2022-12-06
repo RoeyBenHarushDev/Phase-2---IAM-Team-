@@ -21,8 +21,8 @@ const accessLogStream = fs.createWriteStream(path.join(__dirname,'logs.log'),{fl
 // const {changePassword} = require("./routers/changePassword_route");
 // const {adminCRUD} = require("./routers/adminCRUD_route");
 
-app.use(express.json());
-app.use(express.urlencoded({extended: true}));
+/*app.use(express.json());
+app.use(express.urlencoded({extended: true}));*/
 
 require('dotenv').config({ path: path.join(process.cwd() + "/data/",".env") });
 const SESSION_SECRET = process.env.secret;

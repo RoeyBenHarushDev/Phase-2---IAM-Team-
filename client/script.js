@@ -160,7 +160,7 @@ if (showUserBtn) {
     })
 
 
-    fetch('../data/users.json')
+/*    fetch('../data/users.json')
         .then(function (response) {
             return response.json();
         })
@@ -169,7 +169,7 @@ if (showUserBtn) {
         })
         .catch(function (err) {
             console.log('error: ' + err);
-        });
+        });*/
 
     function appendData(data) {
         const mainContainer = document.getElementById("myData");
@@ -219,10 +219,10 @@ const LoginData = async () => {
                 window.location.href = location;
             },
         401: () => {
-            alert(response.status + ": " + response.statusText);
+            alert(response.status + ": " + response.data);
         },
         403: () => {
-            alert("user in suspention!");
+            alert("user in suspension!");
         }
     };
     const body = await response.json();

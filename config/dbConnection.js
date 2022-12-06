@@ -1,6 +1,5 @@
 const mongoose = require('mongoose');
-const consts = require('./constans');
-const express = require("express");
+const consts = require('../data/constans');
 const { DB_HOST, DB_USER, DB_PASS}= consts;
 
 const url = DB_HOST;
@@ -12,19 +11,14 @@ const options = {
     pass: DB_PASS
 };
 
-mongoose.connect(url, options)
-    .then(() => console.log('connected'))
-    .catch(err => console.log(`connection error: ${err}`));
 
-
-/*
 const connectDb = async () => {
     try {
         await mongoose.connect(url, options)
-        console.log("ON");
+        console.log("connected");
     } catch (error) {
-        console.log(error.message)
+        console.log(`connection error: ${error.message}`);
     }
 }
 
-connectDb();*/
+module.exports = {connectDb}
