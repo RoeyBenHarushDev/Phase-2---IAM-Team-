@@ -15,10 +15,11 @@ const options = {
 const connectDb = async () => {
     try {
         await mongoose.connect(url, options)
-        console.log("connected");
+        console.log("Connected to MongoDB");
     } catch (error) {
         console.log(`connection error: ${error.message}`);
     }
 }
 
+connectDb();
 module.exports = {connectDb}
