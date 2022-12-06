@@ -30,7 +30,7 @@ const handleLogin = async (req,res,next)=>{
     const userPassword=req.body.password;
     let user;
 try {
-    user = dbHandler.getUserByEmail(userEmail) //maybe needs await in the start and in the end.lean()
+    user = dbHandler.getUserByEmail(userEmail,res) //maybe needs await in the start and in the end.lean()
 }catch(e) {
     return res.status(401).JSON.send({
         message: e
