@@ -31,7 +31,6 @@ function updateUser(email, params) {
     fs.writeFile(process.cwd() + "/data/users.json", json, 'utf-8', callback => {
         // server.logger.log("wrote file successfully")
     })
-    console.log(userJson);
 }
 
 const addUser = (new_user) => {
