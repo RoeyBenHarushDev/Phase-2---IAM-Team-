@@ -1,4 +1,5 @@
-const {Schema, model} = require('mongoose');
+const {model,Schema} = require('mongoose');
+
 
 const userSchema = new Schema({
     name: {type: String , required: true },
@@ -8,9 +9,9 @@ const userSchema = new Schema({
     type: {type: String, default: 'user'},
     status: {type: String, default: 'active'},
     suspensionTime: {type: Number, default: 0},
-    suspensionDate: {type: Date, default: null}
-}, {collection: 'users'});
+    suspensionDate: {type: Date, default:0}
+}, {collection: 'user'});
 
-const User = model('User',userSchema);
+const User = model('user',userSchema);
 
 module.exports= User;

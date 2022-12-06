@@ -1,17 +1,17 @@
-const js = require("../data/users.json");
 const list = require("../data/OTP-pass.json");
 const confirmCode = require("../services/confirmCodeService");
 const {constructResponse} = require('../utils/utils');
+const dbHandler = require("../data/dbHandler");
 
- function handleConfirmCode(request, response) {
-    const otp = confirmCode.otpCompare(request.body)
-
-    if(otp){
-        return constructResponse(response, {}, 200);
-    } else {
-        return constructResponse(response, {error: otp}, 401);
-    }
-}
+ async function handleConfirmCode(request, response) {
+     try{
+         await confirmCode.otpCompare(request.body);
+         return constructResponse(response, {}, 200);
+     } catch (e) {
+      //       response.status(404).send("Error saving new user");
+         return constructResponse(response, e, 401);
+     }
+ }
 
 module.exports = {handleConfirmCode}
 

@@ -1,13 +1,12 @@
 const bcrypt = require('bcrypt');
 const dbHandler = require('../data/dbHandler');
 const {constructResponse} = require('../utils/utils.js');
-
-const unSuspend= (user)=>{
-    dbHandler.updateUser(user.email,{"status":"active","suspensionTime":"0","suspend  sionDate":"null"});
+const unSuspend= async (user) => {
+    await dbHandler.updateUser(user.email, {"status": "active", "suspensionTime": 0, "suspensionDate": 0});
 }
 
-function isSuspend(user){
-    if (user.suspensionTime === '0' && user.suspensionDate === 'null' && user.status === 'active') {
+async function isSuspend(user){
+    if (user.status === 'active') {
         console.log(`user: ${user["email"]} is not suspended`);
         return 0;
     }
@@ -19,7 +18,7 @@ function isSuspend(user){
         console.log(`user: ${user["email"]} is suspended- login failed`, 'ERROR');
         return suspendStartDate + parseInt(suspendTime);
     }else {
-        unSuspend(user);
+         await unSuspend(user);
         console.log(`user: ${user["email"]} is no longer suspended`);
         return 0;
     };
@@ -30,38 +29,26 @@ const handleLogin = async (req,res,next)=>{
     const userPassword=req.body.password;
     let user;
 try {
-    user = dbHandler.getUserByEmail(userEmail,res) //maybe needs await in the start and in the end.lean()
+    user = await dbHandler.getUserByEmail(userEmail) //maybe needs await in the start and in the end.lean()
+    const suspend = await isSuspend(user);
+    if(suspend){
+        return constructResponse(res, {error: `User is suspended until ${isSuspend}`}, 401);}
+    if (await bcrypt.compare(userPassword, user.password)) {
+        console.log(`password correct! ${user.email} welcome`);
+        const today=new Date();
+        await dbHandler.updateUser(userEmail, {"loginDate": today})
+        return constructResponse(res, {}, 200);
+    }
+    else {
+        return res.status(401).data("password incorrect");
+    }
 }catch(e) {
+    console.log(e);
     return res.status(401).send({
         message: e
     })
 
 }
-
-    const suspend = isSuspend(user);
-    if(suspend){
-        return constructResponse(res, {error: `User is suspended until ${isSuspend}`}, 401);}
-    if (await bcrypt.compare(userPassword, user.password)) {
-        /*password is correct
-        const token = 1;
-                    jwt.sign(
-        {
-            id: user._id,
-                username: user.username
-        },
-        JWT_SECRET
-    )
-        return res.json({ status: 'ok', data: token })
-        */
-        //return res.json({status: 'ok'}); //works
-        // return res.send('/home') // works
-
-        const today=new Date();
-        dbHandler.updateUser(userEmail,{"loginDate":today.toString()})
-        return constructResponse(res, {}, 200);
-        //return res.redirect(200,"/api/login/homePage.html"); //doesnt work
-    }
-    return constructResponse(res, {error: 'Invalid password'}, 401);
 }
 
 

@@ -1,4 +1,3 @@
-const js = require("../data/users.json")
 const list = require("../data/OTP-pass.json")
 const fs = require("fs");
 const path = require("path");
