@@ -1,6 +1,7 @@
 const bcrypt = require('bcrypt');
 const dbHandler = require('../data/dbHandler');
 const {constructResponse} = require('../utils/utils.js');
+
 const unSuspend= async (user) => {
     await dbHandler.updateUser(user.email, {"status": "active", "suspensionTime": 0, "suspensionDate": 0});
 }
@@ -10,6 +11,7 @@ async function isSuspend(user){
         console.log(`user: ${user["email"]} is not suspended`);
         return 0;
     }
+
     const today = new Date();
     const suspendTime = user.suspensionTime;
     const suspendStartDate = user.suspensionDate;
@@ -47,10 +49,7 @@ try {
     return res.status(401).send({
         message: e
     })
-
-}
-}
-
+}}
 
 function isAfter(date1, date2) {
     return date1 > date2;
