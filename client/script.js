@@ -308,14 +308,14 @@ const emailConfirmation = async () => {
     const handleResponse = {
         200: () => {
             location.reload();
-            alert("User was added")
+            alert(response.status + ": " + response.statusText +"User was added");
         },
         403: () => {
-            alert("code is expired, please sign up again");
+            alert("401: code is expired, please sign up again");
         },
         401: () => {
             location.reload();
-            alert("Verification Error");
+            alert(response.status + ": " + response.statusText);
         }
     };
     const body = await response.json();
