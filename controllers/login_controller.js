@@ -11,19 +11,24 @@ async function isSuspend(user){
         console.log(`user: ${user["email"]} is not suspended`);
         return 0;
     }
-
-    const today = new Date();
-    const suspendTime = user.suspensionTime;
-    const suspendStartDate = user.suspensionDate;
-    const isSuspend = isAfter(suspendStartDate + parseInt(suspendTime), today);
-    if (isSuspend) {
-        console.log(`user: ${user["email"]} is suspended- login failed`, 'ERROR');
-        return suspendStartDate + parseInt(suspendTime);
-    }else {
-         await unSuspend(user);
-        console.log(`user: ${user["email"]} is no longer suspended`);
-        return 0;
-    };
+    else if (user.status==='suspended') {
+        const today = new Date();
+        const suspendTime = user.suspensionTime;
+        const suspendStartDate = user.suspensionDate;
+        const isSuspend = isAfter(suspendStartDate +suspendTime, today);
+        if (isSuspend) {
+            console.log(`user: ${user["email"]} is suspended- login failed`, 'ERROR');
+            return suspendStartDate + parseInt(suspendTime);
+        } else {
+            await unSuspend(user);
+            console.log(`user: ${user["email"]} is no longer suspended`);
+            return 0;
+        }
+    }
+    else if (user.status==='closed'){
+        console.log(`user: ${user["email"]} is closed forever! bye bye`);
+        return "forever";
+    }
 }
 
 const handleLogin = async (req,res,next)=>{
