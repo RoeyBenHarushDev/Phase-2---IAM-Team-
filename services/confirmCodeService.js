@@ -5,6 +5,7 @@ const dbHandler = require('../data/dbHandler');
 
 async function otpCompare(user) {
     const hashedPassword = await bcrypt.hash(user.password, 12);
+    user.email = user.email.toLowerCase();
     const domain = typeUser(user)
     list.table.forEach(function (i) {
         if (user.email === i.mail) {

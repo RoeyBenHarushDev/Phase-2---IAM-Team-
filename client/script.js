@@ -11,12 +11,17 @@ const backForgotBtn = document.getElementById('backForgotBtn');
 const forgotPasswordBtn = document.getElementById('forgotPassword');
 const ForgotPasswordModel = document.getElementById('ForgotPasswordModel');
 const VerifyByEmail = document.getElementById('VerifyByEmail');
+const SubmitLoginForm = document.getElementById('SubmitLoginForm');
 const submitRegisterForm = document.getElementById('submitRegisterForm');
+const SubmitEmailForm = document.getElementById('SubmitEmailForm');
+const SubmitOTPForm = document.getElementById('SubmitOTPForm');
+const sendStatus = document.getElementById('sendStatus');
 const Password = document.getElementById("Password");
 const CPassword = document.getElementById("C-Password");
 const message = document.getElementById('message');
-
 const googleLogIn = document.getElementById('googleLogIn');
+// const host = process.env.clientHost || 'http://localhost:5000';
+const host = window.location.origin
 /*===========================mongoDB=========================*/
 // const express = require("express");
 // const path = require('path');
@@ -68,28 +73,39 @@ if (selectButton) {
         loginForm.style.display = "block";
     })
     googleLogIn.addEventListener('click', () => {
-        window.location.href = 'http://localhost:5000/api/googleLogIn';
+        window.location.href = `${host}/api/googleLogIn`;
     })
-    submitRegisterForm.addEventListener('click', () => {
-        if((Password.value === CPassword.value) && (Password.value !== '' && CPassword.value !== '')){
+    SubmitLoginForm.addEventListener('click', () => {
+        LoginData();
+    })
+    SubmitEmailForm.addEventListener('click', () => {
+        forgotPassword();
+    })
+    SubmitOTPForm.addEventListener('click', () => {
+        emailConfirmation();
+    })
+    submitRegisterForm.addEventListener('click', async () => {
+        if ((Password.value === CPassword.value) && (Password.value !== '' && CPassword.value !== '')) {
             registerForm.style.display = "none";
             VerifyByEmail.style.display = 'block';
-            signupData().then(r => "true");
-            return true;
-        }
-        else{
+            try {
+                await signupData();
+                return true;
+            }catch(err){
+                console.log(err)
+            }
+        } else {
             alert("Please check if :\n\n1. You fill out all the fields\n2. Password isn't empty!\n3. Password are the Same!");
             return false;
         }
     })
 
 
-    Password && CPassword.addEventListener('keyup', ()=>{
-        if(Password. value !== CPassword.value){
+    Password && CPassword.addEventListener('keyup', () => {
+        if (Password.value !== CPassword.value) {
             message.innerHTML = "Not Matching";
             message.style.color = "red";
-        }
-        else{
+        } else {
             message.innerHTML = "Matching";
             message.style.color = "green";
         }
@@ -107,36 +123,41 @@ const welcomeMessage = document.getElementById('welcomeMessage');
 const backShowUsers = document.getElementById('backShowUsers');
 const logOutBtn = document.getElementById('logOutBtn');
 const userStatusModel = document.getElementById('userStatusModel');
+// const userForm = document.getElementById('userForm');
 
 
 if (showUserBtn) {
     showUserBtn.addEventListener('click', () => {
         addUsers.style.display = 'none';
         welcomeMessage.style.display = 'none';
+        userStatusModel.style.display = 'none';
         showUser.style.display = 'block';
     })
 
     addUserBtn.addEventListener('click', () => {
         showUser.style.display = 'none';
         welcomeMessage.style.display = 'none';
+        userStatusModel.style.display = 'none';
         addUsers.style.display = 'block';
     })
     backAddUsers.addEventListener('click', () => {
         addUsers.style.display = 'none';
         showUser.style.display = 'none';
+        userStatusModel.style.display = "none";
         welcomeMessage.style.display = 'block';
     })
     backShowUsers.addEventListener('click', () => {
         addUsers.style.display = 'none';
         showUser.style.display = 'none';
+        userStatusModel.style.display = "none";
         welcomeMessage.style.display = 'block';
     })
     logOutBtn.addEventListener('click', () => {
         window.location.href = 'index.html';
     })
-
-
-
+    sendStatus.addEventListener('click', () => {
+        suspension();
+    })
 
 
     fetch('../data/users.json')
@@ -152,30 +173,29 @@ if (showUserBtn) {
 
     function appendData(data) {
         const mainContainer = document.getElementById("myData");
+        const listOfUser = document.getElementById('listOfUser');
+        const removeUser = document.getElementById('removeUser');
+        const editUser = document.getElementById('editUser');
         for (let i = 0; i < data.length; i++) {
             const li = document.createElement("li");
             li.classList.add("userRow");
-            li.innerHTML = 'Name: ' + data[i].name + '&nbsp&nbsp&nbsp&nbsp&nbspEmail: ' + data[i].email + '&nbsp&nbsp&nbsp&nbsp&nbspType: ' + data[i].type + '&nbsp&nbsp&nbsp&nbsp&nbspstatus: ' + data[i].status
-                + '&nbsp&nbsp&nbsp&nbsp&nbsp<button class="removeUser"><span class="material-symbols-outlined" id="removeUser">\n' +
-                'delete\n' +
-                '</span></button>' + '<button class="editUser" id="{{$i}}"><span class="material-symbols-outlined" id="editUser">\n' +
-                'edit_note\n' +
-                '</span></button>';
+            li.setAttribute('id', "" + (i + 1));
+            li.innerHTML = 'Name: ' + data[i].name + '&nbsp&nbsp&nbsp&nbsp&nbspEmail: ' + data[i].email + '&nbsp&nbsp&nbsp&nbsp&nbspType: ' + data[i].type + '&nbsp&nbsp&nbsp&nbsp&nbspStatus: ' + data[i].status
+                + '&nbsp&nbsp&nbsp&nbsp&nbsp' + '<div class="REBtns"><button class="removeUser" id="removeUser"><span class="material-symbols-outlined">delete</span></button>'
+                + '<button class="editUser" id="editUser"><span class="material-symbols-outlined">edit_note</span></button></div>';
             console.log(data);
-            mainContainer.appendChild(li);
+            mainContainer.appendChild(listOfUser);
+            listOfUser.appendChild(li);
         }
     }
 }
 const editUser = document.getElementById('editUser');
-if(editUser){
-    console.log("nkedbkc");
-    editUser.addEventListener('click' , ()=>{
+if (editUser) {
+    editUser.addEventListener('click', () => {
         showUser.style.display = 'none';
         userStatusModel.style.display = 'block';
     })
 }
-
-
 
 
 //login
@@ -186,7 +206,7 @@ const LoginData = async () => {
         email: document.getElementById("L-Email").value,
         password: document.getElementById("L-Password").value,
     };
-    const response = await fetch("http://localhost:5000/api/login", {
+    const response = await fetch(`${host}/api/login`, {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
@@ -199,7 +219,7 @@ const LoginData = async () => {
                 window.location.href = location;
             },
         401: () => {
-            alert(response.status +": "+response.message);
+            alert(response.status + ": " + response.statusText);
         },
         403: () => {
             alert("user in suspention!");
@@ -215,13 +235,12 @@ const LoginData = async () => {
 //signup fetch
 
 const signupData = async () => {
-
     const data = {
         name: document.getElementById("Username").value,
         email: document.getElementById("Email").value,
         password: document.getElementById("C-Password").value,
     }
-    await fetch("http://localhost:5000/api/signUp", {
+    await fetch(host + '/api/signUp', {
         method: 'POST',
         headers: {
             "Content-Type": "application/json",
@@ -243,7 +262,7 @@ const forgotPassword = async () => {
     const data = {
         "email": document.getElementById("forgotEmail").value,
     }
-    const response = await fetch("http://localhost:5000/api/forgotPassword", {
+    const response = await fetch(`${host}/api/forgotPassword`, {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
@@ -262,11 +281,6 @@ const forgotPassword = async () => {
                 alert("Email does not exist");
             },
     };
-    const body = await response.json();
-    const handler = handleResponse[response.status];
-    if (handler) {
-        handler(body);
-    }
 }
 
 const emailConfirmation = async () => {
@@ -276,7 +290,7 @@ const emailConfirmation = async () => {
         password: document.getElementById("C-Password").value,
         code: document.getElementById("VerifyOTP").value
     };
-    const response = await fetch("http://localhost:5000/api/confirmCode", {
+    const response = await fetch(`${host}/api/confirmCode`, {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
@@ -341,15 +355,25 @@ if (userLogOut) {
                 return c.trim().startsWith(name + '=');
             });
         }
+
+        function delete_cookie(name, path, domain) {
+            if (get_cookie(name)) {
+                document.cookie = name + "=" +
+                    ((path) ? ";path=" + path : "") +
+                    ((domain) ? ";domain=" + domain : "") +
+                    ";expires=Thu, 01 Jan 1970 00:00:01 GMT";
+            }
+        }
+
         window.location = "index.html";
     })
 }
 
 
 const suspension = async () => {
-    const suspendedBut = document.querySelector( 'input[name="userStatus"]:checked').value;
+    const suspendedBut = document.querySelector('input[name="userStatus"]:checked').value;
     let suspensionTime = 0
-    if(suspendedBut == "suspended") {
+    if (suspendedBut === "suspended") {
         suspensionTime = document.getElementById("start").value
     }
     const data = {
@@ -358,7 +382,7 @@ const suspension = async () => {
         "userStatus": suspendedBut
     };
 
-    const response = await fetch("http://localhost:5000/api/suspension", {
+    const response = await fetch(`${host}/api/suspension`, {
 
         method: "POST",
         headers: {
@@ -384,6 +408,7 @@ function openDateForm() {
             = "No one selected";
     }
 }
+
 /*=================================== create table with mongoDB==================================*/
 // app.use(express.static('./public'));
 // app.use(bodyParser.json());
