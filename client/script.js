@@ -397,17 +397,13 @@ const suspension = async () => {
 
     const handleResponse = {
         200: () => {
-            location.reload();
             alert("User status update")
-            location.reload();
         },
         403: () => {
             alert("user is closed");
-            location.reload();
         },
         401: () => {
             console.log("401")
-            location.reload();
             alert("Please enter a valid email");
         }
     };

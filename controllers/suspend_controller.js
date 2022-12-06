@@ -10,13 +10,14 @@ async function handleSuspend(request, response) {
         await ifClosed(user);
         const data = changeUserStatus(user);
         await dbHandler.updateUser(user.email, data);
-
+        console.log(await dbHandler.getUserByEmail(user.email));
         return constructResponse(response, {}, 200);
     } catch (e) {
-        if (e.message === 'user is closed') return constructResponse(response, {error: e.message}, 403);
+        if(e.message === 'user is closed'){ return constructResponse(response, {error: e.message}, 403);}
         return constructResponse(response, {error: e.message}, 401);
     }
 }
+
 async function ifClosed(userData) {
     const user = await dbHandler.getUserByEmail(userData.email);
     if (user.status === "closed") {
