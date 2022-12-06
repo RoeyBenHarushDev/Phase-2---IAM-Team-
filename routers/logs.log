@@ -310,3 +310,13 @@
  POST /api/login 401 20 - 666.401 ms Tue, 06 Dec 2022 12:57:04 GMT
  POST /api/login 401 18 - 348.628 ms Tue, 06 Dec 2022 12:57:16 GMT
  POST /api/login 401 14 - 384.867 ms Tue, 06 Dec 2022 12:57:52 GMT
+ GET /? 304 - - 28.497 ms Tue, 06 Dec 2022 13:36:23 GMT
+ GET /style.css 304 - - 6.065 ms Tue, 06 Dec 2022 13:36:23 GMT
+ GET /script.js 304 - - 7.743 ms Tue, 06 Dec 2022 13:36:23 GMT
+ GET /BAMD%20IAM(1).png 304 - - 5.174 ms Tue, 06 Dec 2022 13:36:23 GMT
+ GET /favicon.ico 304 - - 5.423 ms Tue, 06 Dec 2022 13:36:23 GMT
+ POST /api/login 200 - - 293.417 ms Tue, 06 Dec 2022 13:36:36 GMT
+ GET /homePage.html 304 - - 5.975 ms Tue, 06 Dec 2022 13:36:36 GMT
+ GET /style.css 304 - - 5.387 ms Tue, 06 Dec 2022 13:36:36 GMT
+ GET /script.js 304 - - 5.272 ms Tue, 06 Dec 2022 13:36:36 GMT
+ GET /style.css 304 - - 13.450 ms Tue, 06 Dec 2022 13:36:41 GMT
