@@ -6,7 +6,10 @@ const bcrypt = require("bcrypt");
 async function handleForgot(req, res) {
     try {
         req.body.email =  req.body.email.toLowerCase();
-        const user = await dbHandler.getUserByEmail(req.body.email)
+        const user = await dbHandler.getUserByEmail(req.body.email);
+        if(!user){
+            throw new Error("user does'nt exist")
+        }
         const newPass = forgotPassService.generatePassword();
 
         await forgotPassService.sendPassword(newPass, user);

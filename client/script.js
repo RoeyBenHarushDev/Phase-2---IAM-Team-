@@ -223,8 +223,10 @@ const LoginData = async () => {
         },
         403: () => {
             alert("user in suspension!");
-        }
-    };
+        },
+        404: () => {
+        alert(response.status + ": " + response.statusText + "user doesn't exist");
+    }};
     const body = await response.json();
     const handler = handleResponse[response.status];
     if (handler) {
@@ -270,7 +272,6 @@ const forgotPassword = async () => {
         body: JSON.stringify(data),
     });
     const handleResponse = {
-
         200:
             () => {
                 location.reload();

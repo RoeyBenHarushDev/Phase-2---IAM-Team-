@@ -10,8 +10,7 @@ const signUp = require("./signUp_route");
 const changePassword = require("./changePassword_route")
 const suspend = require("./suspend_route");
 const confirmCode = require("./confirmCode_route");
-const passport = require('passport')
-const send = require("send")
+const passport = require('passport');
 const path = require("path");
 const logger = require("morgan");
 const fs = require('fs');
@@ -23,7 +22,6 @@ const SESSION_SECRET = process.env.secret;
 function isLoggedIn(req, res, next) {
     req.user ? next() : res.sendStatus(401)
 }
-//app.use(express.json());
 app.use(logger(" :method :url :status :res[content-length] - :response-time ms :date[web]",
     {stream: accessLogStream}));
 app.use(session({secret: SESSION_SECRET,resave:false,
