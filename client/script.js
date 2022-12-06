@@ -270,6 +270,7 @@ const forgotPassword = async () => {
         body: JSON.stringify(data),
     });
     const handleResponse = {
+
         200:
             () => {
                 location.reload();
@@ -281,6 +282,11 @@ const forgotPassword = async () => {
                 alert("Email does not exist");
             },
     };
+    const body = await response.json();
+    const handler = handleResponse[response.status];
+    if (handler) {
+        handler(body);
+    }
 }
 
 const emailConfirmation = async () => {
