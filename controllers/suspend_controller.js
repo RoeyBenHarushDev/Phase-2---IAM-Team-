@@ -6,21 +6,23 @@ const fs = require("fs");
 
 async function handleSuspend(request, response) {
     try {
-        ifClosed(request.body);
-        const data = changeUserStatus(request.body);
-        await dbHandler.updateUser(request.body.email, data)
+        const user = request.body;
+        await ifClosed(user);
+        const data = changeUserStatus(user);
+        await dbHandler.updateUser(user.email, data);
+        console.log(await dbHandler.getUserByEmail(user.email));
         return constructResponse(response, {}, 200);
     } catch (e) {
-        console.log(e);
+        if(e.message === 'user is closed'){ return constructResponse(response, {error: e.message}, 403);}
         return constructResponse(response, {error: e.message}, 401);
     }
 }
 
-function ifClosed(userData) {
-        const user = dbHandler.getUserByEmail(userData.email);
-        if (user.status === "closed") {
-            throw new Error("user is closed");
-        }
+async function ifClosed(userData) {
+    const user = await dbHandler.getUserByEmail(userData.email);
+    if (user.status === "closed") {
+        throw new Error("user is closed");
+    }
 }
 
 function changeUserStatus(userData) {
@@ -28,21 +30,21 @@ function changeUserStatus(userData) {
     if (userData.userStatus == "suspended") {
         data = {
             "suspensionDate": new Date(),
-            "suspensionTime": data.suspensionTime,
+            "suspensionTime": userData.suspensionTime,
             "status": "suspended"
         }
     }
     if (userData.userStatus == "closed") {
         data = {
             "suspensionDate": new Date(),
-            "suspensionTime": "0",
+            "suspensionTime": 0,
             "status": "closed"
         }
     }
     if (userData.userStatus == "active") {
         data = {
-            "suspensionDate": "null",
-            "suspensionTime": "0",
+            "suspensionDate": 0,
+            "suspensionTime": 0,
             "status": "active"
         }
     }

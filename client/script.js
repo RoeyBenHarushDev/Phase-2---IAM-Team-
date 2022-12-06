@@ -91,7 +91,7 @@ if (selectButton) {
             try {
                 await signupData();
                 return true;
-            }catch(err){
+            } catch (err) {
                 console.log(err)
             }
         } else {
@@ -160,16 +160,16 @@ if (showUserBtn) {
     })
 
 
-/*    fetch('../data/users.json')
-        .then(function (response) {
-            return response.json();
-        })
-        .then(function (data) {
-            appendData(data);
-        })
-        .catch(function (err) {
-            console.log('error: ' + err);
-        });*/
+    /*    fetch('../data/users.json')
+            .then(function (response) {
+                return response.json();
+            })
+            .then(function (data) {
+                appendData(data);
+            })
+            .catch(function (err) {
+                console.log('error: ' + err);
+            });*/
 
     function appendData(data) {
         const mainContainer = document.getElementById("myData");
@@ -387,17 +387,32 @@ const suspension = async () => {
         "suspensionTime": suspensionTime,
         "userStatus": suspendedBut
     };
-
     const response = await fetch(`${host}/api/suspension`, {
-
         method: "POST",
         headers: {
             "Content-Type": "application/json",
         },
         body: JSON.stringify(data),
     });
-}
 
+    const handleResponse = {
+        200: () => {
+            alert("User status update")
+        },
+        403: () => {
+            alert("user is closed");
+        },
+        401: () => {
+            console.log("401")
+            alert("Please enter a valid email");
+        }
+    };
+    const body = await response.json();
+    const handler = handleResponse[response.status];
+    if (handler) {
+        handler(body);
+    }
+};
 
 function openDateForm() {
     let checkRadio = document.querySelector(
