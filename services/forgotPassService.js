@@ -30,23 +30,16 @@ async function sendPassword(newPass, user) {
     //the mailing metadata
     const mainOptions = {
         from: 'IamShenkar@gmail.com',
-        to: user.email,  //mail.emailId,
+        to: user.email,
         subject: 'New Password for IAM',
-        // text: 'Your OTP is: ' + OTP
         html: data
-        // attachment : [{
-        //     filename: 'IAM_logo.jpeg',
-        //     path: '../data/',
-        //     cid: 'IAM_LOGO@test.ee'
-        // }]
     };
+
     await transporter.sendMail(mainOptions, (err, info) => {
         if (err) {
             console.log(err);
-            // server.logger.log(err);
         } else {
             console.log("message sent");
-            // server.logger.log('Message sent: ' + info.response + "\nwith new Pass: " + pass);
         }
     });
 }

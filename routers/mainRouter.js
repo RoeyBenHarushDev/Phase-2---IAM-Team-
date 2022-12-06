@@ -17,13 +17,6 @@ const logger = require("morgan");
 const fs = require('fs');
 const accessLogStream = fs.createWriteStream(path.join(__dirname,'logs.log'),{flags: 'a'})
 
-// const {forgotPassword} = require("./routers/forgotPassword_route");
-// const {changePassword} = require("./routers/changePassword_route");
-// const {adminCRUD} = require("./routers/adminCRUD_route");
-
-/*app.use(express.json());
-app.use(express.urlencoded({extended: true}));*/
-
 require('dotenv').config({ path: path.join(process.cwd() + "/data/",".env") });
 const SESSION_SECRET = process.env.secret;
 
@@ -63,7 +56,7 @@ app.get('/authFailure',(req,res)=>{
 });
 app.use('/api/login',login.loginRouter);
 app.use('/api/signUp', signUp.signupRoute);
-app.use('/api/suspend', suspend.suspendRoute);
+app.use('/api/suspension', suspend.suspendRoute);
 app.use('/api/confirmCode', confirmCode.confirmCodeRoute);
 app.use('/api/forgotPassword', forgotPassword.forgotPasswordRoute);
 app.use('/api/changePassword', changePassword.changePasswordRoute);
@@ -72,7 +65,5 @@ app.use('/api/changePassword', changePassword.changePasswordRoute);
 app.use((req, res) => {
     res.status(400).send('Something is broken!');
 });
-
-
 
 module.exports = { app }
