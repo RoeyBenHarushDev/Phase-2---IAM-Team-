@@ -55,9 +55,19 @@ const handleLogin = async (req, res, next) => {
         })
     }
 }
+const Permissions = async (req, res, next) => {
+    const userEmail = req.body.email.toLowerCase();
+    try {
+       const user = await dbHandler.getUserByEmail(userEmail)
+        return "The user exists"
+    }catch (e){
+        return "The user does not exist"
+    }
+}
+
 
 function isAfter(date1, date2) {
     return date1 > date2;
 }
 
-module.exports = {handleLogin}
+module.exports = {handleLogin, Permissions}

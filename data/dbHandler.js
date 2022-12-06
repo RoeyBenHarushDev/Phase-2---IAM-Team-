@@ -20,4 +20,15 @@ async function addDoc(obj) {
     }
 }
 
-module.exports = {getUserByEmail, updateUser, addDoc};
+function typeUser(user) {
+    let domain = user.email.split("@");
+    domain = domain[1].split(".");
+    console.log(domain)
+    if (domain[0] == "shenkar") {
+        return "admin"
+    } else {
+        return "user"
+    }
+}
+
+module.exports = {getUserByEmail, updateUser, addDoc, typeUser};

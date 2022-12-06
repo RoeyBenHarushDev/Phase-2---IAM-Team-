@@ -2,7 +2,16 @@ const list = require("../data/OTP-pass.json")
 const dbHandler = require("../data/dbHandler")
 const {constructResponse} = require('../utils/utils');
 const fs = require("fs");
+const User = require("../models/users");
+const bcrypt = require("bcrypt");
 
+async function addUser(user) {
+    user.password = await bcrypt.hash(user.password, 12);
+    user.email = user.email.toLowerCase();
+    const domain = dbHandler.typeUser(user)
+    const newUser =  new User({"name": user.name,"email": user.email,"password": user.password, "type": domain});
+    await dbHandler.addDoc(newUser);
+}
 
 async function handleSuspend(request, response) {
     try {
@@ -10,10 +19,12 @@ async function handleSuspend(request, response) {
         await ifClosed(user);
         const data = changeUserStatus(user);
         await dbHandler.updateUser(user.email, data);
-        console.log(await dbHandler.getUserByEmail(user.email));
+
         return constructResponse(response, {}, 200);
     } catch (e) {
-        if(e.message === 'user is closed'){ return constructResponse(response, {error: e.message}, 403);}
+        if (e.message === 'user is closed') {
+            return constructResponse(response, {error: e.message}, 403);
+        }
         return constructResponse(response, {error: e.message}, 401);
     }
 }
@@ -51,7 +62,24 @@ function changeUserStatus(userData) {
     return data
 }
 
-module.exports = {handleSuspend}
+async function handleAddUser(req, res) {
+    try {
+        let newUser = req.body;
+        newUser.email = newUser.email.toLowerCase;
+        let user = await dbHandler.getUserByEmail(newUser.email);
+
+        const domain = dbHandler.typeUser(user)
+        const hashedPassword = await bcrypt.hash(user.password, 12);
+        const addUser =  new User({"name": newUser.name,"email": newUser.email,"password": hashedPassword, "type": domain});
+        console.log(addUser);
+        await dbHandler.addDoc(addUser);
+    }catch (e) {
+
+    }
+
+}
+
+module.exports = {handleSuspend, handleAddUser}
 
 
 

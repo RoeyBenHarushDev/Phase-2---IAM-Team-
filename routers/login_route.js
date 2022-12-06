@@ -6,6 +6,6 @@ const bodyParser = require('body-parser');
 
 
 loginRouter.post('/', login_controller.handleLogin)
-
+loginRouter.get('/email:', login_controller.Permissions)
 
 module.exports = {loginRouter};
