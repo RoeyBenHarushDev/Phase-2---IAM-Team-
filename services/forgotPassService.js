@@ -1,5 +1,3 @@
-const list = require("../data/OTP-pass.json");
-const dbHandler = require('../data/dbHandler');
 const node = require("nodemailer");
 const smtp = require("nodemailer-smtp-transport");
 const ejs = require("ejs");
@@ -28,7 +26,6 @@ function generatePassword() {
 }
 
 async function sendPassword(newPass, user) {
-    console.log(user)
     const data = await ejs.renderFile(process.cwd() + "/data/newPass-mail.ejs", {name: user["name"], code: newPass});
     //the mailing metadata
     const mainOptions = {

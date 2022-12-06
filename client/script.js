@@ -219,7 +219,7 @@ const LoginData = async () => {
                 window.location.href = location;
             },
         401: () => {
-            alert(response.status + ": " + response.data);
+            alert(response.status + ": " + response.statusText + ": Incorrect password or user");
         },
         403: () => {
             alert("user in suspension!");
@@ -310,10 +310,9 @@ const emailConfirmation = async () => {
             alert("User was added")
         },
         403: () => {
-            alert("OTP code is false");
+            alert("code is expired, please sign up again");
         },
         401: () => {
-            console.log("401")
             location.reload();
             alert("Verification Error");
         }

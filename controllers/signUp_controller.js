@@ -1,14 +1,13 @@
-const list = require("../data/OTP-pass.json")
-const fs = require("fs");
-const path = require("path");
 const signUp = require("../services/signUpService");
 const {constructResponse} = require('../utils/utils');
+const dbHandler = require('../data/dbHandler');
 
 async function handleSignUp(request, response) {
     try {
         const user = request.body
         user.email = user.email.toLowerCase();
-        signUp.userExist()
+        await dbHandler.getUserByEmail(user.email);
+        await signUp.userExist(user.email)
         await signUp.sendEmail(request.body)
         // return constructResponse(response, {}, 200);
 

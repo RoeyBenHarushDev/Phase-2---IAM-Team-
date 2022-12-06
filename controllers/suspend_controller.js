@@ -1,4 +1,3 @@
-const list = require("../data/OTP-pass.json")
 const dbHandler = require("../data/dbHandler")
 const {constructResponse} = require('../utils/utils');
 const fs = require("fs");

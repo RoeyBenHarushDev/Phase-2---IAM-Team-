@@ -12,11 +12,10 @@ async function updateUser(mail, params) {
 
 async function addDoc(obj) {
     const result = await obj.save();
-    console.log("res "+result);
     if (result) {
-        console.log("new user was added");
+        return;
     } else {
-        throw new Error("Error while saving new user");
+        throw new Error("Error while saving new object");
     }
 }
 
