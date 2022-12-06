@@ -10,19 +10,11 @@ const signUp = require("./signUp_route");
 const changePassword = require("./changePassword_route")
 const suspend = require("./suspend_route");
 const confirmCode = require("./confirmCode_route");
-const passport = require('passport')
-const send = require("send")
+const passport = require('passport');
 const path = require("path");
 const logger = require("morgan");
 const fs = require('fs');
 const accessLogStream = fs.createWriteStream(path.join(__dirname,'logs.log'),{flags: 'a'})
-
-// const {forgotPassword} = require("./routers/forgotPassword_route");
-// const {changePassword} = require("./routers/changePassword_route");
-// const {adminCRUD} = require("./routers/adminCRUD_route");
-
-/*app.use(express.json());
-app.use(express.urlencoded({extended: true}));*/
 
 require('dotenv').config({ path: path.join(process.cwd() + "/data/",".env") });
 const SESSION_SECRET = process.env.secret;
@@ -30,7 +22,6 @@ const SESSION_SECRET = process.env.secret;
 function isLoggedIn(req, res, next) {
     req.user ? next() : res.sendStatus(401)
 }
-//app.use(express.json());
 app.use(logger(" :method :url :status :res[content-length] - :response-time ms :date[web]",
     {stream: accessLogStream}));
 app.use(session({secret: SESSION_SECRET,resave:false,
@@ -63,7 +54,7 @@ app.get('/authFailure',(req,res)=>{
 });
 app.use('/api/login',login.loginRouter);
 app.use('/api/signUp', signUp.signupRoute);
-app.use('/api/suspend', suspend.suspendRoute);
+app.use('/api/suspension', suspend.suspendRoute);
 app.use('/api/confirmCode', confirmCode.confirmCodeRoute);
 app.use('/api/forgotPassword', forgotPassword.forgotPasswordRoute);
 app.use('/api/changePassword', changePassword.changePasswordRoute);
@@ -72,7 +63,5 @@ app.use('/api/changePassword', changePassword.changePasswordRoute);
 app.use((req, res) => {
     res.status(400).send('Something is broken!');
 });
-
-
 
 module.exports = { app }

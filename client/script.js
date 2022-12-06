@@ -91,7 +91,7 @@ if (selectButton) {
             try {
                 await signupData();
                 return true;
-            }catch(err){
+            } catch (err) {
                 console.log(err)
             }
         } else {
@@ -160,16 +160,16 @@ if (showUserBtn) {
     })
 
 
-/*    fetch('../data/users.json')
-        .then(function (response) {
-            return response.json();
-        })
-        .then(function (data) {
-            appendData(data);
-        })
-        .catch(function (err) {
-            console.log('error: ' + err);
-        });*/
+    /*    fetch('../data/users.json')
+            .then(function (response) {
+                return response.json();
+            })
+            .then(function (data) {
+                appendData(data);
+            })
+            .catch(function (err) {
+                console.log('error: ' + err);
+            });*/
 
     function appendData(data) {
         const mainContainer = document.getElementById("myData");
@@ -219,12 +219,14 @@ const LoginData = async () => {
                 window.location.href = location;
             },
         401: () => {
-            alert(response.status + ": " + response.data);
+            alert(response.status + ": " + response.statusText + ": Incorrect password or user");
         },
         403: () => {
             alert("user in suspension!");
-        }
-    };
+        },
+        404: () => {
+        alert(response.status + ": " + response.statusText + "user doesn't exist");
+    }};
     const body = await response.json();
     const handler = handleResponse[response.status];
     if (handler) {
@@ -281,6 +283,11 @@ const forgotPassword = async () => {
                 alert("Email does not exist");
             },
     };
+    const body = await response.json();
+    const handler = handleResponse[response.status];
+    if (handler) {
+        handler(body);
+    }
 }
 
 const emailConfirmation = async () => {
@@ -301,15 +308,14 @@ const emailConfirmation = async () => {
     const handleResponse = {
         200: () => {
             location.reload();
-            alert("User was added")
+            alert(response.status + ": " + response.statusText +"User was added");
         },
         403: () => {
-            alert("OTP code is false");
+            alert("401: code is expired, please sign up again");
         },
         401: () => {
-            console.log("401")
             location.reload();
-            alert("Verification Error");
+            alert(response.status + ": " + response.statusText);
         }
     };
     const body = await response.json();
@@ -381,17 +387,32 @@ const suspension = async () => {
         "suspensionTime": suspensionTime,
         "userStatus": suspendedBut
     };
-
     const response = await fetch(`${host}/api/suspension`, {
-
         method: "POST",
         headers: {
             "Content-Type": "application/json",
         },
         body: JSON.stringify(data),
     });
-}
 
+    const handleResponse = {
+        200: () => {
+            alert("User status update")
+        },
+        403: () => {
+            alert("user is closed");
+        },
+        401: () => {
+            console.log("401")
+            alert("Please enter a valid email");
+        }
+    };
+    const body = await response.json();
+    const handler = handleResponse[response.status];
+    if (handler) {
+        handler(body);
+    }
+};
 
 function openDateForm() {
     let checkRadio = document.querySelector(
