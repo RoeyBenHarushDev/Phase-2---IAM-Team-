@@ -1,0 +1,8 @@
+secret=IAM_team
+email=ciiokaceskfahoda
+ClientId=464592808185-trttmc5rbu2i1lurqk2k32qm5rvcctpm.apps.googleusercontent.com
+ClientSecret=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
+DB_HOST=mongodb+srv://IAM:Band@cluster0.tv2kpxo.mongodb.net/IAM-db?retryWrites=true&w=majority
+DB_USER=IAM
+DB_PASS=Band
+running_path=http://localhost:5000
