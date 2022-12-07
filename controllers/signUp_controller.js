@@ -6,7 +6,10 @@ async function handleSignUp(request, response) {
     try {
         const user = request.body
         user.email = user.email.toLowerCase();
-        await dbHandler.getUserByEmail(user.email);
+        const findUser = await dbHandler.getUserByEmail(user.email);
+        if(findUser){
+            throw new Error("user already exists");
+        }
         await signUp.userExist(user.email)
         await signUp.sendEmail(request.body)
         // return constructResponse(response, {}, 200);
