@@ -215,9 +215,9 @@ if (showUserBtn) {
         userTitle.appendChild(statusHeading);
         thead.appendChild(userTitle);
 
+        let userDb = document.createElement('tr');
 
         for (let i = 0; i < data.length; i++) {
-            let userDb = document.createElement('tr');
             let userDbRow_1 = document.createElement('td');
             userDbRow_1.innerHTML = data[i][1];
             let userDbRow_2 = document.createElement('td');
@@ -262,13 +262,13 @@ const LoginData = async () => {
         body: JSON.stringify(data),
     });
     if (response.status === 200) {
-        location = "homePage.html"
-        window.location.href = location;
+        location = "homePage.html";
+        window.location.href = "homePage.html";
     }
     const body = await response.json();
     if (body.message) {
         alert((body.message));
-        location.reload();
+        // location.reload();
     }
 };
 
