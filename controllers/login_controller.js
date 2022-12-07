@@ -1,6 +1,7 @@
 const bcrypt = require('bcrypt');
 const dbHandler = require('../data/dbHandler');
 const {constructResponse} = require('../utils/utils.js');
+
 const unSuspend= async (user) => {
     await dbHandler.updateUser(user.email, {"status": "active", "suspensionTime": 0, "suspensionDate": 0});
 }

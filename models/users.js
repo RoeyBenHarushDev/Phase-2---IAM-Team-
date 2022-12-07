@@ -9,7 +9,8 @@ const userSchema = new Schema({
     type: {type: String, default: 'user'},
     status: {type: String, default: 'active'},
     suspensionTime: {type: Number, default: 0},
-    suspensionDate: {type: Date, default:0}
+    suspensionDate: {type: Date, default:0},
+    googleId: {type: String, default:null}
 }, {collection: 'user'});
 
 const User = model('user',userSchema);
