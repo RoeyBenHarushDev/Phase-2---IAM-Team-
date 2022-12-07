@@ -21,7 +21,7 @@ const CPassword = document.getElementById("C-Password");
 const message = document.getElementById('message');
 const googleLogIn = document.getElementById('googleLogIn');
 const addUser = document.getElementById('addUser');
-// const host = process.env.clientHost || 'http://localhost:5000';
+// const host = process..env.clientHost || 'http://localhost:5000';
 const host = window.location.origin
 /*===========================mongoDB=========================*/
 // const express = require("express");
@@ -97,7 +97,7 @@ if (selectButton) {
                 const data = {
                     email: document.getElementById("Email").value,
                 }
-               const response =  await fetch(host + '/api/deleteAfter15', {
+                const response = await fetch(host + '/api/deleteAfter15', {
                     method: 'POST',
                     headers: {
                         "Content-Type": "application/json",
@@ -110,8 +110,8 @@ if (selectButton) {
                     location.reload();
                 }
             }, 900000)
-                await signupData();
-                return true;
+            await signupData();
+            return true;
 
         } else {
             alert("Please check if :\n\n1. You fill out all the fields\n2. Password isn't empty!\n3. Password are the Same!");
@@ -142,6 +142,7 @@ const welcomeMessage = document.getElementById('welcomeMessage');
 const backShowUsers = document.getElementById('backShowUsers');
 const logOutBtn = document.getElementById('logOutBtn');
 const userStatusModel = document.getElementById('userStatusModel');
+const userDetailsModel = document.getElementById('userDetailsModel');
 // const userForm = document.getElementById('userForm');
 
 
@@ -150,6 +151,7 @@ if (showUserBtn) {
         addUsers.style.display = 'none';
         welcomeMessage.style.display = 'none';
         userStatusModel.style.display = 'none';
+        userDetailsModel.style.display = 'none';
         showUser.style.display = 'block';
         appendData();
     })
@@ -158,18 +160,21 @@ if (showUserBtn) {
         showUser.style.display = 'none';
         welcomeMessage.style.display = 'none';
         userStatusModel.style.display = 'none';
+        userDetailsModel.style.display = 'none';
         addUsers.style.display = 'block';
     })
     backAddUsers.addEventListener('click', () => {
         addUsers.style.display = 'none';
         showUser.style.display = 'none';
         userStatusModel.style.display = "none";
+        userDetailsModel.style.display = 'none';
         welcomeMessage.style.display = 'block';
     })
     backShowUsers.addEventListener('click', () => {
         addUsers.style.display = 'none';
         showUser.style.display = 'none';
         userStatusModel.style.display = "none";
+        userDetailsModel.style.display = 'none';
         welcomeMessage.style.display = 'block';
     })
     logOutBtn.addEventListener('click', () => {
@@ -203,11 +208,13 @@ if (showUserBtn) {
         const statusHeading = document.createElement('th');
         statusHeading.innerHTML = "Status";
 
+
         table.appendChild(thead);
         table.appendChild(tbody);
 
 // Adding the entire table to the body tag
-        document.getElementById("myData").appendChild(table);
+        const myData = document.getElementById("myData").appendChild(table);
+
 
         userTitle.appendChild(nameHeading);
         userTitle.appendChild(emailHeading);
@@ -215,36 +222,88 @@ if (showUserBtn) {
         userTitle.appendChild(statusHeading);
         thead.appendChild(userTitle);
 
-        let userDb = document.createElement('tr');
-
+        const userDbBtn = document.createElement('button');
         for (let i = 0; i < data.length; i++) {
+
+            const userDbBtn = document.createElement('button');
+            let userDb = myData.insertRow(i);
+            userDbBtn.classList.add("userDbBtn");
+            userDbBtn.setAttribute('id', data[i].email);
+            userDbBtn.setAttribute('type', "button");
+            const userEmail = data[i].email;
+
             let userDbRow_1 = document.createElement('td');
-            userDbRow_1.innerHTML = data[i][1];
+            userDbRow_1.innerHTML = data[i].name;
             let userDbRow_2 = document.createElement('td');
-            userDbRow_2.innerHTML = data[i][2];
+            userDbRow_2.innerHTML = data[i].email;
             let userDbRow_3 = document.createElement('td');
-            userDbRow_3.innerHTML = data[i][3];
+            userDbRow_3.innerHTML = data[i].type;
             let userDbRow_4 = document.createElement('td');
-            userDbRow_4.innerHTML = data[i][4];
+            userDbRow_4.innerHTML = data[i].status;
+            userDbBtn.innerHTML = "Show User";
 
             userDb.appendChild(userDbRow_1);
             userDb.appendChild(userDbRow_2);
             userDb.appendChild(userDbRow_3);
             userDb.appendChild(userDbRow_4);
+            userDb.appendChild(userDbBtn);
             tbody.appendChild(userDb);
+        }
+
+        const showUserToEdit = document.querySelectorAll('.userDbBtn');
+        for (let i = 0; i < data.length; i++) {
+            showUserToEdit[i].addEventListener('click', () => {
+                    addUsers.style.display = 'none';
+                    showUser.style.display = 'none';
+                    userStatusModel.style.display = "none";
+                    userDetailsModel.style.display = 'block';
+            })
         }
     }
 }
+
+const backStatusUsers = document.getElementById('backStatusUsers');
+if(backStatusUsers){
+    backStatusUsers.addEventListener('click', ()=>{
+        addUsers.style.display = 'none';
+        userStatusModel.style.display = "none";
+        userDetailsModel.style.display = 'none';
+        showUser.style.display = 'block';
+    })
+}
+
+// const myData = document.getElementById('myData');
+
+
 const editUser = document.getElementById('editUser');
 if (editUser) {
     editUser.addEventListener('click', () => {
         document.getElementById('userNameDetails').readOnly = false;
-        document.getElementById('userEmailDetails').readOnly = false;
         document.getElementById('userPasswordDetails').readOnly = false;
         document.getElementById('userPermissions').readOnly = false;
     })
 }
 
+const changeStatus = document.getElementById('changeStatus');
+if(changeStatus){
+    changeStatus.addEventListener('click', ()=>{
+        addUsers.style.display = 'none';
+        showUser.style.display = 'none';
+        userStatusModel.style.display = "none";
+        userDetailsModel.style.display = 'none';
+        userStatusModel.style.display = 'block';
+    })
+}
+const backDetailsUsers = document.getElementById('backDetailsUsers');
+if(backDetailsUsers){
+    backDetailsUsers.addEventListener('click', ()=>{
+        addUsers.style.display = 'none';
+        userStatusModel.style.display = "none";
+        userDetailsModel.style.display = 'none';
+        userStatusModel.style.display = 'none';
+        showUser.style.display = 'block';
+    })
+}
 
 //login
 
