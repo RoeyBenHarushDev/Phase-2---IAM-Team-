@@ -1,13 +1,8 @@
-exports.constructResponse = function constructResponse(
+exports.ErrorResponse = function ErrorResponse(
     response,
-    data,
-    statusCode = 200
+    message,
+    statusCode
 ) {
-    response.writeHead(statusCode, {
-        "Content-Type": "application/json",
-        "Access-Control-Allow-Origin": "*",
-    });
-    response.write(JSON.stringify(data));
-    return response.end();
+    response.status(statusCode).json({ message: message});
 };
 

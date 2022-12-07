@@ -20,6 +20,7 @@ const Password = document.getElementById("Password");
 const CPassword = document.getElementById("C-Password");
 const message = document.getElementById('message');
 const googleLogIn = document.getElementById('googleLogIn');
+const addUser = document.getElementById('addUser');
 // const host = process.env.clientHost || 'http://localhost:5000';
 const host = window.location.origin
 /*===========================mongoDB=========================*/
@@ -82,18 +83,36 @@ if (selectButton) {
         forgotPassword();
     })
     SubmitOTPForm.addEventListener('click', () => {
+        clearInterval(timer);
         emailConfirmation();
     })
+
+    let timer
+
     submitRegisterForm.addEventListener('click', async () => {
         if ((Password.value === CPassword.value) && (Password.value !== '' && CPassword.value !== '')) {
             registerForm.style.display = "none";
             VerifyByEmail.style.display = 'block';
-            try {
+            timer = setInterval(async function () {
+                const data = {
+                    email: document.getElementById("Email").value,
+                }
+               const response =  await fetch(host + '/api/deleteAfter15', {
+                    method: 'POST',
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify(data)
+                })
+                const body = await response.json();
+                if (body.message) {
+                    alert((body.message));
+                    location.reload();
+                }
+            }, 900000)
                 await signupData();
                 return true;
-            }catch(err){
-                console.log(err)
-            }
+
         } else {
             alert("Please check if :\n\n1. You fill out all the fields\n2. Password isn't empty!\n3. Password are the Same!");
             return false;
@@ -132,6 +151,7 @@ if (showUserBtn) {
         welcomeMessage.style.display = 'none';
         userStatusModel.style.display = 'none';
         showUser.style.display = 'block';
+        appendData();
     })
 
     addUserBtn.addEventListener('click', () => {
@@ -158,31 +178,26 @@ if (showUserBtn) {
     sendStatus.addEventListener('click', () => {
         suspension();
     })
+    addUser.addEventListener('click', () => {
+        addUserData();
+    })
 
-
-/*    fetch('../data/users.json')
-        .then(function (response) {
-            return response.json();
-        })
-        .then(function (data) {
-            appendData(data);
-        })
-        .catch(function (err) {
-            console.log('error: ' + err);
-        });*/
-
-    function appendData(data) {
+    async function appendData() {
+        const response = await fetch(`${host}/api/admin/showUser`, {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json",
+            },
+        });
+        const data = await response.json();
         const mainContainer = document.getElementById("myData");
         const listOfUser = document.getElementById('listOfUser');
-        const removeUser = document.getElementById('removeUser');
-        const editUser = document.getElementById('editUser');
         for (let i = 0; i < data.length; i++) {
             const li = document.createElement("li");
             li.classList.add("userRow");
             li.setAttribute('id', "" + (i + 1));
             li.innerHTML = 'Name: ' + data[i].name + '&nbsp&nbsp&nbsp&nbsp&nbspEmail: ' + data[i].email + '&nbsp&nbsp&nbsp&nbsp&nbspType: ' + data[i].type + '&nbsp&nbsp&nbsp&nbsp&nbspStatus: ' + data[i].status
-                + '&nbsp&nbsp&nbsp&nbsp&nbsp' + '<div class="REBtns"><button class="removeUser" id="removeUser"><span class="material-symbols-outlined">delete</span></button>'
-                + '<button class="editUser" id="editUser"><span class="material-symbols-outlined">edit_note</span></button></div>';
+                + '&nbsp&nbsp&nbsp&nbsp&nbsp';
             console.log(data);
             mainContainer.appendChild(listOfUser);
             listOfUser.appendChild(li);
@@ -192,8 +207,10 @@ if (showUserBtn) {
 const editUser = document.getElementById('editUser');
 if (editUser) {
     editUser.addEventListener('click', () => {
-        showUser.style.display = 'none';
-        userStatusModel.style.display = 'block';
+        document.getElementById('userNameDetails').readOnly = false;
+        document.getElementById('userEmailDetails').readOnly = false;
+        document.getElementById('userPasswordDetails').readOnly = false;
+        document.getElementById('userPermissions').readOnly = false;
     })
 }
 
@@ -213,22 +230,14 @@ const LoginData = async () => {
         },
         body: JSON.stringify(data),
     });
-    const handleResponse = {
-        200:
-            ({location = "homePage.html"}) => {
-                window.location.href = location;
-            },
-        401: () => {
-            alert(response.status + ": " + response.data);
-        },
-        403: () => {
-            alert("user in suspension!");
-        }
-    };
+    if (response.status === 200) {
+        location = "homePage.html"
+        window.location.href = location;
+    }
     const body = await response.json();
-    const handler = handleResponse[response.status];
-    if (handler) {
-        handler(body);
+    if (body.message) {
+        alert((body.message));
+        location.reload();
     }
 };
 
@@ -240,21 +249,18 @@ const signupData = async () => {
         email: document.getElementById("Email").value,
         password: document.getElementById("C-Password").value,
     }
-    await fetch(host + '/api/signUp', {
+    const response = await fetch(host + '/api/signUp', {
         method: 'POST',
         headers: {
             "Content-Type": "application/json",
         },
         body: JSON.stringify(data)
     })
-        .then(response => {
-            //console.log(response))
-            // window.location.href=response.headers.Location;
-            if (response.status === 401) {
-                location.reload();
-                alert("ERROR 401: Email already exists");
-            }
-        })
+    const body = await response.json();
+    if (body.message) {
+        alert((body.message));
+        location.reload();
+    }
 }
 
 
@@ -269,18 +275,11 @@ const forgotPassword = async () => {
         },
         body: JSON.stringify(data),
     });
-    const handleResponse = {
-        200:
-            () => {
-                location.reload();
-                alert("A new password has been sent to the email");
-            },
-        403:
-            () => {
-                location.reload();
-                alert("Email does not exist");
-            },
-    };
+    const body = await response.json();
+    if (body.message) {
+        alert((body.message));
+        location.reload();
+    }
 }
 
 const emailConfirmation = async () => {
@@ -298,24 +297,10 @@ const emailConfirmation = async () => {
         body: JSON.stringify(data),
     });
 
-    const handleResponse = {
-        200: () => {
-            location.reload();
-            alert("User was added")
-        },
-        403: () => {
-            alert("OTP code is false");
-        },
-        401: () => {
-            console.log("401")
-            location.reload();
-            alert("Verification Error");
-        }
-    };
     const body = await response.json();
-    const handler = handleResponse[response.status];
-    if (handler) {
-        handler(body);
+    if (body.message) {
+        alert((body.message));
+        location.reload();
     }
 };
 
@@ -381,17 +366,18 @@ const suspension = async () => {
         "suspensionTime": suspensionTime,
         "userStatus": suspendedBut
     };
-
-    const response = await fetch(`${host}/api/suspension`, {
-
+    const response = await fetch(`${host}/api/admin/suspension`, {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
         },
         body: JSON.stringify(data),
     });
-}
-
+    const body = await response.json();
+    if (body.message) {
+        alert((body.message));
+    }
+};
 
 function openDateForm() {
     let checkRadio = document.querySelector(
@@ -453,3 +439,22 @@ function openDateForm() {
 //         });
 //     });
 // });
+const addUserData = async () => {
+    const data = {
+        name: document.getElementById("userFullName").value,
+        email: document.getElementById("userEmail").value,
+        password: document.getElementById("userPassword").value
+    };
+    const response = await fetch(`${host}/api/admin/addUser`, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+    });
+    const body = await response.json();
+    if (body.message) {
+        alert((body.message));
+    }
+};
+

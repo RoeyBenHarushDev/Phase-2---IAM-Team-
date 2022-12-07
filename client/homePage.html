@@ -65,7 +65,7 @@
                 </label><br>
             </div>
             <div class="rightBtn">
-                <button type="submit" class="createUser">Add New User</button>
+                <button type="button" class="createUser" id="addUser">Add New User</button>
             </div>
         </form>
     </div>
@@ -87,9 +87,36 @@
                 </form>
             </div>
             <div id="disp"></div>
-            <input type="submit" value="SEND" id="sendStatus">
+            <input type="button" value="SEND" id="sendStatus">
         </div>
     </form>
+    <div class="userDetailsModel">
+        <h1>User Details</h1>
+        <div class="userDetails">
+            <label for="userNameDetails" class="editable">User Name:
+                <input type="text" id="userNameDetails" value="Roey Ben Harush" readonly>
+            </label>
+            <label for="userEmailDetails" class="editable">User Email
+                <input type="text" id="userEmailDetails" readonly>
+            </label>
+            <label for="userPasswordDetails" class="editable">User Password:
+                <input type="text" id="userPasswordDetails" readonly>
+            </label>
+            <label for="userPermissions" class="editable">User permission:
+            <input list="permission" id="userPermissions" >
+            <datalist id="permission">
+                <option value="User"></option>
+                <option value="Admin"></option>
+            </datalist>
+            </label>
+        </div>
+
+            <div class="userUpdateBtn">
+                <button class="removeUser" id="removeUser">Remove User</button>
+                <button class="saveUser" id="saveUser">SAVE</button>
+                <button class="editUser" id="editUser">Edit User</button>
+            </div>
+    </div>
 </section>
 <section class="rightBar">
     <h1>Weekly tasks</h1>

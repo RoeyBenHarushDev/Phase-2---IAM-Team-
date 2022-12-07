@@ -1,6 +1,8 @@
 const User = require('../models/users');
+const bcrypt = require("bcrypt");
 
-const getUserByEmail= async (mail) =>{
+
+const getUserByEmail = async (mail) => {
     return User.findOne({email: mail});
 }
 
@@ -12,12 +14,43 @@ async function updateUser(mail, params) {
 
 async function addDoc(obj) {
     const result = await obj.save();
-    console.log("res "+result);
     if (result) {
-        console.log("new user was added");
+        return;
     } else {
-        throw new Error("Error while saving new user");
+        throw new Error("Error while saving new object");
     }
 }
 
-module.exports = {getUserByEmail, updateUser, addDoc};
+function typeUser(user) {
+    let domain = user.email.split("@");
+    domain = domain[1].split(".");
+    console.log(domain)
+    if (domain.find(element => element === "shenkar")) {
+        return "admin"
+    } else {
+        return "user"
+    }
+}
+
+ const addUser= async (user) => {
+    user.password = await bcrypt.hash(user.password, 12);
+     console.log(user.email)
+    const domain = typeUser(user)
+    const newUser = new User({
+        "name": user.name,
+        "email": user.email,
+        "password": user.password,
+        "type": domain});
+    await addDoc(newUser);
+}
+
+ const showAll = async () => {
+     const found = await User.find({});
+     return found;
+ }
+
+const deleteUser = async (mail) => {
+    User.deleteOne({ email:mail })
+}
+
+module.exports = {getUserByEmail, updateUser, addDoc, addUser, showAll,deleteUser};

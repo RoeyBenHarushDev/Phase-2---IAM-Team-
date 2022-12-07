@@ -91,9 +91,7 @@ input{
 }
 
 
-.submitButton, #sendStatus {
-    background-image:linear-gradient(120deg, turquoise, rgba(0, 0, 0, 0.9));
-    margin: 15px auto auto;
+.submitButton, #sendStatus, .removeUser, .editUser, .saveUser {
     display:flex;
     width:180px;
     height:45px;
@@ -102,12 +100,32 @@ input{
     font-family: 'Righteous', cursive;
     cursor:pointer;
     border: none;
-    border-radius: 20px;
+    border-radius: 10px;
     transition: transform 0.5s;
     justify-content:center;
 }
+.createUser{
+    display:flex;
+    width:280px;
+    height:45px;
+    background-image:linear-gradient(120deg, turquoise, rgba(0, 0, 0, 0.9));
+    border: 2px solid turquoise;
+    color: #FFF;
+    font-size: 30px;
+    font-family: 'Righteous', cursive;
+    cursor:pointer;
+    border-radius: 10px;
+    transition: transform 0.5s;
+    margin: 40px auto auto;
+    justify-content:center;
+}
+.submitButton, #sendStatus, .saveUser{
+    background-image:linear-gradient(120deg, turquoise, rgba(0, 0, 0, 0.9));
+    border: 2px solid turquoise;
+    margin: 15px auto auto;
+}
 
-.submitButton:hover ,#sendStatus:hover {
+.submitButton:hover ,#sendStatus:hover, .removeUser:hover, .editUser:hover, .saveUser:hover, .createUser:hover  {
     transform: scale(1.1);
 }
 .loginByGoogle{
@@ -344,38 +362,6 @@ li{
     display: none;
 }
 
-.removeUser{
-    margin-right: 20px;
-    margin-top: 2px;
-    border: 2px solid pink;
-    border-radius: 10px;
-    background-color: red;
-    cursor: pointer;
-    transition: transform 0.5s;
-}
-.editUser{
-    position: relative;
-    margin-top: 2px;
-    width: 37px;
-    border: 2px solid yellow;
-    border-radius: 10px;
-    background-color: orange;
-    cursor: pointer;
-    transition: transform 0.5s;
-}
-#removeUser{
-    color: #3a0101;
-    transition: transform 0.5s;
-}
-#removeUser:hover , .removeUser:hover{
-    transform: scale(1.2);
-}
-#editUser{
-    color: black;
-}
-#editUser:hover , .editUser:hover{
-    transform: scale(1.2);
-}
 
 .rightBar{
     width: 15%;
@@ -448,15 +434,11 @@ h4{
 }
 .addUsers{
     text-align: center;
-    display: none;
+    display: block;
 }
 .addUserHeader{
     margin-top: -60px;
     font-size: 45px;
-}
-.leftForm{
-    float: left;
-    margin-left: 200px;
 }
 h3{
     font-size: 20px;
@@ -489,26 +471,7 @@ h3{
 #backAddUsers:hover, #backShowUsers:hover{
     color: turquoise;
 }
-.createUser{
-    border: 5px solid black;
-    padding: 15px;
-    border-radius: 15px;
-    margin-top: 40px;
-    background: transparent;
-    font-family: 'Comfortaa', cursive;
-    font-size: 60px;
-    font-weight: bolder;
-    cursor: pointer;
-    transition: transform 0.5s;
-    height: 400px;
-    width: 200px;
-}
-.createUser:hover{
-    border: 6px solid gray;
-    background-color: black;
-    color: white;
-    transform: scale(1.1);
-}
+
 .welcomeMessage h1{
     text-align: center;
     margin-top: 20%;
@@ -537,7 +500,7 @@ h3{
     left: 70px;
 }
 #userStatusModel{
-    display: block;
+    display: none;
 }
 .current{
     text-align: center;
@@ -576,4 +539,51 @@ h3{
 .REBtns{
     display: inline-block;
 }
-
+.userDetailsModel{
+    display: none;
+    flex-direction: column;
+    align-items: center;
+}
+.userDetailsModel h1{
+    text-align: center;
+    font-size: 30px;
+}
+.userDetails{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 80px;
+}
+.userDetails input[type="text"], .userDetails input[list="permission"]{
+    margin-bottom: 40px;
+    border: none;
+    border-radius: 10px;
+    font-family: 'Righteous', cursive;
+    background-color: rgba(255, 255, 255, 0.37);
+    width: 300px;
+    height: 30px;
+    color: #13588a;
+}
+.editable{
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+}
+.userUpdateBtn{
+    display: flex;
+   margin-top: 20px;
+}
+.removeUser{
+    background-image:linear-gradient(120deg, #d51717, rgba(0, 0, 0, 0.9));
+    border: 2px solid rgba(255, 0, 0, 0.57);
+    margin: 15px auto auto;
+    font-size: 24px;
+    padding-top: 6px;
+}
+.editUser{
+    background-image:linear-gradient(120deg, #d58317, rgba(0, 0, 0, 0.9));
+    border: 2px solid orange;
+    margin: 15px auto auto;
+    font-size: 24px;
+    padding-top: 6px;
+}
