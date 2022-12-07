@@ -5,5 +5,6 @@ const adminRoute = new express.Router()
 
 adminRoute.post('/suspension', suspendController.handleSuspend)
 adminRoute.post('/addUser', suspendController.handleAddUser)
-adminRoute.get('/addUser', suspendController.handleShowUser)
+adminRoute.get('/showUser', suspendController.handleShowUser)
+adminRoute.delete('/deleteUser/email:', suspendController.handleDeleteUser)
 module.exports= { adminRoute }
