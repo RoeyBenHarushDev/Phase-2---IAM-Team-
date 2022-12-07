@@ -5,7 +5,7 @@ const {constructResponse} = require('../utils/utils');
 async function handleConfirmCode(req, res) {
     try {
         await confirmCode.otpCompare(req.body);
-        return res.status(200)
+        return res.status(200).json("user-edit")
     } catch (e) {
        return  res.status(401).json({message: e.message});
     }
