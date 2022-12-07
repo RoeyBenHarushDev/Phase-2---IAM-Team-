@@ -3,7 +3,6 @@ const app = express();
 require('../services/AuthService')
 const login =  require('./login_route')
 const session = require('express-session');
-const login_controller = require('../controllers/login_controller');
 const bodyParser = require('body-parser');
 const forgotPassword= require("./forgotPassword_route")
 const signUp = require("./signUp_route");
@@ -15,6 +14,8 @@ const passport = require('passport');
 const path = require("path");
 const logger = require("morgan");
 const fs = require('fs');
+const login_controller = require('../controllers/login_controller');
+const {loginRouter} = require("./login_route");
 const accessLogStream = fs.createWriteStream(path.join(__dirname,'logs.log'),{flags: 'a'})
 
 require('dotenv').config({ path: path.join(process.cwd() + "/data/",".env") });
@@ -43,11 +44,16 @@ app.get('/',(req,res)=>{
     res.sendFile(path.join(__dirname ,"index.html"))
 });
 app.use('/api/googleLogIn',passport.authenticate('google', {scope : ['email','profile']}));
-app.use('/google/callback',passport.authenticate('google', {successRedirect : '/homePage',failureRedirect:'/authFailure'}));
-app.get('/homePage', isLoggedIn, (req,res)=>{
-    console.log("google Auth Succeeded")
+
+app.use('/google/callback',passport.authenticate('google', {successRedirect : '/homePage.html',failureRedirect:'/authFailure'}));
+
+
+app.get('/homePage', login_controller.authenticateToken, (req,res)=>{
+
+    console.log(res);
     res.sendFile(path.join(__dirname ,"../client/homePage.html"))
 });
+
 app.get('/authFailure',(req,res)=>{
     console.log("google auth failed")
     res.send('Something Went Wrong..')

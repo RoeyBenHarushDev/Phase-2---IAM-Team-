@@ -262,8 +262,8 @@ const LoginData = async () => {
         body: JSON.stringify(data),
     });
     if (response.status === 200) {
-        location = "homePage.html";
-        window.location.href = "homePage.html";
+/*        location = "homePage.html";
+        window.location.href = "homePage.html";*/
     }
     const body = await response.json();
     if (body.message) {
