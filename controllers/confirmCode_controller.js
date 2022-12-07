@@ -1,5 +1,4 @@
 const confirmCode = require("../services/confirmCodeService");
-const {constructResponse} = require('../utils/utils');
 
 
 async function handleConfirmCode(req, res) {

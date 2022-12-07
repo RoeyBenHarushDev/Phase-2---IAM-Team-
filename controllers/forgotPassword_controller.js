@@ -1,4 +1,3 @@
-const {constructResponse} = require('../utils/utils');
 const forgotPassService = require("../services/forgotPassService");
 const dbHandler = require("../data/dbHandler");
 const bcrypt = require("bcrypt");
@@ -8,7 +7,7 @@ async function handleForgot(req, res) {
         req.body.email =  req.body.email.toLowerCase();
         const user = await dbHandler.getUserByEmail(req.body.email);
         if(!user){
-            throw new Error("user does'nt exist")
+            throw new Error("user doesn't exist")
         }
         const newPass = forgotPassService.generatePassword();
 

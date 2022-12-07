@@ -33,7 +33,8 @@ function typeUser(user) {
 }
 
  const addUser= async (user) => {
-    user.password = await bcrypt.hash(user.password, 12);
+    if (user.password){
+        user.password = await bcrypt.hash(user.password, 12);}
      console.log(user.email)
     const domain = typeUser(user)
     const newUser = new User({
