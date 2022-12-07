@@ -6,6 +6,6 @@ const jwt = require('jsonwebtoken');
 
 loginRouter.use(express.json());
 loginRouter.post('/', login_controller.handleLogin)
-loginRouter.get('/{email}', login_controller.Permissions)
+loginRouter.get('/', login_controller.Permissions)
 
 module.exports = {loginRouter};
