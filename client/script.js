@@ -134,6 +134,7 @@ if (showUserBtn) {
         welcomeMessage.style.display = 'none';
         userStatusModel.style.display = 'none';
         showUser.style.display = 'block';
+        appendData();
     })
 
     addUserBtn.addEventListener('click', () => {
@@ -164,22 +165,16 @@ if (showUserBtn) {
         addUserData();
     })
 
-    /*    fetch('../data/users.json')
-            .then(function (response) {
-                return response.json();
-            })
-            .then(function (data) {
-                appendData(data);
-            })
-            .catch(function (err) {
-                console.log('error: ' + err);
-            });*/
-
-    function appendData(data) {
+    async function appendData() {
+        const response = await fetch(`${host}/api/admin/showUser`, {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json",
+            },
+        });
+        const data = await response.json();
         const mainContainer = document.getElementById("myData");
         const listOfUser = document.getElementById('listOfUser');
-        const removeUser = document.getElementById('removeUser');
-        const editUser = document.getElementById('editUser');
         for (let i = 0; i < data.length; i++) {
             const li = document.createElement("li");
             li.classList.add("userRow");
@@ -492,20 +487,9 @@ const addUserData = async () => {
         },
         body: JSON.stringify(data),
     });
-
-    const handleResponse = {
-        200: () => {
-            alert(" add new user")
-            location.reload();
-        },
-        401: () => {
-            alert("The user already exists");
-        },
-    };
     const body = await response.json();
-    const handler = handleResponse[response.status];
-    if (handler) {
-        handler(body);
+    if (body.message) {
+        alert((body.message));
     }
 };
 

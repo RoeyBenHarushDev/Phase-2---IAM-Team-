@@ -20,25 +20,35 @@ async function handleSuspend(request, response) {
 
 async function handleAddUser(req, res) {
     try {
+        if (!req.body) throw new Error("no email")
         let newUser = req.body;
         newUser.email = newUser.email.toLowerCase();
 
-        const user = await dbHandler.getUserByEmail(newUser.email);
-        if (user) {
+            const user = await dbHandler.getUserByEmail(newUser.email);
+        if (user)
             throw new Error("user already exists")
-        }
         await dbHandler.addUser(newUser)
         return constructResponse(res, {}, 200);
     } catch (e) {
+        if(e.message === "no email") res.status
         return constructResponse(res, {}, 401);
     }
 }
-async function handleShowUser(req, res) {
 
+async function handleShowUser(req, res) {
+    const showAllUser = await dbHandler.showAll();
+    const a =JSON.stringify(showAllUser)
+    res.send(a);
 }
 
+async function handleDeleteUser(req, res) {
+    const user = await dbHandler.getUserByEmail(req.body.email);
+    if (user) {
+        await dbHandler.deleteUser(user.email);
+    }
+}
 
-module.exports = {handleSuspend, handleAddUser, handleShowUser}
+module.exports = {handleSuspend, handleAddUser, handleShowUser, handleDeleteUser}
 
 
 
