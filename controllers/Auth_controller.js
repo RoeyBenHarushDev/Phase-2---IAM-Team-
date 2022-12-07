@@ -1,14 +1,11 @@
 const Auth = require("../services/AuthService");
-const {constructResponse} = require('../utils/utils');
 
-
-
-async function handleAuth(request,response) {
+async function handleAuth(req,res) {
     try {
         Auth
     } catch (e) {
         console.log(e);
-        return constructResponse(response, {error: e.message}, 401);
+        return res.status(401).json({message: e.message});
     }
 }
 
