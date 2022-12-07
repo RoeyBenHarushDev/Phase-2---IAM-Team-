@@ -48,7 +48,7 @@ try {
         console.log(`password correct! ${user.email} welcome`);
         const today=new Date();
         await dbHandler.updateUser(userEmail, {"loginDate": today})
-        return res.send(200)
+        return res.status(200)
     }
     return res.status(401).json({message:"incorrect password"});
 }catch(e) {

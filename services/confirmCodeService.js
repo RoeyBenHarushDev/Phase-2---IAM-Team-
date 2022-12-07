@@ -1,5 +1,3 @@
-const User = require("../models/users");
-const bcrypt = require('bcrypt');
 const dbHandler = require('../data/dbHandler');
 const OTP = require('../models/OTP-pass');
 

@@ -3,7 +3,7 @@ const {model,Schema} = require('mongoose');
 
 const userSchema = new Schema({
     name: {type: String , required: true },
-    email: {type: String, required: true},
+    email: {type: String, required: true, set: email => email.toLowerCase()},
     password: {type: String, required: true},
     loginDate: {type: Date, default: new Date()},
     type: {type: String, default: 'user'},
