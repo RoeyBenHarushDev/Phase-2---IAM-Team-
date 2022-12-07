@@ -185,8 +185,7 @@ if (showUserBtn) {
             li.classList.add("userRow");
             li.setAttribute('id', "" + (i + 1));
             li.innerHTML = 'Name: ' + data[i].name + '&nbsp&nbsp&nbsp&nbsp&nbspEmail: ' + data[i].email + '&nbsp&nbsp&nbsp&nbsp&nbspType: ' + data[i].type + '&nbsp&nbsp&nbsp&nbsp&nbspStatus: ' + data[i].status
-                + '&nbsp&nbsp&nbsp&nbsp&nbsp' + '<div class="REBtns"><button class="removeUser" id="removeUser"><span class="material-symbols-outlined">delete</span></button>'
-                + '<button class="editUser" id="editUser"><span class="material-symbols-outlined">edit_note</span></button></div>';
+                + '&nbsp&nbsp&nbsp&nbsp&nbsp';
             console.log(data);
             mainContainer.appendChild(listOfUser);
             listOfUser.appendChild(li);
@@ -196,8 +195,10 @@ if (showUserBtn) {
 const editUser = document.getElementById('editUser');
 if (editUser) {
     editUser.addEventListener('click', () => {
-        showUser.style.display = 'none';
-        userStatusModel.style.display = 'block';
+        document.getElementById('userNameDetails').readOnly = false;
+        document.getElementById('userEmailDetails').readOnly = false;
+        document.getElementById('userPasswordDetails').readOnly = false;
+        document.getElementById('userPermissions').readOnly = false;
     })
 }
 
