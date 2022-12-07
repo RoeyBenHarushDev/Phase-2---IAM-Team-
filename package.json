@@ -30,11 +30,7 @@
     "start": "node index.js"
   },
   "devDependencies": {
-<<<<<<< HEAD
-    "nodemon": "^2.0.20"
-=======
     "eslint": "^8.29.0",
     "eslint-config-google": "^0.14.0"
->>>>>>> 276fd611e9e25b70a6a7912999db9f35e930af41
   }
 }
