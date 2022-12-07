@@ -1,60 +1,56 @@
-// const path = require("path");
-// const fs = require("fs");
-// const { channel } = require("diagnostics_channel");
-// const { stringify } = require("querystring");
-// const userJson = require("../data/users.json")
-// const JSON = require("JSON");
+const User = require('../models/users');
+const bcrypt = require("bcrypt");
 
 
-// module.exports =  { updateUser }
-
-const fs = require("fs");
-const JSON = require("JSON");
-const userJson = require("./users.json");
-
-const getUserByEmail = (email) => {
-    const user = userJson.find(user => user.email === email);
-     if(!user) throw new Error("User doesn't exist");
-     return user;
+const getUserByEmail = async (mail) => {
+    return User.findOne({email: mail});
 }
 
-// Update user from JSON
-function updateUser(email, params) {
-    userJson.forEach(function (i) {
-        if (i.email === email) {
-            Object.keys(params).forEach(key => {
-                i[key] = params[key];
-            })
-        }
-    })
-    const json = JSON.stringify(userJson)
-    fs.writeFile(process.cwd() + "/data/users.json", json, 'utf-8', callback => {
-        // server.logger.log("wrote file successfully")
-    })
+async function updateUser(mail, params) {
+    const filter = {email: mail};
+    const update = params;
+    await User.findOneAndUpdate(filter, update);
 }
 
-const addUser = (new_user) => {
-    try {
-        let json
-        let obj = {
-            name: new_user.name,
-            email: new_user.email,
-            password: new_user.password,
-            loginDate: new_user.loginDate,
-            type: new_user.type,
-            status: new_user.status,
-            suspensionTime: new_user.suspensionTime,
-            suspensionDate: new_user.suspensionDate
-        }
-        userJson.push(obj)
-
-        json = JSON.stringify(userJson)
-        fs.writeFile(process.cwd() + "/data/users.json", json, 'utf-8', callback => {
-            // server.logger.log("wrote file successfully")
-        })
-    } catch (err) {
-        console.error({err});
+async function addDoc(obj) {
+    const result = await obj.save();
+    if (result) {
+        return;
+    } else {
+        throw new Error("Error while saving new object");
     }
 }
 
-module.exports = {getUserByEmail, updateUser, addUser};
+function typeUser(user) {
+    let domain = user.email.split("@");
+    domain = domain[1].split(".");
+    console.log(domain)
+    if (domain.find(element => element === "shenkar")) {
+        return "admin"
+    } else {
+        return "user"
+    }
+}
+
+ const addUser= async (user) => {
+    user.password = await bcrypt.hash(user.password, 12);
+     console.log(user.email)
+    const domain = typeUser(user)
+    const newUser = new User({
+        "name": user.name,
+        "email": user.email,
+        "password": user.password,
+        "type": domain});
+    await addDoc(newUser);
+}
+
+ const showAll = async () => {
+     const found = await User.find({});
+     return found;
+ }
+
+const deleteUser = async (mail) => {
+    User.deleteOne({ email:mail })
+}
+
+module.exports = {getUserByEmail, updateUser, addDoc, addUser, showAll,deleteUser};

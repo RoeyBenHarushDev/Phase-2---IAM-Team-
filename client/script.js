@@ -20,7 +20,8 @@ const Password = document.getElementById("Password");
 const CPassword = document.getElementById("C-Password");
 const message = document.getElementById('message');
 const googleLogIn = document.getElementById('googleLogIn');
-// const host = process.env.clientHost || 'http://localhost:5000';
+const addUser = document.getElementById('addUser');
+// const host = process..env.clientHost || 'http://localhost:5000';
 const host = window.location.origin
 /*===========================mongoDB=========================*/
 // const express = require("express");
@@ -82,18 +83,36 @@ if (selectButton) {
         forgotPassword();
     })
     SubmitOTPForm.addEventListener('click', () => {
+        clearInterval(timer);
         emailConfirmation();
     })
+
+    let timer
+
     submitRegisterForm.addEventListener('click', async () => {
         if ((Password.value === CPassword.value) && (Password.value !== '' && CPassword.value !== '')) {
             registerForm.style.display = "none";
             VerifyByEmail.style.display = 'block';
-            try {
-                await signupData();
-                return true;
-            }catch(err){
-                console.log(err)
-            }
+            timer = setInterval(async function () {
+                const data = {
+                    email: document.getElementById("Email").value,
+                }
+                const response = await fetch(host + '/api/deleteAfter15', {
+                    method: 'POST',
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify(data)
+                })
+                const body = await response.json();
+                if (body.message) {
+                    alert((body.message));
+                    location.reload();
+                }
+            }, 900000)
+            await signupData();
+            return true;
+
         } else {
             alert("Please check if :\n\n1. You fill out all the fields\n2. Password isn't empty!\n3. Password are the Same!");
             return false;
@@ -123,6 +142,7 @@ const welcomeMessage = document.getElementById('welcomeMessage');
 const backShowUsers = document.getElementById('backShowUsers');
 const logOutBtn = document.getElementById('logOutBtn');
 const userStatusModel = document.getElementById('userStatusModel');
+const userDetailsModel = document.getElementById('userDetailsModel');
 // const userForm = document.getElementById('userForm');
 
 
@@ -131,25 +151,30 @@ if (showUserBtn) {
         addUsers.style.display = 'none';
         welcomeMessage.style.display = 'none';
         userStatusModel.style.display = 'none';
+        userDetailsModel.style.display = 'none';
         showUser.style.display = 'block';
+        appendData();
     })
 
     addUserBtn.addEventListener('click', () => {
         showUser.style.display = 'none';
         welcomeMessage.style.display = 'none';
         userStatusModel.style.display = 'none';
+        userDetailsModel.style.display = 'none';
         addUsers.style.display = 'block';
     })
     backAddUsers.addEventListener('click', () => {
         addUsers.style.display = 'none';
         showUser.style.display = 'none';
         userStatusModel.style.display = "none";
+        userDetailsModel.style.display = 'none';
         welcomeMessage.style.display = 'block';
     })
     backShowUsers.addEventListener('click', () => {
         addUsers.style.display = 'none';
         showUser.style.display = 'none';
         userStatusModel.style.display = "none";
+        userDetailsModel.style.display = 'none';
         welcomeMessage.style.display = 'block';
     })
     logOutBtn.addEventListener('click', () => {
@@ -158,45 +183,127 @@ if (showUserBtn) {
     sendStatus.addEventListener('click', () => {
         suspension();
     })
+    addUser.addEventListener('click', () => {
+        addUserData();
+    })
 
-
-    fetch('../data/users.json')
-        .then(function (response) {
-            return response.json();
-        })
-        .then(function (data) {
-            appendData(data);
-        })
-        .catch(function (err) {
-            console.log('error: ' + err);
+    async function appendData() {
+        const response = await fetch(`${host}/api/admin/showUser`, {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json",
+            },
         });
+        const data = await response.json();
+        const table = document.createElement('table');
+        const thead = document.createElement('thead');
+        const tbody = document.createElement('tbody');
+        const userTitle = document.createElement('tr');
+        const nameHeading = document.createElement('th');
+        nameHeading.innerHTML = "Name";
+        const emailHeading = document.createElement('th');
+        emailHeading.innerHTML = "E-mail";
+        const typeHeading = document.createElement('th');
+        typeHeading.innerHTML = "Type";
+        const statusHeading = document.createElement('th');
+        statusHeading.innerHTML = "Status";
 
-    function appendData(data) {
-        const mainContainer = document.getElementById("myData");
-        const listOfUser = document.getElementById('listOfUser');
-        const removeUser = document.getElementById('removeUser');
-        const editUser = document.getElementById('editUser');
+
+        table.appendChild(thead);
+        table.appendChild(tbody);
+
+// Adding the entire table to the body tag
+        const myData = document.getElementById("myData").appendChild(table);
+
+
+        userTitle.appendChild(nameHeading);
+        userTitle.appendChild(emailHeading);
+        userTitle.appendChild(typeHeading);
+        userTitle.appendChild(statusHeading);
+        thead.appendChild(userTitle);
+
+        const userDbBtn = document.createElement('button');
         for (let i = 0; i < data.length; i++) {
-            const li = document.createElement("li");
-            li.classList.add("userRow");
-            li.setAttribute('id', "" + (i + 1));
-            li.innerHTML = 'Name: ' + data[i].name + '&nbsp&nbsp&nbsp&nbsp&nbspEmail: ' + data[i].email + '&nbsp&nbsp&nbsp&nbsp&nbspType: ' + data[i].type + '&nbsp&nbsp&nbsp&nbsp&nbspStatus: ' + data[i].status
-                + '&nbsp&nbsp&nbsp&nbsp&nbsp' + '<div class="REBtns"><button class="removeUser" id="removeUser"><span class="material-symbols-outlined">delete</span></button>'
-                + '<button class="editUser" id="editUser"><span class="material-symbols-outlined">edit_note</span></button></div>';
-            console.log(data);
-            mainContainer.appendChild(listOfUser);
-            listOfUser.appendChild(li);
+
+            const userDbBtn = document.createElement('button');
+            let userDb = myData.insertRow(i);
+            userDbBtn.classList.add("userDbBtn");
+            userDbBtn.setAttribute('id', data[i].email);
+            userDbBtn.setAttribute('type', "button");
+            const userEmail = data[i].email;
+
+            let userDbRow_1 = document.createElement('td');
+            userDbRow_1.innerHTML = data[i].name;
+            let userDbRow_2 = document.createElement('td');
+            userDbRow_2.innerHTML = data[i].email;
+            let userDbRow_3 = document.createElement('td');
+            userDbRow_3.innerHTML = data[i].type;
+            let userDbRow_4 = document.createElement('td');
+            userDbRow_4.innerHTML = data[i].status;
+            userDbBtn.innerHTML = "Show User";
+
+            userDb.appendChild(userDbRow_1);
+            userDb.appendChild(userDbRow_2);
+            userDb.appendChild(userDbRow_3);
+            userDb.appendChild(userDbRow_4);
+            userDb.appendChild(userDbBtn);
+            tbody.appendChild(userDb);
+        }
+
+        const showUserToEdit = document.querySelectorAll('.userDbBtn');
+        for (let i = 0; i < data.length; i++) {
+            showUserToEdit[i].addEventListener('click', () => {
+                    addUsers.style.display = 'none';
+                    showUser.style.display = 'none';
+                    userStatusModel.style.display = "none";
+                    userDetailsModel.style.display = 'block';
+            })
         }
     }
 }
-const editUser = document.getElementById('editUser');
-if (editUser) {
-    editUser.addEventListener('click', () => {
-        showUser.style.display = 'none';
-        userStatusModel.style.display = 'block';
+
+const backStatusUsers = document.getElementById('backStatusUsers');
+if(backStatusUsers){
+    backStatusUsers.addEventListener('click', ()=>{
+        addUsers.style.display = 'none';
+        userStatusModel.style.display = "none";
+        userDetailsModel.style.display = 'none';
+        showUser.style.display = 'block';
     })
 }
 
+// const myData = document.getElementById('myData');
+
+
+const editUser = document.getElementById('editUser');
+if (editUser) {
+    editUser.addEventListener('click', () => {
+        document.getElementById('userNameDetails').readOnly = false;
+        document.getElementById('userPasswordDetails').readOnly = false;
+        document.getElementById('userPermissions').readOnly = false;
+    })
+}
+
+const changeStatus = document.getElementById('changeStatus');
+if(changeStatus){
+    changeStatus.addEventListener('click', ()=>{
+        addUsers.style.display = 'none';
+        showUser.style.display = 'none';
+        userStatusModel.style.display = "none";
+        userDetailsModel.style.display = 'none';
+        userStatusModel.style.display = 'block';
+    })
+}
+const backDetailsUsers = document.getElementById('backDetailsUsers');
+if(backDetailsUsers){
+    backDetailsUsers.addEventListener('click', ()=>{
+        addUsers.style.display = 'none';
+        userStatusModel.style.display = "none";
+        userDetailsModel.style.display = 'none';
+        userStatusModel.style.display = 'none';
+        showUser.style.display = 'block';
+    })
+}
 
 //login
 
@@ -213,22 +320,14 @@ const LoginData = async () => {
         },
         body: JSON.stringify(data),
     });
-    const handleResponse = {
-        200:
-            ({location = "homePage.html"}) => {
-                window.location.href = location;
-            },
-        401: () => {
-            alert(response.status + ": " + response.statusText);
-        },
-        403: () => {
-            alert("user in suspention!");
-        }
-    };
+    if (response.status === 200) {
+        location = "homePage.html";
+        window.location.href = "homePage.html";
+    }
     const body = await response.json();
-    const handler = handleResponse[response.status];
-    if (handler) {
-        handler(body);
+    if (body.message) {
+        alert((body.message));
+        // location.reload();
     }
 };
 
@@ -240,21 +339,18 @@ const signupData = async () => {
         email: document.getElementById("Email").value,
         password: document.getElementById("C-Password").value,
     }
-    await fetch(host + '/api/signUp', {
+    const response = await fetch(host + '/api/signUp', {
         method: 'POST',
         headers: {
             "Content-Type": "application/json",
         },
         body: JSON.stringify(data)
     })
-        .then(response => {
-            //console.log(response))
-            // window.location.href=response.headers.Location;
-            if (response.status === 401) {
-                location.reload();
-                alert("ERROR 401: Email already exists");
-            }
-        })
+    const body = await response.json();
+    if (body.message) {
+        alert((body.message));
+        location.reload();
+    }
 }
 
 
@@ -269,18 +365,11 @@ const forgotPassword = async () => {
         },
         body: JSON.stringify(data),
     });
-    const handleResponse = {
-        200:
-            () => {
-                location.reload();
-                alert("A new password has been sent to the email");
-            },
-        403:
-            () => {
-                location.reload();
-                alert("Email does not exist");
-            },
-    };
+    const body = await response.json();
+    if (body.message) {
+        alert((body.message));
+        location.reload();
+    }
 }
 
 const emailConfirmation = async () => {
@@ -298,24 +387,10 @@ const emailConfirmation = async () => {
         body: JSON.stringify(data),
     });
 
-    const handleResponse = {
-        200: () => {
-            location.reload();
-            alert("User was added")
-        },
-        403: () => {
-            alert("OTP code is false");
-        },
-        401: () => {
-            console.log("401")
-            location.reload();
-            alert("Verification Error");
-        }
-    };
     const body = await response.json();
-    const handler = handleResponse[response.status];
-    if (handler) {
-        handler(body);
+    if (body.message) {
+        alert((body.message));
+        location.reload();
     }
 };
 
@@ -381,17 +456,18 @@ const suspension = async () => {
         "suspensionTime": suspensionTime,
         "userStatus": suspendedBut
     };
-
-    const response = await fetch(`${host}/api/suspension`, {
-
+    const response = await fetch(`${host}/api/admin/suspension`, {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
         },
         body: JSON.stringify(data),
     });
-}
-
+    const body = await response.json();
+    if (body.message) {
+        alert((body.message));
+    }
+};
 
 function openDateForm() {
     let checkRadio = document.querySelector(
@@ -453,3 +529,22 @@ function openDateForm() {
 //         });
 //     });
 // });
+const addUserData = async () => {
+    const data = {
+        name: document.getElementById("userFullName").value,
+        email: document.getElementById("userEmail").value,
+        password: document.getElementById("userPassword").value
+    };
+    const response = await fetch(`${host}/api/admin/addUser`, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+    });
+    const body = await response.json();
+    if (body.message) {
+        alert((body.message));
+    }
+};
+

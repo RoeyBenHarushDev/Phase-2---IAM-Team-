@@ -37,7 +37,6 @@
             arrow_back
         </span>
         <div class="usersTable" id="myData">
-            <ul id="listOfUser"></ul>
         </div>
     </div>
     <div class="addUsers" id="addUsers">
@@ -65,12 +64,15 @@
                 </label><br>
             </div>
             <div class="rightBtn">
-                <button type="submit" class="createUser">Add New User</button>
+                <button type="button" class="createUser" id="addUser">Add New User</button>
             </div>
         </form>
     </div>
     <form name="userStatusForm" class="userForm" action="#">
         <div class="userStatusModel" id="userStatusModel">
+            <span class="material-symbols-outlined" id="backStatusUsers">
+            arrow_back
+        </span>
             <label for="userChangeEmail" class="current">
                 <h1>Change User Status :</h1>
                 <h3>Enter User Email <span class="required">*</span></h3>
@@ -87,9 +89,40 @@
                 </form>
             </div>
             <div id="disp"></div>
-            <input type="submit" value="SEND" id="sendStatus">
+            <input type="button" value="SEND" id="sendStatus">
         </div>
     </form>
+    <div class="userDetailsModel" id="userDetailsModel">
+        <h1>User Details</h1>
+        <span class="material-symbols-outlined" id="backDetailsUsers">
+            arrow_back
+        </span>
+        <div class="userDetails" id="userDetails">
+            <label for="userNameDetails" class="editable">User Name:
+                <input type="text" id="userNameDetails" value="Roey Ben Harush" readonly>
+            </label>
+            <label for="userEmailDetails" class="editable">User Email
+                <input type="text" id="userEmailDetails" value="email" readonly>
+            </label>
+            <label for="userPasswordDetails" class="editable">User Password:
+                <input type="text" id="userPasswordDetails" readonly>
+            </label>
+            <label for="userPermissions" class="editable">User permission:
+                <input list="permission" id="userPermissions">
+                <datalist id="permission">
+                    <option value="User"></option>
+                    <option value="Admin"></option>
+                </datalist>
+            </label>
+            <button class="changeStatus" id="changeStatus">Change Status</button>
+        </div>
+
+        <div class="userUpdateBtn">
+            <button class="removeUser" id="removeUser">Remove User</button>
+            <button class="saveUser" id="saveUser">SAVE</button>
+            <button class="editUser" id="editUser">Edit User</button>
+        </div>
+    </div>
 </section>
 <section class="rightBar">
     <h1>Weekly tasks</h1>

@@ -1,7 +1,6 @@
 const { app } = require("./routers/mainRouter");
-const path = require('path');
-const logger = require("morgan"); // NOTE: for debugging
-const port = process.env.PORT || 8080;
-
+const port = process.env.PORT || 5000;
+const mongoose = require("mongoose");
+mongoose.set('strictQuery', true);
 
 app.listen(port,() => console.log(`Express server is running on port ${port}`));

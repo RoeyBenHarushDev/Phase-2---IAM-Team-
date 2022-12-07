@@ -1,15 +1,13 @@
-const js = require("../data/users.json");
-const list = require("../data/OTP-pass.json");
 const confirmCode = require("../services/confirmCodeService");
 const {constructResponse} = require('../utils/utils');
 
- function handleConfirmCode(request, response) {
-    const otp = confirmCode.otpCompare(request.body)
 
-    if(otp){
-        return constructResponse(response, {}, 200);
-    } else {
-        return constructResponse(response, {error: otp}, 401);
+async function handleConfirmCode(req, res) {
+    try {
+        await confirmCode.otpCompare(req.body);
+        return res.status(200)
+    } catch (e) {
+       return  res.status(401).json({message: e.message});
     }
 }
 

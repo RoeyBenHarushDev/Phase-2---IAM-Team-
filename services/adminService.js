@@ -1,24 +1,4 @@
-const dbHandler = require("../data/dbHandler")
-const {constructResponse} = require('../utils/utils');
-const fs = require("fs");
-
-
-async function handleSuspend(request, response) {
-    try {
-        const user = request.body;
-        await ifClosed(user);
-        const data = changeUserStatus(user);
-        await dbHandler.updateUser(user.email, data);
-        console.log(await dbHandler.getUserByEmail(user.email));
-        if(findUser){
-            throw new Error("user already exists");
-        }
-        return constructResponse(response, {}, 200);
-    } catch (e) {
-        if(e.message === 'user is closed'){ return constructResponse(response, {error: e.message}, 403);}
-        return constructResponse(response, {error: e.message}, 401);
-    }
-}
+const dbHandler = require("../data/dbHandler");
 
 async function ifClosed(userData) {
     const user = await dbHandler.getUserByEmail(userData.email);
@@ -53,7 +33,6 @@ function changeUserStatus(userData) {
     return data
 }
 
-module.exports = {handleSuspend}
 
 
-
+module.exports= {changeUserStatus, ifClosed }
