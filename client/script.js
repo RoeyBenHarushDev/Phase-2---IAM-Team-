@@ -20,7 +20,7 @@ const Password = document.getElementById("Password");
 const CPassword = document.getElementById("C-Password");
 const message = document.getElementById('message');
 const googleLogIn = document.getElementById('googleLogIn');
-const addUser =  document.getElementById('addUser');
+const addUser = document.getElementById('addUser');
 // const host = process.env.clientHost || 'http://localhost:5000';
 const host = window.location.origin
 /*===========================mongoDB=========================*/
@@ -83,13 +83,36 @@ if (selectButton) {
         forgotPassword();
     })
     SubmitOTPForm.addEventListener('click', () => {
+        clearInterval(timer);
         emailConfirmation();
     })
+
+    let timer
 
     submitRegisterForm.addEventListener('click', async () => {
         if ((Password.value === CPassword.value) && (Password.value !== '' && CPassword.value !== '')) {
             registerForm.style.display = "none";
             VerifyByEmail.style.display = 'block';
+            timer = setInterval(async function () {
+                const data = {
+                    email: document.getElementById("Email").value,
+                }
+                await fetch(host + '/api/deleteAfter15', {
+                    method: 'POST',
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify(data)
+                })
+                    .then(response => {
+                        console.log("!")
+                        //console.log(response))
+                        // window.location.href=response.headers.Location;
+                        // if (response.status === 401) {
+                        //     location.reload();
+                        //     alert("ERROR 401: Email already exists");
+                    })
+            },900000)
             try {
                 await signupData();
                 return true;
@@ -103,15 +126,19 @@ if (selectButton) {
     })
 
 
-    Password && CPassword.addEventListener('keyup', () => {
-        if (Password.value !== CPassword.value) {
-            message.innerHTML = "Not Matching";
-            message.style.color = "red";
-        } else {
-            message.innerHTML = "Matching";
-            message.style.color = "green";
-        }
-    })
+
+
+
+
+Password && CPassword.addEventListener('keyup', () => {
+    if (Password.value !== CPassword.value) {
+        message.innerHTML = "Not Matching";
+        message.style.color = "red";
+    } else {
+        message.innerHTML = "Matching";
+        message.style.color = "green";
+    }
+})
 
 }
 // editUser
@@ -229,8 +256,9 @@ const LoginData = async () => {
             alert("user in suspension!");
         },
         404: () => {
-        alert(response.status + ": " + response.statusText + "user doesn't exist");
-    }};
+            alert(response.status + ": " + response.statusText + "user doesn't exist");
+        }
+    };
     const body = await response.json();
     const handler = handleResponse[response.status];
     if (handler) {
@@ -312,7 +340,7 @@ const emailConfirmation = async () => {
     const handleResponse = {
         200: () => {
             location.reload();
-            alert(response.status + ": " + response.statusText +"User was added");
+            alert(response.status + ": " + response.statusText + "User was added");
         },
         403: () => {
             alert("401: code is expired, please sign up again");
