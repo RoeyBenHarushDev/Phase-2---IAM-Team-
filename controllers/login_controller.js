@@ -35,30 +35,44 @@ const handleLogin = async (req, res, next) => {
     const userEmail = req.body.email.toLowerCase();
     const userPassword = req.body.password;
     let user;
-try {
-    user = await dbHandler.getUserByEmail(userEmail) //maybe needs await in the start and in the end.lean()
-    console.log(user);
-    const suspend = await isSuspend(user);
-    if(suspend){
-        return constructResponse(res, {error: `User is suspended until ${isSuspend}`}, 401);}
-    if (await bcrypt.compare(userPassword, user.password)) {
-        console.log(`password correct! ${user.email} welcome`);
-        const today=new Date();
-        await dbHandler.updateUser(userEmail, {"loginDate": today})
-        return constructResponse(res, {}, 200);
+    try {
+        user = await dbHandler.getUserByEmail(userEmail) //maybe needs await in the start and in the end.lean()
+        console.log(user);
+        const suspend = await isSuspend(user);
+        if (suspend) {
+            return constructResponse(res, {error: `User is suspended until ${isSuspend}`}, 401);
+        }
+        if (await bcrypt.compare(userPassword, user.password)) {
+            console.log(`password correct! ${user.email} welcome`);
+            const today = new Date();
+            await dbHandler.updateUser(userEmail, {"loginDate": today})
+            return constructResponse(res, {}, 200);
+        } else {
+            return res.status(401).send("password incorrect");
+        }
+    } catch (e) {
+        console.log(e);
+        return res.status(401).send({
+            message: e
+        })
     }
-    else {
-        return res.status(401).send("password incorrect");
+}
+const Permissions = async (req, res, next) => {
+    try {
+        const userEmail = req.body.email.toLowerCase();
+        const user = await dbHandler.getUserByEmail(userEmail)
+
+        if (!user) {
+            throw new Error("user not exists");
+        }
+        return res.send("The user exists");
+    } catch (e) {
+        return res.send(e.message);
     }
-}catch(e) {
-    console.log(e);
-    return res.status(401).send({
-        message: e
-    })
-}}
+}
 
 function isAfter(date1, date2) {
     return date1 > date2;
 }
 
-module.exports = {handleLogin}
+module.exports = {handleLogin, Permissions}

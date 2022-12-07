@@ -20,6 +20,7 @@ const Password = document.getElementById("Password");
 const CPassword = document.getElementById("C-Password");
 const message = document.getElementById('message');
 const googleLogIn = document.getElementById('googleLogIn');
+const addUser =  document.getElementById('addUser');
 // const host = process.env.clientHost || 'http://localhost:5000';
 const host = window.location.origin
 /*===========================mongoDB=========================*/
@@ -84,6 +85,7 @@ if (selectButton) {
     SubmitOTPForm.addEventListener('click', () => {
         emailConfirmation();
     })
+
     submitRegisterForm.addEventListener('click', async () => {
         if ((Password.value === CPassword.value) && (Password.value !== '' && CPassword.value !== '')) {
             registerForm.style.display = "none";
@@ -158,7 +160,9 @@ if (showUserBtn) {
     sendStatus.addEventListener('click', () => {
         suspension();
     })
-
+    addUser.addEventListener('click', () => {
+        addUserData();
+    })
 
     /*    fetch('../data/users.json')
             .then(function (response) {
@@ -473,7 +477,7 @@ function openDateForm() {
 //         });
 //     });
 // });
-const addUser = async () => {
+const addUserData = async () => {
     const data = {
         name: document.getElementById("userFullName").value,
         email: document.getElementById("userEmail").value,
@@ -489,7 +493,8 @@ const addUser = async () => {
 
     const handleResponse = {
         200: () => {
-            alert(" add new ser")
+            alert(" add new user")
+            location.reload();
         },
         401: () => {
             alert("The user already exists");

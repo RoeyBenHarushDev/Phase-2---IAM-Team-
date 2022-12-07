@@ -1,9 +1,9 @@
 const express = require("express");
-const suspendController = require("../controllers/suspend_controller")
+const suspendController = require("../controllers/admin_controller")
 
 const adminRoute = new express.Router()
 
 adminRoute.post('/suspension', suspendController.handleSuspend)
 adminRoute.post('/addUser', suspendController.handleAddUser)
-
+adminRoute.get('/addUser', suspendController.handleShowUser)
 module.exports= { adminRoute }
