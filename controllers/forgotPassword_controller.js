@@ -16,10 +16,10 @@ async function handleForgot(req, res) {
         const hashedPassword = await bcrypt.hash(newPass, 12);
         await dbHandler.updateUser(user.email, {"password": hashedPassword});
 
-        return constructResponse(res, {}, 200);
+        return res.status(200).json({message: "A new password has been sent to the email"});
     } catch (e) {
         console.log(e);
-        return constructResponse(res, {error: e.message}, 403);
+        return  res.status(401).json({message: e.message});
     }
 }
 

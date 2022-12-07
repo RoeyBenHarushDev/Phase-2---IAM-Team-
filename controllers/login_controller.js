@@ -1,6 +1,5 @@
 const bcrypt = require('bcrypt');
 const dbHandler = require('../data/dbHandler');
-const {constructResponse} = require('../utils/utils.js');
 
 const unSuspend = async (user) => {
     await dbHandler.updateUser(user.email, {"status": "active", "suspensionTime": 0, "suspensionDate": 0});
@@ -43,20 +42,19 @@ try {
     }
     const suspend = await isSuspend(user);
     if(suspend){
-        return constructResponse(res, {error: `User is suspended until ${isSuspend}`}, 403);}
+        return res.status(403).json({message:`User is suspended until ${isSuspend}`});}
     if (await bcrypt.compare(userPassword, user.password)) {
         console.log(`password correct! ${user.email} welcome`);
         const today=new Date();
         await dbHandler.updateUser(userEmail, {"loginDate": today})
-        return constructResponse(res, {}, 200);
+        return res.send(200)
     }
-    else {
-        return constructResponse(res, "incorrect password", 401);
-    }
+    return res.status(401).json({message:"incorrect password"});
 }catch(e) {
-    console.log(e);
-    return constructResponse(res, "user does'nt exist", 400);
+    return res.status(400).json({message:"user does'nt exist"});
 }}
+
+
 const Permissions = async (req, res, next) => {
     try {
         const userEmail = req.body.email.toLowerCase();
@@ -70,7 +68,6 @@ const Permissions = async (req, res, next) => {
         return res.send(e.message);
     }
 }
-
 
 function isAfter(date1, date2) {
     return date1 > date2;

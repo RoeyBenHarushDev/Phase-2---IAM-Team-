@@ -1,50 +1,45 @@
 const dbHandler = require("../data/dbHandler")
-const {constructResponse} = require('../utils/utils');
 const adminService = require("../services/adminService");
 
-async function handleSuspend(request, response) {
+async function handleSuspend(req, res) {
     try {
-        const user = request.body;
+        const user = req.body;
         await adminService.ifClosed(user);
         const data = adminService.changeUserStatus(user);
         await dbHandler.updateUser(user.email, data);
 
-        return constructResponse(response, {}, 200);
-    } catch (e) {
-        if (e.message === 'user is closed') {
-            return constructResponse(response, {error: e.message}, 403);
-        }
-        return constructResponse(response, {error: e.message}, 401);
+       return  res.status(200).json({message: "User status update"});
+    } catch (error) {
+        return res.status(401).json({message: error.message });
     }
 }
 
 async function handleAddUser(req, res) {
     try {
-        if (!req.body) throw new Error("no email")
+        if (!req.body) throw new Error("Email is required")
         let newUser = req.body;
         newUser.email = newUser.email.toLowerCase();
 
-            const user = await dbHandler.getUserByEmail(newUser.email);
+        const user = await dbHandler.getUserByEmail(newUser.email);
         if (user)
             throw new Error("user already exists")
         await dbHandler.addUser(newUser)
-        return constructResponse(res, {}, 200);
-    } catch (e) {
-        if(e.message === "no email") res.status
-        return constructResponse(res, {}, 401);
+      return   res.status(200).json({ message: "user is closed" });
+    } catch (error) {
+       return  res.status(401).json({ message: error.message })
     }
 }
 
 async function handleShowUser(req, res) {
     const showAllUser = await dbHandler.showAll();
-    const a =JSON.stringify(showAllUser)
-    res.send(a);
+    return res.send(JSON.stringify(showAllUser));
 }
 
 async function handleDeleteUser(req, res) {
     const user = await dbHandler.getUserByEmail(req.body.email);
     if (user) {
         await dbHandler.deleteUser(user.email);
+       return  res.status(200).json({ message: "The user has been deleted" })
     }
 }
 
