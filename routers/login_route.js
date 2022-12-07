@@ -5,7 +5,7 @@ const expressSession = require('express-session');
 const jwt = require('jsonwebtoken');
 
 loginRouter.use(express.json());
-loginRouter.post('/', login_controller.handleLogin)
+loginRouter.post('/', login_controller.loginControl)
 loginRouter.get('/', login_controller.Permissions)
 
 module.exports = {loginRouter};
