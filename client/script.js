@@ -161,6 +161,7 @@ if (showUserBtn) {
         welcomeMessage.style.display = 'none';
         userStatusModel.style.display = 'none';
         showUser.style.display = 'block';
+        appendData();
     })
 
     addUserBtn.addEventListener('click', () => {
@@ -191,29 +192,22 @@ if (showUserBtn) {
         addUserData();
     })
 
-    /*    fetch('../data/users.json')
-            .then(function (response) {
-                return response.json();
-            })
-            .then(function (data) {
-                appendData(data);
-            })
-            .catch(function (err) {
-                console.log('error: ' + err);
-            });*/
-
-    function appendData(data) {
+    async function appendData() {
+        const response = await fetch(`${host}/api/admin/showUser`, {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json",
+            },
+        });
+        const data = await response.json();
         const mainContainer = document.getElementById("myData");
         const listOfUser = document.getElementById('listOfUser');
-        const removeUser = document.getElementById('removeUser');
-        const editUser = document.getElementById('editUser');
         for (let i = 0; i < data.length; i++) {
             const li = document.createElement("li");
             li.classList.add("userRow");
             li.setAttribute('id', "" + (i + 1));
             li.innerHTML = 'Name: ' + data[i].name + '&nbsp&nbsp&nbsp&nbsp&nbspEmail: ' + data[i].email + '&nbsp&nbsp&nbsp&nbsp&nbspType: ' + data[i].type + '&nbsp&nbsp&nbsp&nbsp&nbspStatus: ' + data[i].status
-                + '&nbsp&nbsp&nbsp&nbsp&nbsp' + '<div class="REBtns"><button class="removeUser" id="removeUser"><span class="material-symbols-outlined">delete</span></button>'
-                + '<button class="editUser" id="editUser"><span class="material-symbols-outlined">edit_note</span></button></div>';
+                + '&nbsp&nbsp&nbsp&nbsp&nbsp';
             console.log(data);
             mainContainer.appendChild(listOfUser);
             listOfUser.appendChild(li);
@@ -223,8 +217,10 @@ if (showUserBtn) {
 const editUser = document.getElementById('editUser');
 if (editUser) {
     editUser.addEventListener('click', () => {
-        showUser.style.display = 'none';
-        userStatusModel.style.display = 'block';
+        document.getElementById('userNameDetails').readOnly = false;
+        document.getElementById('userEmailDetails').readOnly = false;
+        document.getElementById('userPasswordDetails').readOnly = false;
+        document.getElementById('userPermissions').readOnly = false;
     })
 }
 
@@ -519,20 +515,9 @@ const addUserData = async () => {
         },
         body: JSON.stringify(data),
     });
-
-    const handleResponse = {
-        200: () => {
-            alert(" add new user")
-            location.reload();
-        },
-        401: () => {
-            alert("The user already exists");
-        },
-    };
     const body = await response.json();
-    const handler = handleResponse[response.status];
-    if (handler) {
-        handler(body);
+    if (body.message) {
+        alert((body.message));
     }
 };
 

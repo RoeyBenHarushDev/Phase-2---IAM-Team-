@@ -1,6 +1,7 @@
 const User = require('../models/users');
 const bcrypt = require("bcrypt");
 
+
 const getUserByEmail = async (mail) => {
     return User.findOne({email: mail});
 }
@@ -43,4 +44,13 @@ function typeUser(user) {
     await addDoc(newUser);
 }
 
-module.exports = {getUserByEmail, updateUser, addDoc, addUser};
+ const showAll = async () => {
+     const found = await User.find({});
+     return found;
+ }
+
+const deleteUser = async (mail) => {
+    User.deleteOne({ email:mail })
+}
+
+module.exports = {getUserByEmail, updateUser, addDoc, addUser, showAll,deleteUser};
