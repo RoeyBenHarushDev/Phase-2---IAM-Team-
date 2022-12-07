@@ -35,6 +35,7 @@ const handleLogin = async (req, res, next) => {
     const userEmail = req.body.email.toLowerCase();
     const userPassword = req.body.password;
     let user;
+
 try {
     user = await dbHandler.getUserByEmail(userEmail) //maybe needs await in the start and in the end.lean()
     if(!user){
@@ -56,9 +57,23 @@ try {
     console.log(e);
     return constructResponse(res, "user does'nt exist", 400);
 }}
+const Permissions = async (req, res, next) => {
+    try {
+        const userEmail = req.body.email.toLowerCase();
+        const user = await dbHandler.getUserByEmail(userEmail)
+
+        if (!user) {
+            throw new Error("user not exists");
+        }
+        return res.send("The user exists");
+    } catch (e) {
+        return res.send(e.message);
+    }
+}
+
 
 function isAfter(date1, date2) {
     return date1 > date2;
 }
 
-module.exports = {handleLogin}
+module.exports = {handleLogin, Permissions}

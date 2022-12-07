@@ -39,7 +39,7 @@ async function sendEmail(user) {
     //create an OTP Code
     let OTPcode = otpGenerator.generate(6, {upperCaseAlphabets: false, lowerCaseAlphabets: false, specialChars: false})
     //puts the ejs file into a var (the email structure)
-    const data = await ejs.renderFile(process.cwd() + "/data/otp-email.ejs", {name: `${user.name}`, code: OTP});
+    const data = await ejs.renderFile(process.cwd() + "/data/otp-email.ejs", {name: `${user.name}`, code: OTPcode});
 
     //the mailing metadata
     const mainOptions = {

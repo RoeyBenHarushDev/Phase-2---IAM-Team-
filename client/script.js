@@ -20,6 +20,7 @@ const Password = document.getElementById("Password");
 const CPassword = document.getElementById("C-Password");
 const message = document.getElementById('message');
 const googleLogIn = document.getElementById('googleLogIn');
+const addUser =  document.getElementById('addUser');
 // const host = process.env.clientHost || 'http://localhost:5000';
 const host = window.location.origin
 /*===========================mongoDB=========================*/
@@ -84,6 +85,7 @@ if (selectButton) {
     SubmitOTPForm.addEventListener('click', () => {
         emailConfirmation();
     })
+
     submitRegisterForm.addEventListener('click', async () => {
         if ((Password.value === CPassword.value) && (Password.value !== '' && CPassword.value !== '')) {
             registerForm.style.display = "none";
@@ -158,7 +160,9 @@ if (showUserBtn) {
     sendStatus.addEventListener('click', () => {
         suspension();
     })
-
+    addUser.addEventListener('click', () => {
+        addUserData();
+    })
 
     /*    fetch('../data/users.json')
             .then(function (response) {
@@ -387,7 +391,7 @@ const suspension = async () => {
         "suspensionTime": suspensionTime,
         "userStatus": suspendedBut
     };
-    const response = await fetch(`${host}/api/suspension`, {
+    const response = await fetch(`${host}/api/admin/suspension`, {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
@@ -474,3 +478,33 @@ function openDateForm() {
 //         });
 //     });
 // });
+const addUserData = async () => {
+    const data = {
+        name: document.getElementById("userFullName").value,
+        email: document.getElementById("userEmail").value,
+        password: document.getElementById("userPassword").value
+    };
+    const response = await fetch(`${host}/api/admin/addUser`, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+    });
+
+    const handleResponse = {
+        200: () => {
+            alert(" add new user")
+            location.reload();
+        },
+        401: () => {
+            alert("The user already exists");
+        },
+    };
+    const body = await response.json();
+    const handler = handleResponse[response.status];
+    if (handler) {
+        handler(body);
+    }
+};
+

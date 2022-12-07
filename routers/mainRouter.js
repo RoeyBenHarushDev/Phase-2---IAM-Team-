@@ -8,7 +8,7 @@ const bodyParser = require('body-parser');
 const forgotPassword= require("./forgotPassword_route")
 const signUp = require("./signUp_route");
 const changePassword = require("./changePassword_route")
-const suspend = require("./suspend_route");
+const admin = require("./admin_route");
 const confirmCode = require("./confirmCode_route");
 const passport = require('passport');
 const path = require("path");
@@ -54,7 +54,7 @@ app.get('/authFailure',(req,res)=>{
 });
 app.use('/api/login',login.loginRouter);
 app.use('/api/signUp', signUp.signupRoute);
-app.use('/api/suspension', suspend.suspendRoute);
+app.use('/api/admin', admin.adminRoute);
 app.use('/api/confirmCode', confirmCode.confirmCodeRoute);
 app.use('/api/forgotPassword', forgotPassword.forgotPasswordRoute);
 app.use('/api/changePassword', changePassword.changePasswordRoute);
