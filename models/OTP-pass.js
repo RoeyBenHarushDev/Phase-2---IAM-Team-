@@ -7,4 +7,5 @@ const otpSchema = new Schema({
 }, {collection: 'OTP'});
 
 const OTP = model('OTP',otpSchema);
+
 module.exports= OTP;

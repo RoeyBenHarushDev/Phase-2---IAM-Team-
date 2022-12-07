@@ -20,7 +20,7 @@ const Password = document.getElementById("Password");
 const CPassword = document.getElementById("C-Password");
 const message = document.getElementById('message');
 const googleLogIn = document.getElementById('googleLogIn');
-const addUser =  document.getElementById('addUser');
+const addUser = document.getElementById('addUser');
 // const host = process.env.clientHost || 'http://localhost:5000';
 const host = window.location.origin
 /*===========================mongoDB=========================*/
@@ -83,19 +83,36 @@ if (selectButton) {
         forgotPassword();
     })
     SubmitOTPForm.addEventListener('click', () => {
+        clearInterval(timer);
         emailConfirmation();
     })
+
+    let timer
 
     submitRegisterForm.addEventListener('click', async () => {
         if ((Password.value === CPassword.value) && (Password.value !== '' && CPassword.value !== '')) {
             registerForm.style.display = "none";
             VerifyByEmail.style.display = 'block';
-            try {
+            timer = setInterval(async function () {
+                const data = {
+                    email: document.getElementById("Email").value,
+                }
+               const response =  await fetch(host + '/api/deleteAfter15', {
+                    method: 'POST',
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify(data)
+                })
+                const body = await response.json();
+                if (body.message) {
+                    alert((body.message));
+                    location.reload();
+                }
+            }, 900000)
                 await signupData();
                 return true;
-            } catch (err) {
-                console.log(err)
-            }
+
         } else {
             alert("Please check if :\n\n1. You fill out all the fields\n2. Password isn't empty!\n3. Password are the Same!");
             return false;
@@ -213,24 +230,14 @@ const LoginData = async () => {
         },
         body: JSON.stringify(data),
     });
-    const handleResponse = {
-        200:
-            ({location = "homePage.html"}) => {
-                window.location.href = location;
-            },
-        401: () => {
-            alert(response.status + ": " + response.statusText + ": Incorrect password or user");
-        },
-        403: () => {
-            alert("user in suspension!");
-        },
-        404: () => {
-        alert(response.status + ": " + response.statusText + "user doesn't exist");
-    }};
+    if (response.status === 200) {
+        location = "homePage.html"
+        window.location.href = location;
+    }
     const body = await response.json();
-    const handler = handleResponse[response.status];
-    if (handler) {
-        handler(body);
+    if (body.message) {
+        alert((body.message));
+        location.reload();
     }
 };
 
@@ -242,21 +249,18 @@ const signupData = async () => {
         email: document.getElementById("Email").value,
         password: document.getElementById("C-Password").value,
     }
-    await fetch(host + '/api/signUp', {
+    const response = await fetch(host + '/api/signUp', {
         method: 'POST',
         headers: {
             "Content-Type": "application/json",
         },
         body: JSON.stringify(data)
     })
-        .then(response => {
-            //console.log(response))
-            // window.location.href=response.headers.Location;
-            if (response.status === 401) {
-                location.reload();
-                alert("ERROR 401: Email already exists");
-            }
-        })
+    const body = await response.json();
+    if (body.message) {
+        alert((body.message));
+        location.reload();
+    }
 }
 
 
@@ -271,22 +275,10 @@ const forgotPassword = async () => {
         },
         body: JSON.stringify(data),
     });
-    const handleResponse = {
-        200:
-            () => {
-                location.reload();
-                alert("A new password has been sent to the email");
-            },
-        403:
-            () => {
-                location.reload();
-                alert("Email does not exist");
-            },
-    };
     const body = await response.json();
-    const handler = handleResponse[response.status];
-    if (handler) {
-        handler(body);
+    if (body.message) {
+        alert((body.message));
+        location.reload();
     }
 }
 
@@ -305,23 +297,10 @@ const emailConfirmation = async () => {
         body: JSON.stringify(data),
     });
 
-    const handleResponse = {
-        200: () => {
-            location.reload();
-            alert(response.status + ": " + response.statusText +"User was added");
-        },
-        403: () => {
-            alert("401: code is expired, please sign up again");
-        },
-        401: () => {
-            location.reload();
-            alert(response.status + ": " + response.statusText);
-        }
-    };
     const body = await response.json();
-    const handler = handleResponse[response.status];
-    if (handler) {
-        handler(body);
+    if (body.message) {
+        alert((body.message));
+        location.reload();
     }
 };
 
@@ -395,9 +374,8 @@ const suspension = async () => {
         body: JSON.stringify(data),
     });
     const body = await response.json();
-    const handler = handleResponse[response.status];
-    if (handler) {
-        handler(body);
+    if (body.message) {
+        alert((body.message));
     }
 };
 
