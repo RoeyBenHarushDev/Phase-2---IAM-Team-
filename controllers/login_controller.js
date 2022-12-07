@@ -43,15 +43,14 @@ try {
     const suspend = await isSuspend(user);
     if(suspend){
         return res.status(403).json({message:`User is suspended until ${isSuspend}`});}
-    if (await bcrypt.compare(userPassword, user.password)) {
+    if (!await bcrypt.compare(userPassword, user.password)) { throw new Error("incorrect password")}
         console.log(`password correct! ${user.email} welcome`);
         const today=new Date();
         await dbHandler.updateUser(userEmail, {"loginDate": today})
-        return res.send(200)
-    }
-    return res.status(401).json({message:"incorrect password"});
+        return res.status(200).json({message:"ok"})
+
 }catch(e) {
-    return res.status(400).json({message:"user does'nt exist"});
+    return res.status(401).json({message:e.message});
 }}
 
 

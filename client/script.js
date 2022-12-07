@@ -190,17 +190,48 @@ if (showUserBtn) {
             },
         });
         const data = await response.json();
-        const mainContainer = document.getElementById("myData");
-        const listOfUser = document.getElementById('listOfUser');
+        const table = document.createElement('table');
+        const thead = document.createElement('thead');
+        const tbody = document.createElement('tbody');
+        const userTitle = document.createElement('tr');
+        const nameHeading = document.createElement('th');
+        nameHeading.innerHTML = "Name";
+        const emailHeading = document.createElement('th');
+        emailHeading.innerHTML = "E-mail";
+        const typeHeading = document.createElement('th');
+        typeHeading.innerHTML = "Type";
+        const statusHeading = document.createElement('th');
+        statusHeading.innerHTML = "Status";
+
+        table.appendChild(thead);
+        table.appendChild(tbody);
+
+// Adding the entire table to the body tag
+        document.getElementById("myData").appendChild(table);
+
+        userTitle.appendChild(nameHeading);
+        userTitle.appendChild(emailHeading);
+        userTitle.appendChild(typeHeading);
+        userTitle.appendChild(statusHeading);
+        thead.appendChild(userTitle);
+
+        let userDb = document.createElement('tr');
+
         for (let i = 0; i < data.length; i++) {
-            const li = document.createElement("li");
-            li.classList.add("userRow");
-            li.setAttribute('id', "" + (i + 1));
-            li.innerHTML = 'Name: ' + data[i].name + '&nbsp&nbsp&nbsp&nbsp&nbspEmail: ' + data[i].email + '&nbsp&nbsp&nbsp&nbsp&nbspType: ' + data[i].type + '&nbsp&nbsp&nbsp&nbsp&nbspStatus: ' + data[i].status
-                + '&nbsp&nbsp&nbsp&nbsp&nbsp';
-            console.log(data);
-            mainContainer.appendChild(listOfUser);
-            listOfUser.appendChild(li);
+            let userDbRow_1 = document.createElement('td');
+            userDbRow_1.innerHTML = data[i][1];
+            let userDbRow_2 = document.createElement('td');
+            userDbRow_2.innerHTML = data[i][2];
+            let userDbRow_3 = document.createElement('td');
+            userDbRow_3.innerHTML = data[i][3];
+            let userDbRow_4 = document.createElement('td');
+            userDbRow_4.innerHTML = data[i][4];
+
+            userDb.appendChild(userDbRow_1);
+            userDb.appendChild(userDbRow_2);
+            userDb.appendChild(userDbRow_3);
+            userDb.appendChild(userDbRow_4);
+            tbody.appendChild(userDb);
         }
     }
 }
@@ -231,13 +262,13 @@ const LoginData = async () => {
         body: JSON.stringify(data),
     });
     if (response.status === 200) {
-        location = "homePage.html"
-        window.location.href = location;
+        location = "homePage.html";
+        window.location.href = "homePage.html";
     }
     const body = await response.json();
     if (body.message) {
         alert((body.message));
-        location.reload();
+        // location.reload();
     }
 };
 
