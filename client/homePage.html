@@ -99,13 +99,16 @@
         </span>
         <div class="userDetails" id="userDetails">
             <label for="userNameDetails" class="editable">User Name:
-                <input type="text" id="userNameDetails" value="Roey Ben Harush" readonly>
+                <input type="text" id="userNameDetails" readonly>
             </label>
             <label for="userEmailDetails" class="editable">User Email
-                <input type="text" id="userEmailDetails" value="email" readonly>
+                <input type="text" id="userEmailDetails" readonly>
             </label>
-            <label for="userPasswordDetails" class="editable">User Password:
-                <input type="text" id="userPasswordDetails" readonly>
+            <label for="userStatusDetails" class="editable">User Status:
+                <input type="text" id="userStatusDetails" readonly>
+            </label>
+            <label for="userLoginDetails" class="editable">User Lest Login:
+                <input type="text" id="userLoginDetails" readonly>
             </label>
             <label for="userPermissions" class="editable">User permission:
                 <input list="permission" id="userPermissions">
@@ -114,7 +117,7 @@
                     <option value="Admin"></option>
                 </datalist>
             </label>
-            <button class="changeStatus" id="changeStatus">Change Status</button>
+            <button class="changeStatus" id="changeStatus">Save</button>
         </div>
 
         <div class="userUpdateBtn">

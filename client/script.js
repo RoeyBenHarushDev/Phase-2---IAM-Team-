@@ -143,10 +143,11 @@ const backShowUsers = document.getElementById('backShowUsers');
 const logOutBtn = document.getElementById('logOutBtn');
 const userStatusModel = document.getElementById('userStatusModel');
 const userDetailsModel = document.getElementById('userDetailsModel');
-// const userForm = document.getElementById('userForm');
-
+const saveUser = document.getElementById('saveUser');
+const  removeUser = document.getElementById('removeUser');
 
 if (showUserBtn) {
+
     showUserBtn.addEventListener('click', () => {
         addUsers.style.display = 'none';
         welcomeMessage.style.display = 'none';
@@ -182,10 +183,31 @@ if (showUserBtn) {
     })
     sendStatus.addEventListener('click', () => {
         suspension();
-    })
+    });
     addUser.addEventListener('click', () => {
         addUserData();
+    });
+    saveUser.addEventListener('click', () => {
+        saveUpdateAdmin();
+    });
+    removeUser.addEventListener("click", async () => {
+        const data = {
+            email: document.getElementById('userEmailDetails').value
+        }
+        const response = await fetch(`${host}/api/admin/removeUser`, {
+            method: "DELETE",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(data),
+        });
+        const body = await response.json();
+        if (body.message) {
+            alert((body.message));
+            location.reload();
+        }
     })
+
 
     async function appendData() {
         const response = await fetch(`${host}/api/admin/showUser`, {
@@ -208,13 +230,11 @@ if (showUserBtn) {
         const statusHeading = document.createElement('th');
         statusHeading.innerHTML = "Status";
 
-
         table.appendChild(thead);
         table.appendChild(tbody);
 
 // Adding the entire table to the body tag
         const myData = document.getElementById("myData").appendChild(table);
-
 
         userTitle.appendChild(nameHeading);
         userTitle.appendChild(emailHeading);
@@ -228,9 +248,9 @@ if (showUserBtn) {
             const userDbBtn = document.createElement('button');
             let userDb = myData.insertRow(i);
             userDbBtn.classList.add("userDbBtn");
-            userDbBtn.setAttribute('id', data[i].email);
+            userDbBtn.setAttribute("onclick", "userDetails(value)");
+            userDbBtn.setAttribute('value', data[i].email);
             userDbBtn.setAttribute('type', "button");
-            const userEmail = data[i].email;
 
             let userDbRow_1 = document.createElement('td');
             userDbRow_1.innerHTML = data[i].name;
@@ -253,18 +273,36 @@ if (showUserBtn) {
         const showUserToEdit = document.querySelectorAll('.userDbBtn');
         for (let i = 0; i < data.length; i++) {
             showUserToEdit[i].addEventListener('click', () => {
-                    addUsers.style.display = 'none';
-                    showUser.style.display = 'none';
-                    userStatusModel.style.display = "none";
-                    userDetailsModel.style.display = 'block';
+                addUsers.style.display = 'none';
+                showUser.style.display = 'none';
+                userStatusModel.style.display = "none";
+                userDetailsModel.style.display = 'block';
             })
         }
     }
 }
 
+
+const userDetails = async (email) => {
+    document.getElementById('changeStatus').style.display = 'none';
+
+    const response = await fetch(host + '/api/admin/showUser/' + email, {
+        method: 'GET',
+        headers: {
+            "Content-Type": "application/json",
+        },
+    })
+    const user = await response.json();
+    document.getElementById('userNameDetails').value = user.name;
+    document.getElementById('userStatusDetails').value = user.status;
+    document.getElementById('userPermissions').value = user.type;
+    document.getElementById('userEmailDetails').value = user.email;
+    document.getElementById('userLoginDetails').value = user.loginDate;
+}
+
 const backStatusUsers = document.getElementById('backStatusUsers');
-if(backStatusUsers){
-    backStatusUsers.addEventListener('click', ()=>{
+if (backStatusUsers) {
+    backStatusUsers.addEventListener('click', () => {
         addUsers.style.display = 'none';
         userStatusModel.style.display = "none";
         userDetailsModel.style.display = 'none';
@@ -272,21 +310,41 @@ if(backStatusUsers){
     })
 }
 
-// const myData = document.getElementById('myData');
+const saveUpdateAdmin = async () => {
+    const data = {
+        name: document.getElementById('userNameDetails').value,
+        status: document.getElementById('userStatusDetails').value,
+        type: document.getElementById('userPermissions').value,
+        email: document.getElementById('userEmailDetails').value
+    };
+
+    const response = await fetch(`${host}/api/admin/saveUpdateAdmin`, {
+        method: "PUT",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+    });
+    const body = await response.json();
+    if (body.message) {
+        alert((body.message));
+        location.reload();
+    }
+}
 
 
 const editUser = document.getElementById('editUser');
 if (editUser) {
     editUser.addEventListener('click', () => {
+        // document.getElementById('changeStatus').style.display = 'block';
         document.getElementById('userNameDetails').readOnly = false;
-        document.getElementById('userPasswordDetails').readOnly = false;
         document.getElementById('userPermissions').readOnly = false;
     })
 }
 
 const changeStatus = document.getElementById('changeStatus');
-if(changeStatus){
-    changeStatus.addEventListener('click', ()=>{
+if (changeStatus) {
+    changeStatus.addEventListener('click', () => {
         addUsers.style.display = 'none';
         showUser.style.display = 'none';
         userStatusModel.style.display = "none";
@@ -295,8 +353,8 @@ if(changeStatus){
     })
 }
 const backDetailsUsers = document.getElementById('backDetailsUsers');
-if(backDetailsUsers){
-    backDetailsUsers.addEventListener('click', ()=>{
+if (backDetailsUsers) {
+    backDetailsUsers.addEventListener('click', () => {
         addUsers.style.display = 'none';
         userStatusModel.style.display = "none";
         userDetailsModel.style.display = 'none';

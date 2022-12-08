@@ -139,8 +139,8 @@ input{
     cursor: pointer;
     transition: transform 0.5s;
     font-family: 'Righteous', cursive;
+    /*display: none;*/
 }
-
 .submitButton, #sendStatus, .saveUser, .changeStatus{
     background-image:linear-gradient(120deg, turquoise, rgba(0, 0, 0, 0.9));
     border: 2px solid turquoise;
@@ -597,7 +597,7 @@ h3{
     margin-bottom: 40px;
 }
 .userDetails input[type="text"], .userDetails input[list="permission"]{
-    margin-bottom: 40px;
+    /*margin-bottom: 40px;*/
     border: none;
     border-radius: 10px;
     font-family: 'Righteous', cursive;
@@ -634,6 +634,6 @@ table {
     border-collapse: separate;
     box-sizing: border-box;
     text-indent: each-line;
-    border-spacing: 50px;
-    margin-left: 19%;
+    /*border-spacing: 50px;*/
+    /*margin-left: 19%;*/
 }
