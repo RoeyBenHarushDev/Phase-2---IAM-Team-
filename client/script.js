@@ -21,15 +21,8 @@ const CPassword = document.getElementById("C-Password");
 const message = document.getElementById('message');
 const googleLogIn = document.getElementById('googleLogIn');
 const addUser = document.getElementById('addUser');
-// const host = process..env.clientHost || 'http://localhost:5000';
 const host = window.location.origin
-/*===========================mongoDB=========================*/
-// const express = require("express");
-// const path = require('path');
-// const app =express();
-// const bodyParser = require('body-parser');
-// const MongoClient = require('mongodb').MongoClient;
-// const url = "mongodb://localhost:/";
+
 
 if (selectButton) {
     openLoginForm.addEventListener('click', () => {
@@ -76,15 +69,72 @@ if (selectButton) {
     googleLogIn.addEventListener('click', () => {
         window.location.href = `${host}/api/googleLogIn`;
     })
-    SubmitLoginForm.addEventListener('click', () => {
-        LoginData();
+
+    //login
+    SubmitLoginForm.addEventListener('click', async () => {
+        const data = {
+            email: document.getElementById("L-Email").value,
+            password: document.getElementById("L-Password").value,
+        };
+        const response = await fetch(`${host}/api/login`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(data),
+        });
+        if (response.status === 200) {
+            location = "homePage.html";
+            window.location.href = "homePage.html";
+        }
+        const body = await response.json();
+        if (body.message) {
+            alert((body.message));
+            // location.reload();
+        }
     })
-    SubmitEmailForm.addEventListener('click', () => {
-        forgotPassword();
+
+    //forgot password
+    SubmitEmailForm.addEventListener('click', async () => {
+        const data = {
+            "email": document.getElementById("forgotEmail").value,
+        }
+        const response = await fetch(`${host}/api/forgotPassword`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(data),
+        });
+        const body = await response.json();
+        if (body.message) {
+            alert((body.message));
+            location.reload();
+        }
     })
-    SubmitOTPForm.addEventListener('click', () => {
+
+    //  confirm Code
+    SubmitOTPForm.addEventListener('click', async () => {
         clearInterval(timer);
-        emailConfirmation();
+        const data = {
+            name: document.getElementById("Username").value,
+            email: document.getElementById("Email").value,
+            password: document.getElementById("C-Password").value,
+            code: document.getElementById("VerifyOTP").value
+        };
+        const response = await fetch(`${host}/api/confirmCode`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(data),
+        });
+
+        const body = await response.json();
+        if (body.message) {
+            alert((body.message));
+            location.reload();
+        }
     })
 
     let timer
@@ -131,18 +181,19 @@ if (selectButton) {
     })
 
 }
-// editUser
-/*=============================== create table with JSON file ====================================*/
+
+/*=============================== create table with  ====================================*/
 const showUserBtn = document.getElementById("showUserBtn");
 const showUser = document.getElementById("showUsers");
 const addUserBtn = document.getElementById('addUserBtn');
-const addUsers = document.getElementById('addUsers');
+const addUsers = document.getElementById('addUser');
 const backAddUsers = document.getElementById('backAddUsers');
 const welcomeMessage = document.getElementById('welcomeMessage');
 const backShowUsers = document.getElementById('backShowUsers');
 const logOutBtn = document.getElementById('logOutBtn');
 const userDetailsModel = document.getElementById('userDetailsModel');
-// const userForm = document.getElementById('userForm');
+const saveUser = document.getElementById('saveUser');
+const removeUser = document.getElementById('removeUser');
 
 
 if (showUserBtn) {
@@ -175,15 +226,69 @@ if (showUserBtn) {
     logOutBtn.addEventListener('click', () => {
         window.location.href = 'index.html';
     })
-    // sendStatus.addEventListener('click', () => {
-    //     suspension();
-    // })
-    addUser.addEventListener('click', () => {
-        addUserData();
+
+    addUser.addEventListener('click', async () => {
+        const data = {
+            name: document.getElementById("userFullName").value,
+            email: document.getElementById("userEmail").value,
+            password: document.getElementById("userPassword").value
+        };
+        const response = await fetch(`${host}/api/admin/addUser`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(data),
+        });
+        const body = await response.json();
+        if (body.message) {
+            alert((body.message));
+        }
+    })
+
+//update user details
+    saveUser.addEventListener('click', async () => {
+        const data = {
+            name: document.getElementById('userNameDetails').value,
+            status: document.getElementById('userStatusDetails').value,
+            type: document.getElementById('userPermissions').value,
+            email: document.getElementById('userEmailDetails').value
+        };
+
+        const response = await fetch(`${host}/api/admin/saveUpdateAdmin`, {
+            method: "PUT",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(data),
+        });
+        const body = await response.json();
+        if (body.message) {
+            alert((body.message));
+            location.reload();
+        }
+    });
+
+    removeUser.addEventListener("click", async () => {
+        const data = {
+            email: document.getElementById('userEmailDetails').value
+        }
+        const response = await fetch(`${host}/api/admin/removeUser`, {
+            method: "DELETE",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(data),
+        });
+        const body = await response.json();
+        if (body.message) {
+            alert((body.message));
+            location.reload();
+        }
     })
 
     async function appendData() {
-        const response = await fetch(`${host}/api/admin/showUser`, {
+        const response = await fetch(`${host}/api/admin/showAllUsers`, {
             method: "GET",
             headers: {
                 "Content-Type": "application/json",
@@ -203,13 +308,11 @@ if (showUserBtn) {
         const statusHeading = document.createElement('th');
         statusHeading.innerHTML = "Status";
 
-
         table.appendChild(thead);
         table.appendChild(tbody);
 
 // Adding the entire table to the body tag
         const myData = document.getElementById("myData").appendChild(table);
-
 
         userTitle.appendChild(nameHeading);
         userTitle.appendChild(emailHeading);
@@ -223,9 +326,9 @@ if (showUserBtn) {
             const userDbBtn = document.createElement('button');
             let userDb = myData.insertRow(i);
             userDbBtn.classList.add("userDbBtn");
-            userDbBtn.setAttribute('id', data[i].email);
+            userDbBtn.setAttribute("onclick", "userDetails(value)");
+            userDbBtn.setAttribute('value', data[i].email);
             userDbBtn.setAttribute('type', "button");
-            const userEmail = data[i].email;
 
             let userDbRow_1 = document.createElement('td');
             userDbRow_1.innerHTML = data[i].name;
@@ -256,17 +359,17 @@ if (showUserBtn) {
     }
 }
 
-
 // const myData = document.getElementById('myData');
 
-const saveUser = document.getElementById("saveUser");
-const removeUser = document.getElementById("removeUser");
+
 const editUser = document.getElementById('editUser');
 const changePasswordUser = document.getElementById("changePasswordUser");
 const userNameDetails = document.getElementById("userNameDetails");
 const backChangePasswordUsers = document.getElementById("backChangePasswordUsers");
 const changePasswordModel = document.getElementById("changePasswordModel");
 if (editUser) {
+    const saveUser = document.getElementById("saveUser");
+    const removeUser = document.getElementById("removeUser");
     editUser.addEventListener('click', () => {
         document.getElementById('userNameDetails').readOnly = false;
         document.getElementById('userLastLoginDetails').readOnly = false;
@@ -277,8 +380,9 @@ if (editUser) {
         saveUser.style.display = "block";
         changePasswordUser.style.display = "block";
     })
-}if(backChangePasswordUsers){
-    backChangePasswordUsers.addEventListener('click',()=>{
+}
+if (backChangePasswordUsers) {
+    backChangePasswordUsers.addEventListener('click', () => {
         changePasswordModel.style.display = "none";
         addUsers.style.display = 'none';
         showUser.style.display = 'none';
@@ -286,8 +390,8 @@ if (editUser) {
         userDetailsModel.style.display = "block";
     })
 }
-if(changePasswordUser){
-    changePasswordUser.addEventListener('click', ()=>{
+if (changePasswordUser) {
+    changePasswordUser.addEventListener('click', () => {
         addUsers.style.display = 'none';
         showUser.style.display = 'none';
         userDetailsModel.style.display = 'none';
@@ -320,32 +424,6 @@ if (saveUser) {
 
 }
 
-//login
-
-
-const LoginData = async () => {
-    const data = {
-        email: document.getElementById("L-Email").value,
-        password: document.getElementById("L-Password").value,
-    };
-    const response = await fetch(`${host}/api/login`, {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json",
-        },
-        body: JSON.stringify(data),
-    });
-    if (response.status === 200) {
-        location = "homePage.html";
-        window.location.href = "homePage.html";
-    }
-    const body = await response.json();
-    if (body.message) {
-        alert((body.message));
-        // location.reload();
-    }
-};
-
 //signup fetch
 
 const signupData = async () => {
@@ -369,73 +447,7 @@ const signupData = async () => {
 }
 
 
-const forgotPassword = async () => {
-    const data = {
-        "email": document.getElementById("forgotEmail").value,
-    }
-    const response = await fetch(`${host}/api/forgotPassword`, {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json",
-        },
-        body: JSON.stringify(data),
-    });
-    const body = await response.json();
-    if (body.message) {
-        alert((body.message));
-        location.reload();
-    }
-}
-
-const emailConfirmation = async () => {
-    const data = {
-        name: document.getElementById("Username").value,
-        email: document.getElementById("Email").value,
-        password: document.getElementById("C-Password").value,
-        code: document.getElementById("VerifyOTP").value
-    };
-    const response = await fetch(`${host}/api/confirmCode`, {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json",
-        },
-        body: JSON.stringify(data),
-    });
-
-    const body = await response.json();
-    if (body.message) {
-        alert((body.message));
-        location.reload();
-    }
-};
-
-// const changePassword = async () => {
-//     const data = {
-//         "email": document.getElementById("forgotEmail").value,
-//     }
-//     const response = await fetch("http://localhost:3000/api/changePassword", {
-//         method: "POST",
-//         headers: {
-//             "Content-Type": "application/json",
-//         },
-//         body: JSON.stringify(data),
-//     });
-//     const handleResponse = {
-//         200:
-//             () => {
-//                 location.reload();
-//                 alert("A new password has been sent to the email");
-//             },
-//         403:
-//             () => {
-//                 location.reload();
-//                 alert("Email does not exist");
-//             },
-//     };
-// }
-
 //LOGOUT & DELETING COOKIES
-
 const userLogOut = document.getElementById('logOutBtn');
 if (userLogOut) {
 
@@ -484,67 +496,17 @@ const suspension = async () => {
     }
 };
 
-
-/*=================================== create table with mongoDB==================================*/
-// app.use(express.static('./public'));
-// app.use(bodyParser.json());
-// app.use(bodyParser.urlencoded({ // to support URL-encoded bodies
-//     extended: true
-// }));
-// app.post('/login',function(req,res){
-//     let x=req.body.x;
-//     let y=req.body.y;
-//     let data={
-//         "x_op":x,
-//         "y_op":y
-//     }
-//     MongoClient.connect(url, function(err, db) {
-//         if (err) throw err;
-//         const dbo = db.db("mdb");
-//         const myobj = { x: `${x}`, y: `${y}`};
-//         dbo.collection("customers").insertOne(myobj, function(err, res) {
-//             if (err) throw err;
-//             console.log("1 document inserted");
-//             db.close();
-//         });
-//     });
-//     res.set({
-//         'Access-Control-Allow-Origin' : '*'
-//     });
-//     res.send(JSON.stringify(data));
-// });
-// app.get('/tb',function(req,res){
-//     let MongoClient = require('mongodb').MongoClient;
-//     let url = "mongodb://localhost:27017/";
-//     MongoClient.connect(url, function(err, db) {
-//         if (err) throw err;
-//         let dbo = db.db("mydb");
-//         dbo.collection("customers").find({}).toArray(function(err, result) {
-//             if (err) throw err;
-//             let obj = '$(result)';
-//             for (let i = 0; i < obj.length; i++){
-//                 app.locals.obj=result;
-//                 db.close();
-//             }
-//         });
-//     });
-// });
-const addUserData = async () => {
-    const data = {
-        name: document.getElementById("userFullName").value,
-        email: document.getElementById("userEmail").value,
-        password: document.getElementById("userPassword").value
-    };
-    const response = await fetch(`${host}/api/admin/addUser`, {
-        method: "POST",
+const userDetails = async (email) => {
+    const response = await fetch(host + '/api/admin/showUser/' + email, {
+        method: 'GET',
         headers: {
             "Content-Type": "application/json",
         },
-        body: JSON.stringify(data),
-    });
-    const body = await response.json();
-    if (body.message) {
-        alert((body.message));
-    }
-};
-
+    })
+    const user = await response.json();
+    document.getElementById('userNameDetails').value = user.name;
+    document.getElementById('userStatusDetails').value = user.status;
+    document.getElementById('userPermissions').value = user.type;
+    document.getElementById('userEmailDetails').value = user.email;
+    document.getElementById('userLastLoginDetails').value = user.loginDate;
+}
