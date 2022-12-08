@@ -68,30 +68,6 @@
             </div>
         </form>
     </div>
-    <form name="userStatusForm" class="userForm" action="#">
-        <div class="userStatusModel" id="userStatusModel">
-            <span class="material-symbols-outlined" id="backStatusUsers">
-            arrow_back
-        </span>
-            <label for="userChangeEmail" class="current">
-                <h1>Change User Status :</h1>
-                <h3>Enter User Email <span class="required">*</span></h3>
-                <input type="email" id="userChangeEmail" placeholder="User Email " required/>
-            </label>
-            <div class="radioUserStatus">
-                <form>
-                    <label for="active">Active</label>
-                    <input type="radio" id="active" onchange="openDateForm()" name="userStatus" value="active">
-                    <label for="closed">Closed</label>
-                    <input type="radio" id="closed" onchange="openDateForm()" name="userStatus" value="closed">
-                    <label for="suspended">Suspended</label>
-                    <input type="radio" id="suspended" onchange="openDateForm()" name="userStatus" value="suspended">
-                </form>
-            </div>
-            <div id="disp"></div>
-            <input type="button" value="SEND" id="sendStatus">
-        </div>
-    </form>
     <div class="userDetailsModel" id="userDetailsModel">
         <h1>User Details</h1>
         <span class="material-symbols-outlined" id="backDetailsUsers">
@@ -99,32 +75,56 @@
         </span>
         <div class="userDetails" id="userDetails">
             <label for="userNameDetails" class="editable">User Name:
-                <input type="text" id="userNameDetails" readonly>
+                <input type="text" class="inputEditable" id="userNameDetails" value="Roey Ben Harush" readonly>
             </label>
             <label for="userEmailDetails" class="editable">User Email
-                <input type="text" id="userEmailDetails" readonly>
+                <input type="text" class="inputEditable" id="userEmailDetails" value="email" readonly>
             </label>
-            <label for="userStatusDetails" class="editable">User Status:
-                <input type="text" id="userStatusDetails" readonly>
-            </label>
-            <label for="userLoginDetails" class="editable">User Lest Login:
-                <input type="text" id="userLoginDetails" readonly>
+            <label for="userLastLoginDetails" class="editable">User Last Login:
+                <input type="text" class="inputEditable" id="userLastLoginDetails" readonly>
             </label>
             <label for="userPermissions" class="editable">User permission:
-                <input list="permission" id="userPermissions">
+                <input list="permission" class="inputEditable" id="userPermissions">
                 <datalist id="permission">
                     <option value="User"></option>
                     <option value="Admin"></option>
                 </datalist>
             </label>
-            <button class="changeStatus" id="changeStatus">Save</button>
+            <div class="radioUserStatus">
+                <form>
+                    <label for="radioActive" class="radioStatus">Active
+                        <input type="radio" id="radioActive" name="userStatus" value="active" checked readonly></label>
+                    <label for="radioClosed" class="radioStatus">Closed
+                        <input type="radio" id="radioClosed" name="userStatus" value="closed" readonly></label>
+                    <label for="radioSuspended" class="radioStatus">Suspended
+                        <input type="radio" id="radioSuspended" name="userStatus" value="suspended" readonly></label>
+                </form>
+            </div>
         </div>
-
         <div class="userUpdateBtn">
             <button class="removeUser" id="removeUser">Remove User</button>
             <button class="saveUser" id="saveUser">SAVE</button>
+            <button class="changePasswordUser" id="changePasswordUser">Change Password</button>
             <button class="editUser" id="editUser">Edit User</button>
         </div>
+    </div>
+    <div class="changePasswordModel" id="changePasswordModel">
+        <h1>Change Password</h1>
+        <span class="material-symbols-outlined" id="backChangePasswordUsers">
+            arrow_back
+        </span>
+        <div class="inputsPassword">
+            <label for="oldPassword" class="editable">Please Insert Old Password:
+                <input type="text" id="oldPassword">
+            </label>
+            <label for="newPassword" class="editable">Please Insert Old Password:
+                <input type="text" id="newPassword">
+            </label>
+            <label for="reNewPassword" class="editable">Please Insert Old Password:
+                <input type="text" id="reNewPassword">
+            </label>
+        </div>
+        <button class="savePassword" id="savePassword">SAVE</button>
     </div>
 </section>
 <section class="rightBar">

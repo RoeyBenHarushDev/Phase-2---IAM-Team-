@@ -100,9 +100,21 @@ input{
     margin-bottom:20px;
     line-height:60px;
 }
+.saveUser{
+    display: none;
+    width: 179px;
+    height:45px;
+    color: #FFF;
+    font-size: 30px;
+    font-family: 'Righteous', cursive;
+    cursor:pointer;
+    border: none;
+    border-radius: 10px;
+    transition: transform 0.5s;
+    justify-content:center;
+}
 
-
-.submitButton, #sendStatus, .removeUser, .editUser, .saveUser {
+.submitButton, #sendStatus, .removeUser, .editUser, .changePasswordUser{
     display:flex;
     width:180px;
     height:45px;
@@ -115,7 +127,7 @@ input{
     transition: transform 0.5s;
     justify-content:center;
 }
-.createUser{
+.createUser,.savePassword{
     display:flex;
     width:280px;
     height:45px;
@@ -130,7 +142,8 @@ input{
     margin: 40px auto auto;
     justify-content:center;
 }
-.changeStatus{
+.changePasswordUser{
+    display: none;
     color: white;
     width:230px;
     height:45px;
@@ -139,9 +152,18 @@ input{
     cursor: pointer;
     transition: transform 0.5s;
     font-family: 'Righteous', cursive;
-    /*display: none;*/
 }
-.submitButton, #sendStatus, .saveUser, .changeStatus{
+.saveUser{
+    background-image:linear-gradient(120deg, #8ee537, rgba(0, 0, 0, 0.9));
+    border: 2px solid #56a14d;
+    margin: 15px auto auto;
+}
+.changePasswordUser{
+    background-image:linear-gradient(120deg, turquoise, rgba(0, 0, 0, 0.9));
+    border: 2px solid turquoise;
+    margin: 15px auto auto;
+}
+.submitButton, #sendStatus {
     background-image:linear-gradient(120deg, turquoise, rgba(0, 0, 0, 0.9));
     border: 2px solid turquoise;
     margin: 15px auto auto;
@@ -157,9 +179,11 @@ input{
     transition: transform 0.5s;
 }
 
-.submitButton:hover ,#sendStatus:hover, .removeUser:hover, .editUser:hover, .saveUser:hover, .createUser:hover, .userDbBtn:hover, .changeStatus:hover {
+.submitButton:hover ,#sendStatus:hover, .removeUser:hover, .editUser:hover, .saveUser:hover, .createUser:hover, .userDbBtn:hover, .changeStatus:hover, .changePasswordUser:hover, .savePassword:hover {
     transform: scale(1.1);
 }
+
+
 .loginByGoogle{
     display: flex;
     margin: auto auto 10px;
@@ -510,7 +534,15 @@ h3{
     font-size: 50px;
     cursor: pointer;
 }
-#backAddUsers:hover, #backShowUsers:hover, #backStatusUsers:hover, #backDetailsUsers:hover{
+#backChangePasswordUsers{
+    position: absolute;
+    top: 17%;
+    left: 8.3%;
+    margin-bottom: 20px;
+    font-size: 50px;
+    cursor: pointer;
+}
+#backAddUsers:hover, #backShowUsers:hover, #backStatusUsers:hover, #backDetailsUsers:hover ,#backChangePasswordUsers:hover{
     color: turquoise;
 }
 
@@ -569,12 +601,15 @@ h3{
     display: flex;
     flex-direction: row;
     justify-content: center;
-    margin-top: 20px;
+    margin-top: -20px;
+    margin-left: 30px;
 }
 .radioUserStatus input[type="radio"]{
     position: relative;
     width: 40px;
     margin-top: 40px;
+    margin-bottom: 40px;
+    top: -30px;
     right: 53px;
 }
 
@@ -590,18 +625,28 @@ h3{
     text-align: center;
     font-size: 30px;
 }
-.userDetails{
+.changePasswordModel{
+    display: none;
+}
+
+.changePasswordModel h1{
+    text-align: center;
+    font-size: 30px;
+    margin-top: 60px;
+    margin-bottom: 80px;
+}
+.userDetails, .inputsPassword{
     display: flex;
     flex-direction: column;
     align-items: center;
     margin-bottom: 40px;
 }
-.userDetails input[type="text"], .userDetails input[list="permission"]{
-    /*margin-bottom: 40px;*/
+.userDetails input[type="text"], .userDetails input[list="permission"], .inputsPassword input[type="text"]{
+    margin-bottom: 40px;
     border: none;
     border-radius: 10px;
     font-family: 'Righteous', cursive;
-    background-color: rgba(255, 255, 255, 0.37);
+    background-color: rgba(171, 171, 171, 0.37);
     width: 300px;
     height: 30px;
     color: #13588a;
@@ -613,7 +658,7 @@ h3{
 }
 .userUpdateBtn{
     display: flex;
-   margin-top: 20px;
+    margin-top: 20px;
 }
 .removeUser{
     background-image:linear-gradient(120deg, #d51717, rgba(0, 0, 0, 0.9));
@@ -634,6 +679,9 @@ table {
     border-collapse: separate;
     box-sizing: border-box;
     text-indent: each-line;
-    /*border-spacing: 50px;*/
-    /*margin-left: 19%;*/
+    border-spacing: 50px;
+    margin-left: 19%;
 }
+
+
+

@@ -141,17 +141,14 @@ const backAddUsers = document.getElementById('backAddUsers');
 const welcomeMessage = document.getElementById('welcomeMessage');
 const backShowUsers = document.getElementById('backShowUsers');
 const logOutBtn = document.getElementById('logOutBtn');
-const userStatusModel = document.getElementById('userStatusModel');
 const userDetailsModel = document.getElementById('userDetailsModel');
-const saveUser = document.getElementById('saveUser');
-const  removeUser = document.getElementById('removeUser');
+// const userForm = document.getElementById('userForm');
+
 
 if (showUserBtn) {
-
     showUserBtn.addEventListener('click', () => {
         addUsers.style.display = 'none';
         welcomeMessage.style.display = 'none';
-        userStatusModel.style.display = 'none';
         userDetailsModel.style.display = 'none';
         showUser.style.display = 'block';
         appendData();
@@ -160,54 +157,30 @@ if (showUserBtn) {
     addUserBtn.addEventListener('click', () => {
         showUser.style.display = 'none';
         welcomeMessage.style.display = 'none';
-        userStatusModel.style.display = 'none';
         userDetailsModel.style.display = 'none';
         addUsers.style.display = 'block';
     })
     backAddUsers.addEventListener('click', () => {
         addUsers.style.display = 'none';
         showUser.style.display = 'none';
-        userStatusModel.style.display = "none";
         userDetailsModel.style.display = 'none';
         welcomeMessage.style.display = 'block';
     })
     backShowUsers.addEventListener('click', () => {
         addUsers.style.display = 'none';
         showUser.style.display = 'none';
-        userStatusModel.style.display = "none";
         userDetailsModel.style.display = 'none';
         welcomeMessage.style.display = 'block';
     })
     logOutBtn.addEventListener('click', () => {
         window.location.href = 'index.html';
     })
-    sendStatus.addEventListener('click', () => {
-        suspension();
-    });
+    // sendStatus.addEventListener('click', () => {
+    //     suspension();
+    // })
     addUser.addEventListener('click', () => {
         addUserData();
-    });
-    saveUser.addEventListener('click', () => {
-        saveUpdateAdmin();
-    });
-    removeUser.addEventListener("click", async () => {
-        const data = {
-            email: document.getElementById('userEmailDetails').value
-        }
-        const response = await fetch(`${host}/api/admin/removeUser`, {
-            method: "DELETE",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify(data),
-        });
-        const body = await response.json();
-        if (body.message) {
-            alert((body.message));
-            location.reload();
-        }
     })
-
 
     async function appendData() {
         const response = await fetch(`${host}/api/admin/showUser`, {
@@ -230,11 +203,13 @@ if (showUserBtn) {
         const statusHeading = document.createElement('th');
         statusHeading.innerHTML = "Status";
 
+
         table.appendChild(thead);
         table.appendChild(tbody);
 
 // Adding the entire table to the body tag
         const myData = document.getElementById("myData").appendChild(table);
+
 
         userTitle.appendChild(nameHeading);
         userTitle.appendChild(emailHeading);
@@ -248,9 +223,9 @@ if (showUserBtn) {
             const userDbBtn = document.createElement('button');
             let userDb = myData.insertRow(i);
             userDbBtn.classList.add("userDbBtn");
-            userDbBtn.setAttribute("onclick", "userDetails(value)");
-            userDbBtn.setAttribute('value', data[i].email);
+            userDbBtn.setAttribute('id', data[i].email);
             userDbBtn.setAttribute('type', "button");
+            const userEmail = data[i].email;
 
             let userDbRow_1 = document.createElement('td');
             userDbRow_1.innerHTML = data[i].name;
@@ -275,7 +250,6 @@ if (showUserBtn) {
             showUserToEdit[i].addEventListener('click', () => {
                 addUsers.style.display = 'none';
                 showUser.style.display = 'none';
-                userStatusModel.style.display = "none";
                 userDetailsModel.style.display = 'block';
             })
         }
@@ -283,84 +257,67 @@ if (showUserBtn) {
 }
 
 
-const userDetails = async (email) => {
-    document.getElementById('changeStatus').style.display = 'none';
+// const myData = document.getElementById('myData');
 
-    const response = await fetch(host + '/api/admin/showUser/' + email, {
-        method: 'GET',
-        headers: {
-            "Content-Type": "application/json",
-        },
-    })
-    const user = await response.json();
-    document.getElementById('userNameDetails').value = user.name;
-    document.getElementById('userStatusDetails').value = user.status;
-    document.getElementById('userPermissions').value = user.type;
-    document.getElementById('userEmailDetails').value = user.email;
-    document.getElementById('userLoginDetails').value = user.loginDate;
-}
-
-const backStatusUsers = document.getElementById('backStatusUsers');
-if (backStatusUsers) {
-    backStatusUsers.addEventListener('click', () => {
-        addUsers.style.display = 'none';
-        userStatusModel.style.display = "none";
-        userDetailsModel.style.display = 'none';
-        showUser.style.display = 'block';
-    })
-}
-
-const saveUpdateAdmin = async () => {
-    const data = {
-        name: document.getElementById('userNameDetails').value,
-        status: document.getElementById('userStatusDetails').value,
-        type: document.getElementById('userPermissions').value,
-        email: document.getElementById('userEmailDetails').value
-    };
-
-    const response = await fetch(`${host}/api/admin/saveUpdateAdmin`, {
-        method: "PUT",
-        headers: {
-            "Content-Type": "application/json",
-        },
-        body: JSON.stringify(data),
-    });
-    const body = await response.json();
-    if (body.message) {
-        alert((body.message));
-        location.reload();
-    }
-}
-
-
+const saveUser = document.getElementById("saveUser");
+const removeUser = document.getElementById("removeUser");
 const editUser = document.getElementById('editUser');
+const changePasswordUser = document.getElementById("changePasswordUser");
+const userNameDetails = document.getElementById("userNameDetails");
+const backChangePasswordUsers = document.getElementById("backChangePasswordUsers");
+const changePasswordModel = document.getElementById("changePasswordModel");
 if (editUser) {
     editUser.addEventListener('click', () => {
-        // document.getElementById('changeStatus').style.display = 'block';
         document.getElementById('userNameDetails').readOnly = false;
+        document.getElementById('userLastLoginDetails').readOnly = false;
         document.getElementById('userPermissions').readOnly = false;
+        userNameDetails.style.backgroundColor = "white";
+        removeUser.style.display = "none";
+        editUser.style.display = "none"
+        saveUser.style.display = "block";
+        changePasswordUser.style.display = "block";
+    })
+}if(backChangePasswordUsers){
+    backChangePasswordUsers.addEventListener('click',()=>{
+        changePasswordModel.style.display = "none";
+        addUsers.style.display = 'none';
+        showUser.style.display = 'none';
+        userDetailsModel.style.display = 'none';
+        userDetailsModel.style.display = "block";
+    })
+}
+if(changePasswordUser){
+    changePasswordUser.addEventListener('click', ()=>{
+        addUsers.style.display = 'none';
+        showUser.style.display = 'none';
+        userDetailsModel.style.display = 'none';
+        changePasswordModel.style.display = "block";
     })
 }
 
-const changeStatus = document.getElementById('changeStatus');
-if (changeStatus) {
-    changeStatus.addEventListener('click', () => {
-        addUsers.style.display = 'none';
-        showUser.style.display = 'none';
-        userStatusModel.style.display = "none";
-        userDetailsModel.style.display = 'none';
-        userStatusModel.style.display = 'block';
-    })
-}
 const backDetailsUsers = document.getElementById('backDetailsUsers');
 if (backDetailsUsers) {
     backDetailsUsers.addEventListener('click', () => {
         addUsers.style.display = 'none';
-        userStatusModel.style.display = "none";
         userDetailsModel.style.display = 'none';
-        userStatusModel.style.display = 'none';
         showUser.style.display = 'block';
     })
+}
+if (saveUser) {
+    saveUser.addEventListener('click', () => {
+        addUsers.style.display = 'none';
+        userDetailsModel.style.display = 'none';
+        saveUser.style.display = "none"
+        changePasswordUser.style.display = "none";
+        document.getElementById('userNameDetails').readOnly = true;
+        document.getElementById('userLastLoginDetails').readOnly = true;
+        document.getElementById('userPermissions').readOnly = true;
+        userNameDetails.style.backgroundColor = "rgba(171, 171, 171, 0.37)";
+        showUser.style.display = 'block';
+        removeUser.style.display = "block";
+        editUser.style.display = "block";
+    })
+
 }
 
 //login
@@ -527,21 +484,6 @@ const suspension = async () => {
     }
 };
 
-function openDateForm() {
-    let checkRadio = document.querySelector(
-        'input[name="userStatus"]:checked');
-
-    if (checkRadio.value === "suspended") {
-        document.getElementById("disp").innerHTML = checkRadio.value + " button checked" + `<br><input type="number" id="start" name="trip-start"
-        value="1"
-        min="0">`;
-    } else if (checkRadio.value !== "suspended") {
-        document.getElementById("disp").innerHTML = checkRadio.value + " button checked"
-    } else {
-        document.getElementById("disp").innerHTML
-            = "No one selected";
-    }
-}
 
 /*=================================== create table with mongoDB==================================*/
 // app.use(express.static('./public'));
