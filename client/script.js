@@ -258,6 +258,7 @@ const LoginData = async () => {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
+            "user": data.email
         },
         body: JSON.stringify(data),
         redirect: "follow",
@@ -266,7 +267,10 @@ const LoginData = async () => {
         console.log("200");
         window.location.replace("/homePage");
     }
-    const body = await response.json();
+    if(response.status === 401){
+        alert('token not found')
+    }
+    const body = await response;
     if (body.message) {
         alert((body.message));
         // location.reload();
