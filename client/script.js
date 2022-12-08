@@ -141,7 +141,6 @@ const backAddUsers = document.getElementById('backAddUsers');
 const welcomeMessage = document.getElementById('welcomeMessage');
 const backShowUsers = document.getElementById('backShowUsers');
 const logOutBtn = document.getElementById('logOutBtn');
-const userStatusModel = document.getElementById('userStatusModel');
 const userDetailsModel = document.getElementById('userDetailsModel');
 // const userForm = document.getElementById('userForm');
 
@@ -150,7 +149,6 @@ if (showUserBtn) {
     showUserBtn.addEventListener('click', () => {
         addUsers.style.display = 'none';
         welcomeMessage.style.display = 'none';
-        userStatusModel.style.display = 'none';
         userDetailsModel.style.display = 'none';
         showUser.style.display = 'block';
         appendData();
@@ -159,30 +157,27 @@ if (showUserBtn) {
     addUserBtn.addEventListener('click', () => {
         showUser.style.display = 'none';
         welcomeMessage.style.display = 'none';
-        userStatusModel.style.display = 'none';
         userDetailsModel.style.display = 'none';
         addUsers.style.display = 'block';
     })
     backAddUsers.addEventListener('click', () => {
         addUsers.style.display = 'none';
         showUser.style.display = 'none';
-        userStatusModel.style.display = "none";
         userDetailsModel.style.display = 'none';
         welcomeMessage.style.display = 'block';
     })
     backShowUsers.addEventListener('click', () => {
         addUsers.style.display = 'none';
         showUser.style.display = 'none';
-        userStatusModel.style.display = "none";
         userDetailsModel.style.display = 'none';
         welcomeMessage.style.display = 'block';
     })
     logOutBtn.addEventListener('click', () => {
         window.location.href = 'index.html';
     })
-    sendStatus.addEventListener('click', () => {
-        suspension();
-    })
+    // sendStatus.addEventListener('click', () => {
+    //     suspension();
+    // })
     addUser.addEventListener('click', () => {
         addUserData();
     })
@@ -253,56 +248,76 @@ if (showUserBtn) {
         const showUserToEdit = document.querySelectorAll('.userDbBtn');
         for (let i = 0; i < data.length; i++) {
             showUserToEdit[i].addEventListener('click', () => {
-                    addUsers.style.display = 'none';
-                    showUser.style.display = 'none';
-                    userStatusModel.style.display = "none";
-                    userDetailsModel.style.display = 'block';
+                addUsers.style.display = 'none';
+                showUser.style.display = 'none';
+                userDetailsModel.style.display = 'block';
             })
         }
     }
 }
 
-const backStatusUsers = document.getElementById('backStatusUsers');
-if(backStatusUsers){
-    backStatusUsers.addEventListener('click', ()=>{
-        addUsers.style.display = 'none';
-        userStatusModel.style.display = "none";
-        userDetailsModel.style.display = 'none';
-        showUser.style.display = 'block';
-    })
-}
 
 // const myData = document.getElementById('myData');
 
-
+const saveUser = document.getElementById("saveUser");
+const removeUser = document.getElementById("removeUser");
 const editUser = document.getElementById('editUser');
+const changePasswordUser = document.getElementById("changePasswordUser");
+const userNameDetails = document.getElementById("userNameDetails");
+const backChangePasswordUsers = document.getElementById("backChangePasswordUsers");
+const changePasswordModel = document.getElementById("changePasswordModel");
 if (editUser) {
     editUser.addEventListener('click', () => {
         document.getElementById('userNameDetails').readOnly = false;
-        document.getElementById('userPasswordDetails').readOnly = false;
+        document.getElementById('userLastLoginDetails').readOnly = false;
         document.getElementById('userPermissions').readOnly = false;
+        userNameDetails.style.backgroundColor = "white";
+        removeUser.style.display = "none";
+        editUser.style.display = "none"
+        saveUser.style.display = "block";
+        changePasswordUser.style.display = "block";
+    })
+}if(backChangePasswordUsers){
+    backChangePasswordUsers.addEventListener('click',()=>{
+        changePasswordModel.style.display = "none";
+        addUsers.style.display = 'none';
+        showUser.style.display = 'none';
+        userDetailsModel.style.display = 'none';
+        userDetailsModel.style.display = "block";
+    })
+}
+if(changePasswordUser){
+    changePasswordUser.addEventListener('click', ()=>{
+        addUsers.style.display = 'none';
+        showUser.style.display = 'none';
+        userDetailsModel.style.display = 'none';
+        changePasswordModel.style.display = "block";
     })
 }
 
-const changeStatus = document.getElementById('changeStatus');
-if(changeStatus){
-    changeStatus.addEventListener('click', ()=>{
-        addUsers.style.display = 'none';
-        showUser.style.display = 'none';
-        userStatusModel.style.display = "none";
-        userDetailsModel.style.display = 'none';
-        userStatusModel.style.display = 'block';
-    })
-}
 const backDetailsUsers = document.getElementById('backDetailsUsers');
-if(backDetailsUsers){
-    backDetailsUsers.addEventListener('click', ()=>{
+if (backDetailsUsers) {
+    backDetailsUsers.addEventListener('click', () => {
         addUsers.style.display = 'none';
-        userStatusModel.style.display = "none";
         userDetailsModel.style.display = 'none';
-        userStatusModel.style.display = 'none';
         showUser.style.display = 'block';
     })
+}
+if (saveUser) {
+    saveUser.addEventListener('click', () => {
+        addUsers.style.display = 'none';
+        userDetailsModel.style.display = 'none';
+        saveUser.style.display = "none"
+        changePasswordUser.style.display = "none";
+        document.getElementById('userNameDetails').readOnly = true;
+        document.getElementById('userLastLoginDetails').readOnly = true;
+        document.getElementById('userPermissions').readOnly = true;
+        userNameDetails.style.backgroundColor = "rgba(171, 171, 171, 0.37)";
+        showUser.style.display = 'block';
+        removeUser.style.display = "block";
+        editUser.style.display = "block";
+    })
+
 }
 
 //login
@@ -469,21 +484,6 @@ const suspension = async () => {
     }
 };
 
-function openDateForm() {
-    let checkRadio = document.querySelector(
-        'input[name="userStatus"]:checked');
-
-    if (checkRadio.value === "suspended") {
-        document.getElementById("disp").innerHTML = checkRadio.value + " button checked" + `<br><input type="number" id="start" name="trip-start"
-        value="1"
-        min="0">`;
-    } else if (checkRadio.value !== "suspended") {
-        document.getElementById("disp").innerHTML = checkRadio.value + " button checked"
-    } else {
-        document.getElementById("disp").innerHTML
-            = "No one selected";
-    }
-}
 
 /*=================================== create table with mongoDB==================================*/
 // app.use(express.static('./public'));
