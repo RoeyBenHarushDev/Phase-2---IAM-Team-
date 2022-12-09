@@ -11,7 +11,7 @@ async function handleConfirmCode(req, res) {
         }
         await confirmCode.otpCompare(user);
         // mailer.sendMail(user.email, "welcome", emailPath);
-        return res.status(200).json("add user");
+        return res.status(200).json({message: "Add user"});
     } catch (e) {
         return res.status(401).json({message: e.message});
     }
