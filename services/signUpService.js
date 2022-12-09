@@ -28,7 +28,6 @@ const transporter = node.createTransport(smtp({
 async function userExist(mail) {
     const exist = await OTP.findOne({email: mail});
     if (exist) {
-        console.log(`user ${mail} exists`);
         throw new Error("Email already exists");
     }
 }

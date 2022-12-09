@@ -23,27 +23,24 @@ const mainRouter = new express.Router();
 
 require('dotenv').config({ path: path.join(process.cwd() + "/data/",".env") });
 const SESSION_SECRET = process.env.secret;
-app.use(express.static('client'));
+app.use(express.static('clientPublic'));
+
 function isLoggedIn(req, res, next) {
     req.user ? next() : res.sendStatus(401)
 }
 app.get('*.html',function (req, res, next) {
-   /* if ((req.path.indexOf('html') >= 0)) {*/
         res.redirect('/homePage');
-   // }
 });
 
-/*app.get('/homePage.html',(req,res)=>
-{
-})*/
-app.get('/client/script.js', function(req, res) {
-    res.sendFile(path.join(__dirname , "../client/script.js"));
+
+app.get('/clientPublic/script.js', function(req, res) {
+    res.sendFile(path.join(__dirname , "../clientPublic/script.js"));
 });
-app.get('/client/style.css', function(req, res) {
-    res.sendFile(path.join(__dirname , "../client/style.css"));
+app.get('/clientPublic/style.css', function(req, res) {
+    res.sendFile(path.join(__dirname , "../clientPublic/style.css"));
 });
-app.get('/client/scriptsHome.js', function(req, res) {
-    res.sendFile(path.join(__dirname , "../client/scriptsHome.js"));
+app.get('/clientPublic/scriptsHome.js', function(req, res) {
+    res.sendFile(path.join(__dirname , "../clientPublic/scriptsHome.js"));
 });
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
@@ -59,7 +56,6 @@ app.use((req, res, next) => {
     res.header('Access-Control-Allow-Origin', '*');
     res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
     res.header("Referrer-Policy: no-referrer-when-downgrade")
-    // res.set('Content-Type', 'application/json');
     next();
 });
 
@@ -68,27 +64,23 @@ app.use(bodyParser.json());
 app.get('/',(req,res)=>{
     res.sendFile("index.html")
 });
-app.use('/api/googleLogIn',passport.authenticate('google', {scope : ['email','profile']}));
+app.use('/googleLogIn',passport.authenticate('google', {scope : ['email','profile']}));
 
-app.use('/google/callback',passport.authenticate('google', {successRedirect : '/homePage.html',failureRedirect:'/authFailure'}));
+app.use('/google/callback',passport.authenticate('google', {successRedirect : '/homePage',failureRedirect:'/authFailure'}));
 
 app.get('/authFailure',(req,res)=>{
     console.log("google auth failed")
     res.send('Something Went Wrong..')
-    // res.sendFile(path.join(__dirname ,"index.html"))
 });
-app.use('/api/login',login.loginRouter);
+app.use('/login',login.loginRouter);
 app.use('/homePage', login.loginRouter);
-app.use('/api/logout',logout.logoutRouter);
-app.use('/api/signUp', signUp.signupRoute);
-app.use('/api/admin', admin.adminRoute);
-app.use('/api/confirmCode', confirmCode.confirmCodeRoute);
-app.use('/api/forgotPassword', forgotPassword.forgotPasswordRoute);
-app.use('/api/changePassword', changePassword.changePasswordRoute);
-app.use('/api/deleteAfter15',deleteAfter15.deleteAfter15Route);
-// app.use('/api/adminCRUD', adminCRUD);
-
-
+app.use('/logout',logout.logoutRouter);
+app.use('/signUp', signUp.signupRoute);
+app.use('/admin', admin.adminRoute);
+app.use('/confirmCode', confirmCode.confirmCodeRoute);
+app.use('/forgotPassword', forgotPassword.forgotPasswordRoute);
+app.use('/changePassword', changePassword.changePasswordRoute);
+app.use('/deleteAfter15',deleteAfter15.deleteAfter15Route);
 
 
 module.exports = { app }

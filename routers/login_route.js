@@ -10,11 +10,10 @@ loginRouter.use(express.json());
 loginRouter.post('/', login_controller.loginControl)
 loginRouter.get('/', (req,res)=>{
     const token = req.cookies.token;
-    console.log(token);
     try {
         const userObj = jwt.verify(token, process.env.ACCESS_TOKEN_SECRET).user;
         if (userObj.type === "admin") {
-            res.sendFile(path.join(__dirname, "..", "clientPublic", "homePage.html"));
+            res.sendFile(path.join(__dirname, "..", "client", "homePage.html"));
         } else {
             res.redirect("/");
             res.end();
