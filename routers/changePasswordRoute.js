@@ -1,5 +1,5 @@
 const express = require("express");
-const changePasswordController =require("../controllers/changePassword_controller");
+const changePasswordController =require("../controllers/changePasswordController");
 
 const changePasswordRoute = new express.Router();
 

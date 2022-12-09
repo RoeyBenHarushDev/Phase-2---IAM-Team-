@@ -1,7 +1,7 @@
 const dbHandler = require("../data/dbHandler")
 const adminService = require("../services/adminService");
 const User = require("../models/users");
-const OTP = require("../models/OTP-pass");
+const OTP = require("../models/OTPPass");
 
 async function handleSuspend(req, res) {
     try {

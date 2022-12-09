@@ -1,5 +1,5 @@
 const express = require("express");
-const suspendController = require("../controllers/admin_controller")
+const suspendController = require("../controllers/adminController")
 
 const adminRoute = new express.Router()
 

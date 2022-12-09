@@ -67,7 +67,7 @@ if (selectButton) {
         loginForm.style.display = "block";
     })
     googleLogIn.addEventListener('click', () => {
-        window.location.href = `${host}/api/googleLogIn`;
+        window.location.href = `${host}/googleLogIn`;
     })
 
     //login
@@ -85,7 +85,6 @@ if (selectButton) {
             redirect: "follow",
         })
         if (response.status === 200) {
-            console.log(response.cookie.token);
             window.location.replace("/homePage");
         }
         const body = await response.json();
