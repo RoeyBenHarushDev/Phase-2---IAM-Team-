@@ -390,18 +390,24 @@ const changePasswordUser = document.getElementById("changePasswordUser");
 const userNameDetails = document.getElementById("userNameDetails");
 const backChangePasswordUsers = document.getElementById("backChangePasswordUsers");
 const changePasswordModel = document.getElementById("changePasswordModel");
+const userPermissions = document.getElementById('userPermissions');
+const userStatusDetails = document.getElementById('userStatusDetails');
+const radioUserStatus = document.getElementById('radioUserStatus');
+const suspensionModel = document.getElementById('suspensionModel');
+const suspensionTime = document.getElementById('suspensionTime');
+
+
 if (editUser) {
-    const saveUser = document.getElementById("saveUser");
-    const removeUser = document.getElementById("removeUser");
     editUser.addEventListener('click', () => {
-        document.getElementById('userNameDetails').readOnly = false;
-        document.getElementById('userLastLoginDetails').readOnly = false;
-        document.getElementById('userPermissions').readOnly = false;
+        userNameDetails.readOnly = false;
+        userPermissions.disable = 0;
+        userStatusDetails.readOnly = false;
         userNameDetails.style.backgroundColor = "white";
+        userStatusDetails.style.backgroundColor = "white";
+        userPermissions.style.backgroundColor = "white";
         removeUser.style.display = "none";
-        editUser.style.display = "none"
+        editUser.style.display = "none";
         saveUser.style.display = "block";
-        changePasswordUser.style.display = "block";
     })
 }
 if (backChangePasswordUsers) {
@@ -410,7 +416,8 @@ if (backChangePasswordUsers) {
         addUsers.style.display = 'none';
         showUser.style.display = 'none';
         userDetailsModel.style.display = 'none';
-        userDetailsModel.style.display = "block";
+        userDetailsModel.style.display = "none";
+        welcomeMessage.style.display = "block";
     })
 }
 if (changePasswordUser) {
@@ -418,6 +425,7 @@ if (changePasswordUser) {
         addUsers.style.display = 'none';
         showUser.style.display = 'none';
         userDetailsModel.style.display = 'none';
+        welcomeMessage.style.display = "none";
         changePasswordModel.style.display = "block";
     })
 }
@@ -428,6 +436,11 @@ if (backDetailsUsers) {
         addUsers.style.display = 'none';
         userDetailsModel.style.display = 'none';
         showUser.style.display = 'block';
+        changePasswordModel.style.display = "none";
+        userNameDetails.readOnly = false;
+        userPermissions.disable = false;
+        userStatusDetails.readOnly = false;
+        userNameDetails.style.backgroundColor = "rgba(171, 171, 171, 0.37)";
     })
 }
 if (saveUser) {
@@ -435,16 +448,27 @@ if (saveUser) {
         addUsers.style.display = 'none';
         userDetailsModel.style.display = 'none';
         saveUser.style.display = "none"
-        changePasswordUser.style.display = "none";
-        document.getElementById('userNameDetails').readOnly = true;
-        document.getElementById('userLastLoginDetails').readOnly = true;
-        document.getElementById('userPermissions').readOnly = true;
+        changePasswordModel.style.display = "none";
+        userNameDetails.readOnly = true;
+        userPermissions.disable = true;
+        userStatusDetails.readOnly = true;
         userNameDetails.style.backgroundColor = "rgba(171, 171, 171, 0.37)";
         showUser.style.display = 'block';
         removeUser.style.display = "block";
         editUser.style.display = "block";
     })
-
+    if(userStatusDetails){
+        userStatusDetails.addEventListener('focus' , (event)=>{
+            radioUserStatus.style.display = "block";
+        })
+    }
+    function openTimeSuspension(){
+        suspensionModel.style.display = "block";
+        suspensionTime.style.backgroundColor = "white";
+    }
+    function closeTimeModel(){
+        suspensionModel.style.display = "none";
+    }
 }
 
 //signup fetch
