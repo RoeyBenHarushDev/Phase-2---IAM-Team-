@@ -76,7 +76,7 @@ if (selectButton) {
             email: document.getElementById("L-Email").value,
             password: document.getElementById("L-Password").value,
         };
-        const response = await fetch(`${host}/api/login`, {
+        const response = await fetch(`${host}/login`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -99,7 +99,7 @@ if (selectButton) {
         const data = {
             "email": document.getElementById("forgotEmail").value,
         }
-        const response = await fetch(`${host}/api/forgotPassword`, {
+        const response = await fetch(`${host}/forgotPassword`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -115,14 +115,13 @@ if (selectButton) {
 
     //  confirm Code
     SubmitOTPForm.addEventListener('click', async () => {
-        clearInterval(timer);
         const data = {
             name: document.getElementById("Username").value,
             email: document.getElementById("Email").value,
             password: document.getElementById("C-Password").value,
             code: document.getElementById("VerifyOTP").value
         };
-        const response = await fetch(`${host}/api/confirmCode`, {
+        const response = await fetch(`${host}/confirmCode`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -137,32 +136,12 @@ if (selectButton) {
         }
     })
 
-    let timer
-
     submitRegisterForm.addEventListener('click', async () => {
         if ((Password.value === CPassword.value) && (Password.value !== '' && CPassword.value !== '')) {
             registerForm.style.display = "none";
             VerifyByEmail.style.display = 'block';
-            timer = setInterval(async function () {
-                const data = {
-                    email: document.getElementById("Email").value,
-                }
-                const response = await fetch(host + '/api/deleteAfter15', {
-                    method: 'POST',
-                    headers: {
-                        "Content-Type": "application/json",
-                    },
-                    body: JSON.stringify(data)
-                })
-                const body = await response.json();
-                if (body.message) {
-                    alert((body.message));
-                    location.reload();
-                }
-            }, 900000)
             await signupData();
             return true;
-
         } else {
             alert("Please check if :\n\n1. You fill out all the fields\n2. Password isn't empty!\n3. Password are the Same!");
             return false;
@@ -233,7 +212,7 @@ if (showUserBtn) {
             email: document.getElementById("userEmail").value,
             password: document.getElementById("userPassword").value
         };
-        const response = await fetch(`${host}/api/admin/addUser`, {
+        const response = await fetch(`${host}/admin/addUser`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -255,7 +234,7 @@ if (showUserBtn) {
             email: document.getElementById('userEmailDetails').value
         };
 
-        const response = await fetch(`${host}/api/admin/saveUpdateAdmin`, {
+        const response = await fetch(`${host}/admin/saveUpdateAdmin`, {
             method: "PUT",
             headers: {
                 "Content-Type": "application/json",
@@ -273,7 +252,7 @@ if (showUserBtn) {
         const data = {
             email: document.getElementById('userEmailDetails').value
         }
-        const response = await fetch(`${host}/api/admin/removeUser`, {
+        const response = await fetch(`${host}/admin/removeUser`, {
             method: "DELETE",
             headers: {
                 "Content-Type": "application/json",
@@ -288,7 +267,7 @@ if (showUserBtn) {
     })
 
     async function appendData() {
-        const response = await fetch(`${host}/api/admin/showAllUsers`, {
+        const response = await fetch(`${host}/admin/showAllUsers`, {
             method: "GET",
             headers: {
                 "Content-Type": "application/json",
@@ -432,7 +411,7 @@ const signupData = async () => {
         email: document.getElementById("Email").value,
         password: document.getElementById("C-Password").value,
     }
-    const response = await fetch(host + '/api/signUp', {
+    const response = await fetch(host + '/signUp', {
         method: 'POST',
         headers: {
             "Content-Type": "application/json",
@@ -483,7 +462,7 @@ const suspension = async () => {
         "suspensionTime": suspensionTime,
         "userStatus": suspendedBut
     };
-    const response = await fetch(`${host}/api/admin/suspension`, {
+    const response = await fetch(`${host}/admin/suspension`, {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
@@ -497,7 +476,7 @@ const suspension = async () => {
 };
 
 const userDetails = async (email) => {
-    const response = await fetch(host + '/api/admin/showUser/' + email, {
+    const response = await fetch(host + '/admin/showUser/' + email, {
         method: 'GET',
         headers: {
             "Content-Type": "application/json",

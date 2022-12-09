@@ -7,7 +7,6 @@ const login_controller = require('../controllers/login_controller');
 const bodyParser = require('body-parser');
 const forgotPassword= require("./forgotPassword_route")
 const signUp = require("./signUp_route");
-const deleteAfter15 = require("./deleteAfter15_route")
 const changePassword = require("./changePassword_route")
 const admin = require("./admin_route");
 const confirmCode = require("./confirmCode_route");
@@ -53,13 +52,12 @@ app.get('/authFailure',(req,res)=>{
     res.send('Something Went Wrong..')
     // res.sendFile(path.join(__dirname ,"index.html"))
 });
-app.use('/api/login',login.loginRouter);
-app.use('/api/signUp', signUp.signupRoute);
-app.use('/api/admin', admin.adminRoute);
-app.use('/api/confirmCode', confirmCode.confirmCodeRoute);
-app.use('/api/forgotPassword', forgotPassword.forgotPasswordRoute);
-app.use('/api/changePassword', changePassword.changePasswordRoute);
-app.use('/api/deleteAfter15',deleteAfter15.deleteAfter15Route);
+app.use('/login',login.loginRouter);
+app.use('/signUp', signUp.signupRoute);
+app.use('/admin', admin.adminRoute);
+app.use('/confirmCode', confirmCode.confirmCodeRoute);
+app.use('/forgotPassword', forgotPassword.forgotPasswordRoute);
+app.use('/changePassword', changePassword.changePasswordRoute);
 // app.use('/api/adminCRUD', adminCRUD);
 
 app.use((req, res) => {
