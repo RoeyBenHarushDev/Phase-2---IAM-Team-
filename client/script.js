@@ -140,7 +140,7 @@ const addUsers = document.getElementById('addUsers');
 const backAddUsers = document.getElementById('backAddUsers');
 const welcomeMessage = document.getElementById('welcomeMessage');
 const backShowUsers = document.getElementById('backShowUsers');
-const logOutBtn = document.getElementById('logOutBtn');
+/*const logOutBtn = document.getElementById('logOutBtn');*/
 const userStatusModel = document.getElementById('userStatusModel');
 // const userForm = document.getElementById('userForm');
 
@@ -172,9 +172,9 @@ if (showUserBtn) {
         userStatusModel.style.display = "none";
         welcomeMessage.style.display = 'block';
     })
-    logOutBtn.addEventListener('click', () => {
+/*    logOutBtn.addEventListener('click', () => {
         window.location.href = 'index.html';
-    })
+    })*/
     sendStatus.addEventListener('click', () => {
         suspension();
     })
@@ -260,10 +260,11 @@ const LoginData = async () => {
             "Content-Type": "application/json",
         },
         body: JSON.stringify(data),
-    });
+        redirect: "follow",
+    })
     if (response.status === 200) {
-/*        location = "homePage.html";
-        window.location.href = "homePage.html";*/
+        console.log("200");
+        window.location.replace("/homePage");
     }
     const body = await response.json();
     if (body.message) {
@@ -362,8 +363,17 @@ const emailConfirmation = async () => {
 
 //LOGOUT & DELETING COOKIES
 
-const userLogOut = document.getElementById('logOutBtn');
-if (userLogOut) {
+
+/*
+logOutBtn.addEventListener("click", async () => {
+    await fetch("http://localhost:5000/api/logout");
+    window.location.replace("http://localhost:5000/index.html");
+});
+*/
+
+
+
+/*if (userLogOut) {
 
     userLogOut.addEventListener('click', () => {
         function get_cookie(name) {
@@ -383,7 +393,7 @@ if (userLogOut) {
 
         window.location = "index.html";
     })
-}
+}*/
 
 
 const suspension = async () => {

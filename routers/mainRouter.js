@@ -14,16 +14,40 @@ const passport = require('passport');
 const path = require("path");
 const logger = require("morgan");
 const fs = require('fs');
+const logout = require('./logout_route');
+const cookieParser = require('cookie-parser');
 const login_controller = require('../controllers/login_controller');
-const {loginRouter} = require("./login_route");
+const jwt = require("jsonwebtoken");
 const accessLogStream = fs.createWriteStream(path.join(__dirname,'logs.log'),{flags: 'a'})
+const mainRouter = new express.Router();
 
 require('dotenv').config({ path: path.join(process.cwd() + "/data/",".env") });
 const SESSION_SECRET = process.env.secret;
-
+app.use(express.static('client'));
 function isLoggedIn(req, res, next) {
     req.user ? next() : res.sendStatus(401)
 }
+app.get('*.html',function (req, res, next) {
+   /* if ((req.path.indexOf('html') >= 0)) {*/
+        res.redirect('/homePage');
+   // }
+});
+
+/*app.get('/homePage.html',(req,res)=>
+{
+})*/
+app.get('/client/script.js', function(req, res) {
+    res.sendFile(path.join(__dirname , "../client/script.js"));
+});
+app.get('/client/style.css', function(req, res) {
+    res.sendFile(path.join(__dirname , "../client/style.css"));
+});
+app.get('/client/scriptsHome.js', function(req, res) {
+    res.sendFile(path.join(__dirname , "../client/scriptsHome.js"));
+});
+app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
+app.use(cookieParser());
 app.use(logger(" :method :url :status :res[content-length] - :response-time ms :date[web]",
     {stream: accessLogStream}));
 app.use(session({secret: SESSION_SECRET,resave:false,
@@ -38,21 +62,15 @@ app.use((req, res, next) => {
     // res.set('Content-Type', 'application/json');
     next();
 });
-app.use(express.static('client'));
+
+
 app.use(bodyParser.json());
 app.get('/',(req,res)=>{
-    res.sendFile(path.join(__dirname ,"index.html"))
+    res.sendFile("index.html")
 });
 app.use('/api/googleLogIn',passport.authenticate('google', {scope : ['email','profile']}));
 
 app.use('/google/callback',passport.authenticate('google', {successRedirect : '/homePage.html',failureRedirect:'/authFailure'}));
-
-
-app.get('/homePage', login_controller.authenticateToken, (req,res)=>{
-
-    console.log(res);
-    res.sendFile(path.join(__dirname ,"../client/homePage.html"))
-});
 
 app.get('/authFailure',(req,res)=>{
     console.log("google auth failed")
@@ -60,6 +78,8 @@ app.get('/authFailure',(req,res)=>{
     // res.sendFile(path.join(__dirname ,"index.html"))
 });
 app.use('/api/login',login.loginRouter);
+app.use('/homePage', login.loginRouter);
+app.use('/api/logout',logout.logoutRouter);
 app.use('/api/signUp', signUp.signupRoute);
 app.use('/api/admin', admin.adminRoute);
 app.use('/api/confirmCode', confirmCode.confirmCodeRoute);
@@ -68,8 +88,7 @@ app.use('/api/changePassword', changePassword.changePasswordRoute);
 app.use('/api/deleteAfter15',deleteAfter15.deleteAfter15Route);
 // app.use('/api/adminCRUD', adminCRUD);
 
-app.use((req, res) => {
-    res.status(400).send('Something is broken!');
-});
+
+
 
 module.exports = { app }
