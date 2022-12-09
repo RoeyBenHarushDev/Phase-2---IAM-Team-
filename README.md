@@ -2,7 +2,6 @@
 
 # Description
 Identity & Access Management system, the service will support registration, login, forgot password and actions on users (suspend, edit and more).
-
 Users sessions and premissions managed by JWT cookie.
 The service will authenticate users with an email verification code.
 Data is stored on Mongo Atlas cloud.
