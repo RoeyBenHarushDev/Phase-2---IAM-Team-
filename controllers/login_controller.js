@@ -1,59 +1,37 @@
-const bcrypt = require('bcrypt');
-const dbHandler = require('../data/dbHandler');
-const {constructResponse} = require('../utils/utils.js');
-const unSuspend= async (user) => {
-    await dbHandler.updateUser(user.email, {"status": "active", "suspensionTime": 0, "suspensionDate": 0});
-}
+const loginService = require('../services/loginService');
+const dbHandler = require("../data/dbHandler");
+const jwt = require("jsonwebtoken");
+const path = require("path");
+let refreshTokens = [];
 
-async function isSuspend(user){
-    if (user.status === 'active') {
-        console.log(`user: ${user["email"]} is not suspended`);
-        return 0;
+
+const loginControl = async (req, res, next)=> {
+    try {
+            await loginService.handleLogin(req, res, next);
+            const userFind = await dbHandler.getUserByEmail(req.body.email);
+            const user = new userClass(userFind._id, userFind.type, userFind.email);
+            const accessToken = jwt.sign({user}, process.env.ACCESS_TOKEN_SECRET, { expiresIn: '15m' })
+            res.cookie('token', accessToken, {httponly:true});
+            res.status(200).json({});
+    } catch (err) {
+        console.log(err);
+        return res.status(401).json({message: err.message});
     }
-    const today = new Date();
-    const suspendTime = user.suspensionTime;
-    const suspendStartDate = user.suspensionDate;
-    const isSuspend = isAfter(suspendStartDate + parseInt(suspendTime), today);
-    if (isSuspend) {
-        console.log(`user: ${user["email"]} is suspended- login failed`, 'ERROR');
-        return suspendStartDate + parseInt(suspendTime);
-    }else {
-         await unSuspend(user);
-        console.log(`user: ${user["email"]} is no longer suspended`);
-        return 0;
-    };
 }
 
-const handleLogin = async (req,res,next)=>{
-    const userEmail=req.body.email.toLowerCase();
-    const userPassword=req.body.password;
-    let user;
-try {
-    user = await dbHandler.getUserByEmail(userEmail) //maybe needs await in the start and in the end.lean()
-    const suspend = await isSuspend(user);
-    if(suspend){
-        return constructResponse(res, {error: `User is suspended until ${isSuspend}`}, 401);}
-    if (await bcrypt.compare(userPassword, user.password)) {
-        console.log(`password correct! ${user.email} welcome`);
-        const today=new Date();
-        await dbHandler.updateUser(userEmail, {"loginDate": today})
-        return constructResponse(res, {}, 200);
+
+const Permissions = async (req, res, next) => {
+    try {
+        const userEmail = req.params.email.toLowerCase();
+        const user = await dbHandler.getUserByEmail(userEmail)
+
+        if (!user) {
+            throw new Error("user not exists");
+        }
+    } catch (e) {
+        return res.send(e.message);
     }
-    else {
-        return res.status(401).data("password incorrect");
-    }
-}catch(e) {
-    console.log(e);
-    return res.status(401).send({
-        message: e
-    })
-
-}
 }
 
 
-function isAfter(date1, date2) {
-    return date1 > date2;
-}
-
-module.exports = {handleLogin}
+module.exports={Permissions,loginControl};
