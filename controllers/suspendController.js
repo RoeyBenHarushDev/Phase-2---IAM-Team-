@@ -1,5 +1,4 @@
 const dbHandler = require("../data/dbHandler")
-const fs = require("fs");
 
 
 async function handleSuspend(request, response) {
@@ -27,21 +26,21 @@ async function ifClosed(userData) {
 
 function changeUserStatus(userData) {
     let data;
-    if (userData.userStatus == "suspended") {
+    if (userData.userStatus === "suspended") {
         data = {
             "suspensionDate": new Date(),
             "suspensionTime": userData.suspensionTime,
             "status": "suspended"
         }
     }
-    if (userData.userStatus == "closed") {
+    if (userData.userStatus === "closed") {
         data = {
             "suspensionDate": new Date(),
             "suspensionTime": 0,
             "status": "closed"
         }
     }
-    if (userData.userStatus == "active") {
+    if (userData.userStatus === "active") {
         data = {
             "suspensionDate": 0,
             "suspensionTime": 0,
