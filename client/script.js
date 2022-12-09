@@ -194,6 +194,7 @@ const logOutBtn = document.getElementById('logOutBtn');
 const userDetailsModel = document.getElementById('userDetailsModel');
 const saveUser = document.getElementById('saveUser');
 const removeUser = document.getElementById('removeUser');
+const changePassword= document.getElementById('savePassword');
 
 
 if (showUserBtn) {
@@ -268,6 +269,28 @@ if (showUserBtn) {
             location.reload();
         }
     });
+
+    //changePassword
+    changePassword.addEventListener("click", async () => {
+            const data = {
+                name: document.getElementById("Username").value,
+                email: document.getElementById("Email").value,
+                password: document.getElementById("C-Password").value,
+            }
+            const response = await fetch(host + '/api/signUp', {
+                method: 'POST',
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(data)
+            })
+            const body = await response.json();
+            if (body.message) {
+                alert((body.message));
+                location.reload();
+            }
+        })
+
 
     removeUser.addEventListener("click", async () => {
         const data = {
