@@ -7,7 +7,6 @@ const unSuspend= async (user) => {
 
 async function isSuspend(user) {
     if (user.status === 'active') {
-        console.log(`user: ${user["email"]} is not suspended`);
         return 0;
     } else if (user.status === 'suspended') {
         const today = new Date();
@@ -21,11 +20,9 @@ async function isSuspend(user) {
             return suspendStartDate + parseInt(suspendTime);
         } else {
             await unSuspend(user);
-            console.log(`user: ${user["email"]} is no longer suspended`);
             return 0;
         }
     } else if (user.status === 'closed') {
-        console.log(`user: ${user["email"]} is closed forever! bye bye`);
         return "forever";
     }
 }
@@ -42,7 +39,6 @@ const handleLogin = async (req, res, next) => {
         { throw new Error(`User is suspended until ${isSuspend}`)}
     if (!await bcrypt.compare(userPassword, user.password))
         { throw new Error("incorrect password")}
-    console.log(`password correct! ${user.email} welcome`);
     const today=new Date();
     await dbHandler.updateUser(userEmail, {"loginDate": today})
 }
