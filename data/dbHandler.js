@@ -24,7 +24,6 @@ async function addDoc(obj) {
 function typeUser(user) {
     let domain = user.email.split("@");
     domain = domain[1].split(".");
-    console.log(domain)
     if (domain.find(element => element === "shenkar")) {
         return "admin"
     } else {
@@ -33,8 +32,8 @@ function typeUser(user) {
 }
 
  const addUser= async (user) => {
-    user.password = await bcrypt.hash(user.password, 12);
-     console.log(user.email)
+    if (user.password){
+        user.password = await bcrypt.hash(user.password, 12);}
     const domain = typeUser(user)
     const newUser = new User({
         "name": user.name,
@@ -44,13 +43,5 @@ function typeUser(user) {
     await addDoc(newUser);
 }
 
- const showAll = async () => {
-     const found = await User.find({});
-     return found;
- }
 
-const deleteUser = async (mail) => {
-    User.deleteOne({ email:mail })
-}
-
-module.exports = {getUserByEmail, updateUser, addDoc, addUser, showAll,deleteUser};
+module.exports = {getUserByEmail, updateUser, addDoc, addUser};

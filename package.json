@@ -6,6 +6,7 @@
     "bcrypt": "^5.1.0",
     "body-parser": "^1.20.1",
     "chalk": "^5.1.2",
+    "cookie-parser": "^1.4.6",
     "diagnostics_channel": "^1.1.0",
     "dotenv": "^16.0.3",
     "dotnet": "^1.1.4",
@@ -27,7 +28,8 @@
     "send": "^0.18.0"
   },
   "scripts": {
-    "start": "node index.js"
+    "start": "node index.js",
+    "dev": "nodemon index.js"
   },
   "devDependencies": {
     "eslint": "^8.29.0",
