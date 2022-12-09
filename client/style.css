@@ -639,10 +639,9 @@ h3{
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin-bottom: 40px;
 }
 .userDetails input[type="text"], .userDetails input[list="permission"], .inputsPassword input[type="text"]{
-    margin-bottom: 40px;
+    margin-bottom: 6%;
     border: none;
     border-radius: 10px;
     font-family: 'Righteous', cursive;
@@ -658,7 +657,6 @@ h3{
 }
 .userUpdateBtn{
     display: flex;
-    margin-top: 20px;
 }
 .removeUser{
     background-image:linear-gradient(120deg, #d51717, rgba(0, 0, 0, 0.9));
@@ -680,8 +678,4 @@ table {
     box-sizing: border-box;
     text-indent: each-line;
     border-spacing: 50px;
-    margin-left: 19%;
 }
-
-
-

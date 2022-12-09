@@ -1,5 +1,4 @@
 const dbHandler = require("../data/dbHandler")
-const {constructResponse} = require('../utils/utils');
 const fs = require("fs");
 
 
@@ -13,10 +12,9 @@ async function handleSuspend(request, response) {
         if(findUser){
             throw new Error("user already exists");
         }
-        return constructResponse(response, {}, 200);
+        return response.status(200);
     } catch (e) {
-        if(e.message === 'user is closed'){ return constructResponse(response, {error: e.message}, 403);}
-        return constructResponse(response, {error: e.message}, 401);
+        return response.status(401).json({message: e.message})
     }
 }
 
