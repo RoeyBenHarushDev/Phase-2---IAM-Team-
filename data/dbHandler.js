@@ -44,13 +44,5 @@ function typeUser(user) {
     await addDoc(newUser);
 }
 
- const showAll = async () => {
-     const found = await User.find({});
-     return found;
- }
 
-const deleteUser = async (mail) => {
-    User.deleteOne({ email:mail })
-}
-
-module.exports = {getUserByEmail, updateUser, addDoc, addUser, showAll,deleteUser};
+module.exports = {getUserByEmail, updateUser, addDoc, addUser};
