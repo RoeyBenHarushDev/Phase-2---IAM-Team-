@@ -4,6 +4,7 @@ const otpGenerator = require('otp-generator')
 const ejs = require("ejs");
 const path = require("path");
 const OTP = require('../models/OTP-pass');
+const User = require("../models/users");
 const dbHandler = require('../data/dbHandler');
 
 ///////////////////////////////////////////////////////////////
@@ -30,22 +31,24 @@ async function userExist(mail) {
     if (exist) {
         throw new Error("Email already exists");
     }
-}
+    else
+    {
+        const userEmail = mail.toLowerCase();
+        await OTP.findOneAndDelete({'email': userEmail});
+    }
 
-///////////////////////////////////////////////////////////////
+}
 
 async function sendEmail(user) {
     //create an OTP Code
     let OTPcode = otpGenerator.generate(6, {upperCaseAlphabets: false, lowerCaseAlphabets: false, specialChars: false})
-    //puts the ejs file into a var (the email structure)
     const data = await ejs.renderFile(process.cwd() + "/data/otp-email.ejs", {name: `${user.name}`, code: OTPcode});
 
     //the mailing metadata
     const mainOptions = {
         from: 'IamTeamShenkar@gmail.com',
-        to: user.email,   //mail.emailId,
+        to: user.email,
         subject: 'Please Verify you Account',
-        // text: 'Your OTP is: ' + OTP
         html: data
     };
 
@@ -56,10 +59,8 @@ async function sendEmail(user) {
     await transporter.sendMail(mainOptions, (err, info) => {
         if (err) {
             throw new Error("transporter error: mail was not sent")
-            // server.logger.log(err);
         } else {
             console.log("message sent")
-            // server.logger.log('Message sent: ' + info.response + "\nwith OTP: " + OTP);
         }
     });
 }

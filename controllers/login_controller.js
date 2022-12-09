@@ -28,7 +28,7 @@ const loginControl = async (req, res, next)=> {
 
 const Permissions = async (req, res, next) => {
     try {
-        const userEmail = req.body.email.toLowerCase();
+        const userEmail = req.params.email.toLowerCase();
         const user = await dbHandler.getUserByEmail(userEmail)
 
         if (!user) {

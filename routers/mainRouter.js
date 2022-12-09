@@ -3,6 +3,7 @@ const app = express();
 require('../services/AuthService')
 const login =  require('./login_route')
 const session = require('express-session');
+const login_controller = require('../controllers/login_controller');
 const bodyParser = require('body-parser');
 const forgotPassword= require("./forgotPassword_route")
 const signUp = require("./signUp_route");
@@ -19,7 +20,6 @@ const cookieParser = require('cookie-parser');
 const login_controller = require('../controllers/login_controller');
 const jwt = require("jsonwebtoken");
 const accessLogStream = fs.createWriteStream(path.join(__dirname,'logs.log'),{flags: 'a'})
-const mainRouter = new express.Router();
 
 require('dotenv').config({ path: path.join(process.cwd() + "/data/",".env") });
 const SESSION_SECRET = process.env.secret;
@@ -82,5 +82,8 @@ app.use('/forgotPassword', forgotPassword.forgotPasswordRoute);
 app.use('/changePassword', changePassword.changePasswordRoute);
 app.use('/deleteAfter15',deleteAfter15.deleteAfter15Route);
 
+app.use((req, res) => {
+    res.status(400).send('Something is broken!');
+});
 
 module.exports = { app }
