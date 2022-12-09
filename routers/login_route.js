@@ -12,7 +12,7 @@ loginRouter.get('/', (req,res)=>{
     const token = req.cookies.token;
     try {
         const userObj = jwt.verify(token, process.env.ACCESS_TOKEN_SECRET).user;
-        if (userObj.type === "admin") {
+        if (userObj) {
             res.sendFile(path.join(__dirname, "..", "client", "homePage.html"));
         } else {
             res.redirect("/");
@@ -25,7 +25,7 @@ loginRouter.get('/', (req,res)=>{
     }
 });
 
-//loginRouter.get('/', login_controller.Permissions)
+loginRouter.get('/:email', login_controller.Permissions)
 
 
 

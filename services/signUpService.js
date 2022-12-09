@@ -9,7 +9,7 @@ const dbHandler = require('../data/dbHandler');
 
 ///////////////////////////////////////////////////////////////
 
-require("dotenv").config({ path: path.join(process.cwd() + "/data/","...env") });
+require("dotenv").config({ path: path.join(process.cwd() + "/data/",".env") });
 const emailSMTP = process.env.email;
 
 ///////////////////////////////////////////////////////////////

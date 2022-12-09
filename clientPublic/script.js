@@ -85,6 +85,7 @@ if (selectButton) {
             redirect: "follow",
         })
         if (response.status === 200) {
+            console.log(response.cookie.token);
             window.location.replace("/homePage");
         }
         const body = await response.json();
@@ -134,6 +135,26 @@ if (selectButton) {
             location.reload();
         }
     })
+    const signupData = async () => {
+        const data = {
+            name: document.getElementById("Username").value,
+            email: document.getElementById("Email").value,
+            password: document.getElementById("C-Password").value,
+        }
+        const response = await fetch(`${host}/signUp`, {
+            method: 'POST',
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(data)
+        })
+        const body = await response.json();
+        if (body.message) {
+            alert((body.message));
+            location.reload();
+        }
+    }
+
 
     submitRegisterForm.addEventListener('click', async () => {
         if ((Password.value === CPassword.value) && (Password.value !== '' && CPassword.value !== '')) {
@@ -176,12 +197,10 @@ const changePassword= document.getElementById('savePassword');
 
 
 if (showUserBtn) {
-
     logOutBtn.addEventListener("click", async () => {
         await fetch(`${host}/logout`);
         window.location.replace(`${host}/index.html`);
     });
-
     showUserBtn.addEventListener('click', () => {
         addUsers.style.display = 'none';
         welcomeMessage.style.display = 'none';
@@ -251,28 +270,6 @@ if (showUserBtn) {
         }
     });
 
-
-
-/*    //changePassword
-    changePassword.addEventListener("click", async () => {
-            const data = {
-                name: document.getElementById("Username").value,
-                email: document.getElementById("Email").value,
-                password: document.getElementById("C-Password").value,
-            }
-            const response = await fetch(host + '/signUp', {
-                method: 'POST',
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify(data)
-            })
-            const body = await response.json();
-            if (body.message) {
-                alert((body.message));
-                location.reload();
-            }
-        })*/
 
 
     removeUser.addEventListener("click", async () => {
@@ -453,8 +450,6 @@ if (saveUser) {
         suspensionModel.style.display = "none";
     }
 }
-
-
 
 const suspension = async () => {
     const suspendedBut = document.querySelector('input[name="userStatus"]:checked').value;

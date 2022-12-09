@@ -4,18 +4,12 @@ const jwt = require("jsonwebtoken");
 const path = require("path");
 let refreshTokens = [];
 
-class userClass {
-    constructor(_id,type) {
-        this.type= type;
-        this._id=_id;
-    }
-}
 
 const loginControl = async (req, res, next)=> {
     try {
             await loginService.handleLogin(req, res, next);
             const userFind = await dbHandler.getUserByEmail(req.body.email);
-            const user = new userClass(userFind._id, userFind.type);
+            const user = new userClass(userFind._id, userFind.type, userFind.email);
             const accessToken = jwt.sign({user}, process.env.ACCESS_TOKEN_SECRET, { expiresIn: '15m' })
             res.cookie('token', accessToken, {httponly:true});
             res.status(200).json({});

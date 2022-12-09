@@ -3,12 +3,10 @@ const app = express();
 require('../services/AuthService')
 const login =  require('./login_route')
 const session = require('express-session');
-const login_controller = require('../controllers/login_controller');
 const bodyParser = require('body-parser');
-const forgotPassword= require("./forgotPassword_route")
+const forgotPassword= require("./forgotPassword_route");
 const signUp = require("./signUp_route");
-const deleteAfter15 = require("./deleteAfter15_route")
-const changePassword = require("./changePassword_route")
+const changePassword = require("./changePassword_route");
 const admin = require("./admin_route");
 const confirmCode = require("./confirmCode_route");
 const passport = require('passport');
@@ -80,7 +78,6 @@ app.use('/admin', admin.adminRoute);
 app.use('/confirmCode', confirmCode.confirmCodeRoute);
 app.use('/forgotPassword', forgotPassword.forgotPasswordRoute);
 app.use('/changePassword', changePassword.changePasswordRoute);
-app.use('/deleteAfter15',deleteAfter15.deleteAfter15Route);
 
 app.use((req, res) => {
     res.status(400).send('Something is broken!');
