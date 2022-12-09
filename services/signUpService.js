@@ -3,8 +3,7 @@ const smtp = require("nodemailer-smtp-transport")
 const otpGenerator = require('otp-generator')
 const ejs = require("ejs");
 const path = require("path");
-const OTP = require('../models/OTP-pass');
-const User = require("../models/users");
+const OTP = require('../models/OTPPass');
 const dbHandler = require('../data/dbHandler');
 
 ///////////////////////////////////////////////////////////////
@@ -42,7 +41,7 @@ async function userExist(mail) {
 async function sendEmail(user) {
     //create an OTP Code
     let OTPcode = otpGenerator.generate(6, {upperCaseAlphabets: false, lowerCaseAlphabets: false, specialChars: false})
-    const data = await ejs.renderFile(process.cwd() + "/data/otp-email.ejs", {name: `${user.name}`, code: OTPcode});
+    const data = await ejs.renderFile(process.cwd() + "/data/otpEmail.ejs", {name: `${user.name}`, code: OTPcode});
 
     //the mailing metadata
     const mainOptions = {
