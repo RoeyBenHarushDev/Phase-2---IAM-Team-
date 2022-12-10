@@ -16,9 +16,11 @@ const fs = require('fs');
 const logout = require('./logoutRoute');
 const cookieParser = require('cookie-parser');
 const jwt = require("jsonwebtoken");
+
 const dbHandler = require('../data/dbHandler');
 const userClass = require("../models/userClass");
 const Url = require("url");
+
 const accessLogStream = fs.createWriteStream(path.join(__dirname,'logs.log'),{flags: 'a'})
 
 
@@ -82,6 +84,7 @@ app.use('/admin', admin.adminRoute);
 app.use('/confirmCode', confirmCode.confirmCodeRoute);
 app.use('/forgotPassword', forgotPassword.forgotPasswordRoute);
 app.use('/changePassword', changePassword.changePasswordRoute);
+
 app.use((req, res) => {res.status(400).send('Something is broken!');});
 
 module.exports = { app }

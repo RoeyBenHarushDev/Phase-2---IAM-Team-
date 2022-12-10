@@ -24,7 +24,7 @@ loginRouter.get('/', (req,res)=>{
     }
 });
 
-loginRouter.get('/:email', login_controller.Permissions)
+loginRouter.get('/api/:email', login_controller.Permissions)
 
 
 

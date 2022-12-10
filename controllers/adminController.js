@@ -18,7 +18,7 @@ async function handleSuspend(req, res) {
 
 async function handleAddUser(req, res) {
     try {
-        if (!req.body) throw new Error("Email is required")
+        if (!req.body.email) throw new Error("Email is required")
         let newUser = req.body;
         newUser.email = newUser.email.toLowerCase();
 
@@ -26,7 +26,7 @@ async function handleAddUser(req, res) {
         if (user)
             throw new Error("user already exists")
         await dbHandler.addUser(newUser)
-      return   res.status(200).json({ message: "user is closed" });
+      return   res.status(200).json({ message: "user add" });
     } catch (error) {
        return  res.status(401).json({ message: error.message })
     }
