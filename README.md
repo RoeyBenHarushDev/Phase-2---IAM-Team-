@@ -15,7 +15,7 @@ Data is stored on Mongo Atlas cloud.
   https://iam-team.onrender.com/
 ```
 ## local run
-## Install
+### Install
 install dependancies
 ```bash
   npm install
