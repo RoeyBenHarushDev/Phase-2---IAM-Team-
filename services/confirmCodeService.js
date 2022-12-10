@@ -16,14 +16,4 @@ async function otpCompare(user) {
     }
 }
 
-function typeUser(user) {
-    let domain = user.email.split("@");
-    domain = domain[1].split(".");
-    if (domain[0] === "shenkar") {
-        return "admin"
-    } else {
-        return "user"
-    }
-}
-
 module.exports = {otpCompare}

@@ -1,12 +1,12 @@
 const express = require("express");
 const loginRouter = new express.Router();
-const login_controller = require('../controllers/loginController');
+const loginController = require('../controllers/loginController');
 const jwt = require('jsonwebtoken');
 const path = require("path");
 
 loginRouter.use(express.json());
 
-loginRouter.post('/', login_controller.loginControl)
+loginRouter.post('/', loginController.loginControl)
 loginRouter.get('/', (req,res)=>{
     const token = req.cookies.token;
     try {
@@ -24,7 +24,7 @@ loginRouter.get('/', (req,res)=>{
     }
 });
 
-loginRouter.get('/:email', login_controller.Permissions)
+loginRouter.get('/:email', loginController.Permissions)
 
 
 

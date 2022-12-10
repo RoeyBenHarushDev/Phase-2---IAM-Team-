@@ -1,4 +1,3 @@
-
 const dbHandler = require("../data/dbHandler");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");

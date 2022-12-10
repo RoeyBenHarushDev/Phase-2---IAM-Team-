@@ -1,5 +1,4 @@
 const confirmCode = require("../services/confirmCodeService");
-const mailer = require("../growth/mailerAPI");
 const dbHandler = require("../data/dbHandler");
 
 async function handleConfirmCode(req, res) {

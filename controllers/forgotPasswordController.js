@@ -1,4 +1,3 @@
-
 const forgotPassService = require("../services/forgotPassService");
 const dbHandler = require("../data/dbHandler");
 const bcrypt = require("bcrypt");

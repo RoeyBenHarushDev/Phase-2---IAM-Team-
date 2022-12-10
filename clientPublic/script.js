@@ -15,7 +15,6 @@ const SubmitLoginForm = document.getElementById('SubmitLoginForm');
 const submitRegisterForm = document.getElementById('submitRegisterForm');
 const SubmitEmailForm = document.getElementById('SubmitEmailForm');
 const SubmitOTPForm = document.getElementById('SubmitOTPForm');
-const sendStatus = document.getElementById('sendStatus');
 const Password = document.getElementById("Password");
 const CPassword = document.getElementById("C-Password");
 const message = document.getElementById('message');
@@ -370,20 +369,20 @@ console.log(data)
                 userDbBtn.setAttribute('value', data[i].email);
                 userDbBtn.setAttribute('type', "button");
 
-                let userDbRow_1 = document.createElement('td');
-                userDbRow_1.innerHTML = data[i].name;
-                let userDbRow_2 = document.createElement('td');
-                userDbRow_2.innerHTML = data[i].email;
-                let userDbRow_3 = document.createElement('td');
-                userDbRow_3.innerHTML = data[i].type;
-                let userDbRow_4 = document.createElement('td');
-                userDbRow_4.innerHTML = data[i].status;
+                let userDbRow1 = document.createElement('td');
+                userDbRow1.innerHTML = data[i].name;
+                let userDbRow2 = document.createElement('td');
+                userDbRow2.innerHTML = data[i].email;
+                let userDbRow3 = document.createElement('td');
+                userDbRow3.innerHTML = data[i].type;
+                let userDbRow4 = document.createElement('td');
+                userDbRow4.innerHTML = data[i].status;
                 userDbBtn.innerHTML = "Show User";
 
-                userDb.appendChild(userDbRow_1);
-                userDb.appendChild(userDbRow_2);
-                userDb.appendChild(userDbRow_3);
-                userDb.appendChild(userDbRow_4);
+                userDb.appendChild(userDbRow1);
+                userDb.appendChild(userDbRow2);
+                userDb.appendChild(userDbRow3);
+                userDb.appendChild(userDbRow4);
                 userDb.appendChild(userDbBtn);
                 tbody.appendChild(userDb);
             }

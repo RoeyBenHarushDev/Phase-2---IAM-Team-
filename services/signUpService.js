@@ -2,17 +2,11 @@ const node = require("nodemailer")
 const smtp = require("nodemailer-smtp-transport")
 const otpGenerator = require('otp-generator')
 const ejs = require("ejs");
-const path = require("path");
 const OTP = require('../models/OTPPass');
 const USERS = require('../models/users')
 const dbHandler = require('../data/dbHandler');
 
-///////////////////////////////////////////////////////////////
-
-require("dotenv").config({ path: path.join(process.cwd() + "/data/",".env") });
 const emailSMTP = process.env.email;
-
-///////////////////////////////////////////////////////////////
 
 // the transport metadata
 const transporter = node.createTransport(smtp({

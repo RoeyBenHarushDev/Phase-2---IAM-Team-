@@ -16,24 +16,12 @@ const fs = require('fs');
 const logout = require('./logoutRoute');
 const cookieParser = require('cookie-parser');
 const jwt = require("jsonwebtoken");
-
-const dbHandler = require('../data/dbHandler');
-const userClass = require("../models/userClass");
-const Url = require("url");
-
 const accessLogStream = fs.createWriteStream(path.join(__dirname,'logs.log'),{flags: 'a'})
-
-
-require('dotenv').config({ path: path.join(process.cwd() + "/data/",".env") });
 const SESSION_SECRET = process.env.secret;
 
 
 app.use(express.static('clientPublic'));
-
-function isLoggedIn(req, res, next) {req.user ? next() : res.sendStatus(401)}
 app.get('*.html',function (req, res, next) {res.redirect('/homePage');});
-
-
 app.get('/clientPublic/script.js', function(req, res) {res.sendFile(path.join(__dirname , "../clientPublic/script.js"));});
 app.get('/clientPublic/style.css', function(req, res) {res.sendFile(path.join(__dirname , "../clientPublic/style.css"));});
 app.get('/clientPublic/scriptsHome.js', function(req, res) {res.sendFile(path.join(__dirname , "../clientPublic/scriptsHome.js"));});

@@ -2,14 +2,27 @@
     "env": {
         "browser": true,
         "commonjs": true,
-        "es2021": true
+        "es2021": true,
+        "node": true
     },
-    "extends": "google",
+    "extends": [
+        "eslint:recommended",
+        "plugin:@typescript-eslint/recommended"
+    ],
     "overrides": [
     ],
+    "parser": "@typescript-eslint/parser",
     "parserOptions": {
         "ecmaVersion": "latest"
     },
+    "plugins": [
+        "@typescript-eslint"
+    ],
     "rules": {
+        "linebreak-style": [
+            "error",
+            "windows"
+        ],
+        "camelcase": "error"
     }
 }
