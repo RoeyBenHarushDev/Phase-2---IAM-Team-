@@ -3,7 +3,7 @@ const dbHandler = require("../data/dbHandler");
 const jwt = require("jsonwebtoken");
 const path = require("path");
 let refreshTokens = [];
-
+const userClass = require('../models/users');
 
 const loginControl = async (req, res, next)=> {
     try {
