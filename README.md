@@ -52,8 +52,11 @@ https://documenter.getpostman.com/view/24057770/2s8YzTTMkM
 * css
 
 ## Credits
-* Roey Ben Harush
-* Racheli Dekel
-* Shahar Ariel
-* Tomer Duchovni
-* Roni Naor
+* Roey Ben Harush :ring:
+* Racheli Dekel :roll_eyes:
+* Shahar Ariel :guitar:
+* Tomer Duchovni 	:soccer:
+* Roni Naor :socks:
+
+## Lecturer
+David Avigad :lollipop:
