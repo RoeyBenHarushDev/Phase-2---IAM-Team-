@@ -1,8 +1,7 @@
 
 const dbHandler = require("../data/dbHandler");
 
-function handleChangePassword(){
-
+function handleChangePassword(req, res){
 
 }
 
