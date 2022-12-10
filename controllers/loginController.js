@@ -2,8 +2,10 @@ const loginService = require('../services/loginService');
 const dbHandler = require("../data/dbHandler");
 const jwt = require("jsonwebtoken");
 const path = require("path");
-let refreshTokens = [];
-const userClass = require('../models/users');
+const userClass = require("../models/userClass")
+
+require('dotenv').config({ path: path.join(process.cwd() + "/data/",".env") });
+
 
 const loginControl = async (req, res, next)=> {
     try {

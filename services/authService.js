@@ -1,11 +1,10 @@
 const passport = require('passport')
-const expressSession = require('express-session');
 const path = require("path");
 const GoogleStrategy = require('passport-google-oauth2').Strategy;
 const dbHandler = require('../data/dbHandler');
-const {addDoc} = require("../data/dbHandler");
 const User = require("../models/users");
 const jwt = require('jsonwebtoken');
+const userClass = require('../models/users');
 
 
 require("dotenv").config({ path: path.join(process.cwd() + "/data/",".env") });
@@ -34,9 +33,9 @@ passport.use(new GoogleStrategy({
             await dbHandler.addDoc(user)
             return done(null, user);
         }
-
-        //const token = jwt.sign({id: id, name: displayName},process.env.ACCESS_TOKEN_SECRET )
-       /* return done(null,{findUser,token});*/
+        // const user = new userClass(findUser._id, findUser.type, findUser.email);
+        // const token = jwt.sign({user}, process.env.ACCESS_TOKEN_SECRET, { expiresIn: '15m' })
+        // cookie('token', token, {httponly:true});
         return done(null,findUser);
 
     }
