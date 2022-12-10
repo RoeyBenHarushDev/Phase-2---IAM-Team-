@@ -274,6 +274,7 @@ if (showUserBtn) {
         const body = await response.json();
         if (body.message) {
             alert((body.message));
+            location.reload();
         }
     })
 

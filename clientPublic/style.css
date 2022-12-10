@@ -185,7 +185,7 @@ input{
 
 .loginByGoogle{
     display: flex;
-    margin: -18px auto;
+    margin: -10px auto;
     justify-content: center;
     border: 1px solid black;
     border-radius: 10px;
@@ -213,7 +213,7 @@ input{
 }
 
 .optionalSection {
-    height:50px;
+    height:40px;
     width:300px;
     background-color: transparent;
     position: absolute;
@@ -231,7 +231,7 @@ input{
     -webkit-text-fill-color: transparent;
     cursor:pointer;
     position:absolute;
-    right: 0;
+    right: -100px;
     top: 12px;
     font-size: 20px;
     transition: transform 0.5s;
