@@ -11,6 +11,8 @@ Identity & Access Management system, the service will support:
 ## Before you start, you should know:
 * passwords and codes sent to email can end up in the spam folder
 * api requests that contain body in postman should be formatted as JSON  
+* growth directory belongs to growth team. we use their api to send confirm registration mail.
+* our logo is BAND- stands for the capital letters of each of our last names. we are the IAM band :fox_face:	
 ## Prequisites
 ```bash
   Node.js 16v
