@@ -2,50 +2,29 @@ const loginService = require('../services/loginService');
 const dbHandler = require("../data/dbHandler");
 const jwt = require("jsonwebtoken");
 const path = require("path");
-let refreshTokens = [];
+const userClass = require("../models/userClass")
 
-class userClass {
-    constructor(_id,type) {
-        this.type= type;
-        this._id=_id;
-    }
-}
+require('dotenv').config({ path: path.join(process.cwd() + "/data/",".env") });
+
 
 const loginControl = async (req, res, next)=> {
     try {
             await loginService.handleLogin(req, res, next);
             const userFind = await dbHandler.getUserByEmail(req.body.email);
-            const user = new userClass(userFind._id, userFind.type);
-            console.log(user);
+            const user = new userClass(userFind._id, userFind.type, userFind.email);
             const accessToken = jwt.sign({user}, process.env.ACCESS_TOKEN_SECRET, { expiresIn: '15m' })
             res.cookie('token', accessToken, {httponly:true});
             res.status(200).json({});
     } catch (err) {
         console.log(err);
-       // return res.status(401).json({message: err.message});
+        return res.status(401).json({message: err.message});
     }
-    /*next();*/
-}
-
-const authenticateToken = (req,res,next)=>{
-    console.log("auth");
-/*    if (req.cookie.token===null) {
-        console.log(req.cookie.token);
-        return res.sendStatus(401);
-    }
-    jwt.verify(token,process.env.ACCESS_TOKEN_SECRET,(err,user)=>{
-        if (err){
-            console.log(err);
-            return res.sendStatus(403);  //token is no longer valid
-        }
-        next();
-    })*/
 }
 
 
 const Permissions = async (req, res, next) => {
     try {
-        const userEmail = req.body.email.toLowerCase();
+        const userEmail = req.params.email.toLowerCase();
         const user = await dbHandler.getUserByEmail(userEmail)
 
         if (!user) {
@@ -57,4 +36,4 @@ const Permissions = async (req, res, next) => {
 }
 
 
-module.exports={Permissions,loginControl,authenticateToken};
+module.exports={Permissions,loginControl};

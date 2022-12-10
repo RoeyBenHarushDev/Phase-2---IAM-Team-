@@ -12,6 +12,17 @@ body {
     cursor:default;
 }
 
+::-webkit-scrollbar {
+    width: 10px;
+}
+::-webkit-scrollbar-track {
+    border-radius: 10px;
+}
+::-webkit-scrollbar-thumb {
+    background-image:linear-gradient(120deg, turquoise, rgba(0, 0, 0, 0.65));
+    border-radius: 10px;
+}
+
 .sectionForm {
     height:400px;
     width: 600px;
@@ -19,7 +30,7 @@ body {
     box-shadow: 0 0 15px 5px rgba(0,0,0,.5);
 }
 
-#Register {
+.Register {
     padding: 15px 15px 15px 15px;
     font-family: 'Comfortaa', cursive;
     position: relative;
@@ -31,7 +42,6 @@ label,span{
 }
 
 .inputSection {
-
     margin-bottom:12px;
     margin-left: 100px;
 }
@@ -57,7 +67,7 @@ input{
     text-align: center;
     border-bottom: 2px solid turquoise;
 }
-#message{
+.message{
     display: flex;
     justify-content: center;
     margin-top: -20px;
@@ -89,9 +99,21 @@ input{
     margin-bottom:20px;
     line-height:60px;
 }
+.saveUser{
+    display: none;
+    width: 179px;
+    height:45px;
+    color: #FFF;
+    font-size: 30px;
+    font-family: 'Righteous', cursive;
+    cursor:pointer;
+    border: none;
+    border-radius: 10px;
+    transition: transform 0.5s;
+    justify-content:center;
+}
 
-
-.submitButton, #sendStatus, .removeUser, .editUser, .saveUser {
+.submitButton, #sendStatus, .removeUser, .editUser, .changePasswordUser{
     display:flex;
     width:180px;
     height:45px;
@@ -104,7 +126,7 @@ input{
     transition: transform 0.5s;
     justify-content:center;
 }
-.createUser{
+.createUser,.savePassword{
     display:flex;
     width:280px;
     height:45px;
@@ -119,21 +141,57 @@ input{
     margin: 40px auto auto;
     justify-content:center;
 }
-.submitButton, #sendStatus, .saveUser{
+.changePasswordUser{
+    display: none;
+    color: white;
+    width:230px;
+    height:45px;
+    border-radius: 10px;
+    font-size: 25px;
+    cursor: pointer;
+    transition: transform 0.5s;
+    font-family: 'Righteous', cursive;
+}
+.saveUser{
+    background-image:linear-gradient(120deg, #8ee537, rgba(0, 0, 0, 0.9));
+    border: 2px solid #56a14d;
+    margin: 15px auto auto;
+}
+.changePasswordUser{
     background-image:linear-gradient(120deg, turquoise, rgba(0, 0, 0, 0.9));
     border: 2px solid turquoise;
     margin: 15px auto auto;
 }
+.submitButton, #sendStatus {
+    background-image:linear-gradient(120deg, turquoise, rgba(0, 0, 0, 0.9));
+    border: 2px solid turquoise;
+    margin: 15px auto auto;
+}
+.userDbBtn{
+    background-image:linear-gradient(120deg, #40e0c8, rgba(0, 0, 0, 0.9));
+    border: 2px solid turquoise;
+    padding: 10px;
+    color: white;
+    border-radius: 5px;
+    font-family: 'Comfortaa', cursive;
+    cursor: pointer;
+    transition: transform 0.5s;
+}
 
-.submitButton:hover ,#sendStatus:hover, .removeUser:hover, .editUser:hover, .saveUser:hover, .createUser:hover  {
+.submitButton:hover ,#sendStatus:hover, .removeUser:hover, .editUser:hover, .saveUser:hover, .createUser:hover, .userDbBtn:hover, .changeStatus:hover, .changePasswordUser:hover, .savePassword:hover {
     transform: scale(1.1);
 }
+
+
 .loginByGoogle{
     display: flex;
     margin: auto auto 10px;
     justify-content: center;
-    border: none;
-    background: transparent;
+    border: 1px solid black;
+    border-radius: 10px;
+    padding: 7px;
+    background: rgba(255, 255, 255, 0.28);
+    font-family: 'Comfortaa', cursive;
     cursor: pointer;
 }
 .forgotPasswordBtn{
@@ -194,14 +252,14 @@ input{
     height:340px;
 }
 
-#LoginForm {
+.LoginForm {
     display:none;
     position:relative;
     width: 620px;
     height: 360px;
 }
 
-#RegisterForm {
+.RegisterForm {
     display:none;
     position:relative;
     width: 620px;
@@ -223,12 +281,12 @@ input{
     font-family: 'Righteous', cursive;
 }
 
-#SelectRegister {
+.SelectRegister {
     background-image:linear-gradient(140deg, black, turquoise 90%);
     border-radius: 20px;
 }
 
-#SelectLogin {
+.SelectLogin {
     background-image:linear-gradient(140deg, turquoise , black 90%);
     border-radius: 20px;
 }
@@ -260,13 +318,13 @@ input{
     transform: rotate(90deg);
     margin-left:10px;
 }
-#ForgotPasswordModel{
+.ForgotPasswordModel{
     display: none;
     width: 620px;
     height: 360px;
 
 }
-#VerifyByEmail{
+.VerifyByEmail{
     display: none;
     width: 620px;
     height: 360px;
@@ -285,10 +343,10 @@ input{
     width: 300px;
     height: 30px;
 }
-#SubmitOTPForm{
+.SubmitOTPForm{
     margin-top: 60px;
 }
-#backForgotBtn, #backVerificationBtn{
+.backForgotBtn, .backVerificationBtn{
     position: relative;
     left: 91%;
     top: -120px;
@@ -312,7 +370,7 @@ ul{
     list-style: none;
 }
 li{
-    margin-bottom: 40px;
+    margin-bottom: 20px;
 }
 .adminCrud{
     font-family: 'Righteous', cursive;
@@ -320,7 +378,7 @@ li{
     background: none;
     cursor: pointer;
     color: black;
-    font-size: 30px;
+    font-size: 20px;
 }
 .adminCrud:hover{
     color: rgba(64, 224, 208, 0.84);
@@ -343,26 +401,26 @@ li{
     margin-bottom:20px;
     line-height:60px;
 }
+.showUsers h1{
+    position: relative;
+    text-align: center;
+
+}
 .usersTable{
     width: 90%;
     height: auto;
-    max-height: 550px;
+    max-height: 390px;
     background-color: rgba(147, 146, 146, 0.35);
-    border-radius: 20px;
+    border-radius: 10px;
     margin-left: 5%;
     padding-top: 20px;
     overflow-x: hidden;
     overflow-y: auto;
-}
-.userRow{
-    list-style: none;
-    margin-left: 120px;
+    text-align: center;
 }
 .showUsers{
     display: none;
 }
-
-
 .rightBar{
     width: 15%;
     height: 90%;
@@ -384,22 +442,22 @@ input[type=checkbox]{
 .switchLabel {
     cursor: pointer;
     text-indent: -9999px;
-    width: 50px;
-    height: 30px;
+    width: 40px;
+    height: 22px;
     background: grey;
     display: block;
     border-radius: 100px;
     position: relative;
-    bottom: 8px;
+    bottom: 2px;
 }
 
 .switchLabel:after {
     content: '';
     position: absolute;
-    top: 2px;
-    left: 2px;
-    width: 25px;
-    height: 25px;
+    top: 1px;
+    left: 1px;
+    width: 20px;
+    height: 20px;
     background: #fff;
     border-radius: 25px;
     transition: 0.3s;
@@ -421,7 +479,7 @@ input:checked + .switchLabel:after {
 }
 h4{
     display: inline-block;
-    font-size: 20px;
+    font-size: 15px;
     margin-left: 20px;
 }
 .checkListDetails{
@@ -429,54 +487,63 @@ h4{
     margin-bottom: -22px;
 }
 .must{
-    font-size: 20px;
+    font-size: 15px;
     color: red;
 }
 .addUsers{
     text-align: center;
-    display: block;
+    display: none;
 }
 .addUserHeader{
     margin-top: -60px;
     font-size: 45px;
 }
 h3{
-    font-size: 20px;
+    font-size: 10px;
 }
 
 .addUsers input{
     width: 450px;
     border: none;
-    border-radius: 20px;
-    height: 40px;
+    border-radius: 10px;
+    height: 20px;
     background-color: rgba(180, 194, 193, 0.56);
     text-align: center;
 }
 .addUsers input::placeholder{
     color: rgba(22, 98, 126, 0.84);
 }
-#backAddUsers{
+.backAddUsers{
     padding-right: 80%;
     margin-bottom: 0;
     font-size: 50px;
     cursor: pointer;
 }
-#backShowUsers{
-    position: relative;
+.backShowUsers, .backStatusUsers, .backDetailsUsers{
+    position: absolute;
+    top: 10%;
+    left: 8.3%;
+    margin-bottom: 10px;
+    font-size: 50px;
+    cursor: pointer;
+}
+.backChangePasswordUsers{
+    position: absolute;
+    top: 17%;
     left: 8.3%;
     margin-bottom: 20px;
     font-size: 50px;
     cursor: pointer;
 }
-#backAddUsers:hover, #backShowUsers:hover{
+.backAddUsers:hover, .backShowUsers:hover, .backStatusUsers:hover, .backDetailsUsers:hover ,.backChangePasswordUsers:hover{
     color: turquoise;
 }
 
 .welcomeMessage h1{
     text-align: center;
     margin-top: 20%;
-    font-size: 70px;
-    display: none;
+    font-size: 50px;
+    display: block;
 }
 .logOut{
     font-family: 'Righteous', cursive;
@@ -485,7 +552,7 @@ h3{
     background: none;
     cursor: pointer;
     color: black;
-    font-size: 30px;
+    font-size: 20px;
     bottom: 10%;
 }
 .logOut:hover{
@@ -499,46 +566,29 @@ h3{
     bottom: 50px;
     left: 70px;
 }
-#userStatusModel{
+.userStatusModel{
     display: none;
 }
 .current{
     text-align: center;
 }
-.current h1{
-    font-size: 30px;
-    margin-bottom: 80px;
-}
-.current h3{
-    font-size: 25px;
-}
-#userChangeEmail{
-    position: relative;
-    left: 370px;
-    width: 390px;
-    border: none;
-    text-align: center;
-    border-bottom: 2px solid turquoise;
-    height: 30px;
-    background: rgba(255, 255, 255, 0.75);
-}
 .radioUserStatus{
     position: relative;
-    display: flex;
+    display: none;
     flex-direction: row;
     justify-content: center;
-    margin-top: 20px;
+    margin-top: -10px;
+    margin-left: 70px;
 }
 .radioUserStatus input[type="radio"]{
     position: relative;
     width: 40px;
     margin-top: 40px;
+    margin-bottom: 20px;
+    top: -30px;
     right: 53px;
 }
 
-.REBtns{
-    display: inline-block;
-}
 .userDetailsModel{
     display: none;
     flex-direction: column;
@@ -546,23 +596,35 @@ h3{
 }
 .userDetailsModel h1{
     text-align: center;
-    font-size: 30px;
+    font-size: 20px;
 }
-.userDetails{
+.changePasswordModel{
+    display: none;
+}
+
+.changePasswordModel h1{
+    text-align: center;
+    font-size: 20px;
+    margin-top: 60px;
+    margin-bottom: 80px;
+}
+.userDetails, .inputsPassword{
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin-bottom: 80px;
 }
-.userDetails input[type="text"], .userDetails input[list="permission"]{
-    margin-bottom: 40px;
+.userDetails input[type="text"], .userDetails input[list="permission"], input[type="number"] , .inputsPassword input[type="text"]{
+    margin-bottom: 5%;
     border: none;
     border-radius: 10px;
     font-family: 'Righteous', cursive;
-    background-color: rgba(255, 255, 255, 0.37);
+    background-color: rgba(171, 171, 171, 0.37);
     width: 300px;
-    height: 30px;
+    height: 20px;
     color: #13588a;
+}
+.suspensionModel{
+    display: none;
 }
 .editable{
     display: flex;
@@ -571,19 +633,25 @@ h3{
 }
 .userUpdateBtn{
     display: flex;
-   margin-top: 20px;
 }
 .removeUser{
     background-image:linear-gradient(120deg, #d51717, rgba(0, 0, 0, 0.9));
     border: 2px solid rgba(255, 0, 0, 0.57);
-    margin: 15px auto auto;
-    font-size: 24px;
-    padding-top: 6px;
+    margin: 10px auto auto;
+    font-size: 18px;
+    padding-top: 10px;
 }
 .editUser{
     background-image:linear-gradient(120deg, #d58317, rgba(0, 0, 0, 0.9));
     border: 2px solid orange;
-    margin: 15px auto auto;
-    font-size: 24px;
-    padding-top: 6px;
+    margin: 10px auto auto;
+    font-size: 18px;
+    padding-top: 10px;
+}
+table {
+    display: table;
+    border-collapse: unset;
+    text-indent: each-line;
+    border-spacing: 15px;
+    padding-left: 20%;
 }

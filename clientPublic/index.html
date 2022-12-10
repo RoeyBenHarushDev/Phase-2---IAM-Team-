@@ -11,13 +11,13 @@
 </head>
 <body>
 <section id="SelectButton" class="selectButtonArea">
-    <button id="SelectRegister" class="selectButton">Register</button>
-    <button id="SelectLogin" class="selectButton">Login</button>
+    <button id="SelectRegister" class="selectButton SelectRegister">Register</button>
+    <button id="SelectLogin" class="selectButton SelectLogin">Login</button>
 </section>
-<section id="RegisterForm" class="sectionForm">
+<section id="RegisterForm" class="sectionForm RegisterForm">
     <div class="formHeader">
         <h1 class="formHeading">Register</h1>
-        <button class="backBtn" id="backRegisterBtn">&#10006;</button>
+        <button class="backBtn backRegisterBtn" id="backRegisterBtn">&#10006;</button>
     </div>
     <form class="Register" action="#">
         <div class="inputSection">
@@ -51,10 +51,10 @@
     </div>
 
 </section>
-<section id="LoginForm" class="sectionForm reSize">
+<section id="LoginForm" class="sectionForm reSize LoginForm">
     <div class="formHeader">
         <h1 class="formHeading">Login</h1>
-        <button class="backBtn" id="backLoginBtn">&#10006;</button>
+        <button class="backBtn backLoginBtn" id="backLoginBtn">&#10006;</button>
     </div>
     <form class="Register" action="#">
         <div class="inputSection loginSection">
@@ -67,18 +67,18 @@
             <input type="password" id="L-Password" class="inputText" placeholder="password"><br><br>
             </label>
         </div>
-        <button class="forgotPasswordBtn" id="forgotPassword" >Forgot Password ?</button>
+        <button class="submitButton" type="button" id="SubmitLoginForm">Login</button>
         <div class="formFooter">
-            <button class="submitButton" type="button" id="SubmitLoginForm">Login</button>
+            <button class="forgotPasswordBtn" id="forgotPassword" >Forgot Password ?</button>
         </div>
     </form>
-    <button class="loginByGoogle" id="googleLogIn">Login with &nbsp<i class="fa fa-google"></i></button>
+    <button class="loginByGoogle" id="googleLogIn">Continue with Google&nbsp;<img src="search.png" width="16px" height="16px" alt=""></button>
     <div class="optionalSection">
         <span class="inputText sizeBack">No account yet?</span>
         <button class="changeButton" type="button" id="GoRegister">Register</button>
     </div>
 </section>
-<section id="ForgotPasswordModel" class="sectionForm reSize">
+<section id="ForgotPasswordModel" class="sectionForm reSize ForgotPasswordModel">
     <div class="formHeader">
         <h1 class="formHeading forgotH1">Forgot Password</h1>
         <button class="backBtn" id="backForgotBtn">&#10006;</button>
@@ -94,13 +94,13 @@
         </div>
     </form>
 </section>
-<section id="VerifyByEmail" class="sectionForm reSize">
+<section id="VerifyByEmail" class="sectionForm reSize VerifyByEmail">
     <div class="formHeader">
         <h1 class="formHeading forgotH1">Verification by email</h1>
     </div>
     <form class="VerifyForm" action="#">
         <div class="inputSection verifySection">
-            <label for="VerifyOTP" class="OTPLabel">Enter Your OTP:
+            <label for="VerifyOTP" class="OTPLabel">Please enter the code sent to your email:
                 <input type="text" id="VerifyOTP" class="inputOTP" required placeholder="OTP">
             </label>
         </div>

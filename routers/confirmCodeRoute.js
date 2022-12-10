@@ -1,5 +1,5 @@
 const express = require("express");
-const confirmCodeController = require("../controllers/confirmCode_controller");
+const confirmCodeController = require("../controllers/confirmCodeController");
 
 const confirmCodeRoute = new express.Router()
 

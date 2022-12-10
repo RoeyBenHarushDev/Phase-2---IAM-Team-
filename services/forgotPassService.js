@@ -3,7 +3,7 @@ const smtp = require("nodemailer-smtp-transport");
 const ejs = require("ejs");
 const path = require("path");
 
-require("dotenv").config({ path: path.join(process.cwd() + "/data/","...env") });
+require("dotenv").config({ path: path.join(process.cwd() + "/data/","....env") });
 const emailSMTP = process.env.email;
 
 const transporter = node.createTransport(smtp({
@@ -26,7 +26,7 @@ function generatePassword() {
 }
 
 async function sendPassword(newPass, user) {
-    const data = await ejs.renderFile(process.cwd() + "/data/newPass-mail.ejs", {name: user["name"], code: newPass});
+    const data = await ejs.renderFile(process.cwd() + "/data/newPassMail.ejs", {name: user["name"], code: newPass});
     //the mailing metadata
     const mainOptions = {
         from: 'IamShenkar@gmail.com',

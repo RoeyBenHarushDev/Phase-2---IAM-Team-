@@ -1,5 +1,5 @@
 const dbHandler = require('../data/dbHandler');
-const OTP = require('../models/OTP-pass');
+const OTP = require('../models/OTPPass');
 
 async function otpCompare(user) {
     user.email = user.email.toLowerCase();
@@ -7,7 +7,6 @@ async function otpCompare(user) {
     if (user.email === findUser.email) {
         if (user.code === findUser.code && Math.abs(new Date().getMinutes() - findUser.creationDate.getMinutes()) < 15) {
             await dbHandler.addUser(user);
-            return;
         } else {
             await OTP.findOneAndDelete({'email': user.email});
             throw new Error("code is expired");
@@ -20,7 +19,7 @@ async function otpCompare(user) {
 function typeUser(user) {
     let domain = user.email.split("@");
     domain = domain[1].split(".");
-    if (domain[0] == "shenkar") {
+    if (domain[0] === "shenkar") {
         return "admin"
     } else {
         return "user"

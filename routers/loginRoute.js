@@ -1,7 +1,6 @@
 const express = require("express");
 const loginRouter = new express.Router();
-const login_controller = require('../controllers/login_controller');
-const expressSession = require('express-session');
+const login_controller = require('../controllers/loginController');
 const jwt = require('jsonwebtoken');
 const path = require("path");
 
@@ -10,11 +9,10 @@ loginRouter.use(express.json());
 loginRouter.post('/', login_controller.loginControl)
 loginRouter.get('/', (req,res)=>{
     const token = req.cookies.token;
-    console.log(token);
     try {
         const userObj = jwt.verify(token, process.env.ACCESS_TOKEN_SECRET).user;
-        if (userObj.type === "admin") {
-            res.sendFile(path.join(__dirname, "..", "clientPublic", "homePage.html"));
+        if (userObj) {
+            res.sendFile(path.join(__dirname, "..", "client", "homePage.html"));
         } else {
             res.redirect("/");
             res.end();
@@ -26,7 +24,7 @@ loginRouter.get('/', (req,res)=>{
     }
 });
 
-//loginRouter.get('/', login_controller.Permissions)
+loginRouter.get('/:email', login_controller.Permissions)
 
 
 
