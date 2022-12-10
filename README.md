@@ -20,11 +20,11 @@ install dependancies
 ```bash
   npm install
 ```
-## start server
+### start server
 ```bash
   npm start
 ```
-## start client
+### start client
 ```bash
 type in url borwser: http://localhost:5000 
 ```
@@ -38,7 +38,6 @@ api documantion
   or
   https://interstellar-star-937701.postman.co/workspace/0a4b2104-369b-4054-af81-0fca62a17530/collection/24057770-a61e2dcc-4d2e-4745-88dc-40a3e212951f?ctx=documentation
 ```
-
 ## Built with
 * nodejs
 * express
