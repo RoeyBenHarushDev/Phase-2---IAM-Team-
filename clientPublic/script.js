@@ -184,7 +184,7 @@ if (selectButton) {
 const showUserBtn = document.getElementById("showUserBtn");
 const showUser = document.getElementById("showUsers");
 const addUserBtn = document.getElementById('addUserBtn');
-const addUsers = document.getElementById('addUser');
+const addUsers = document.getElementById('addUsers');
 const backAddUsers = document.getElementById('backAddUsers');
 const welcomeMessage = document.getElementById('welcomeMessage');
 const backShowUsers = document.getElementById('backShowUsers');
@@ -192,7 +192,7 @@ const logOutBtn = document.getElementById('logOutBtn');
 const userDetailsModel = document.getElementById('userDetailsModel');
 const saveUser = document.getElementById('saveUser');
 const removeUser = document.getElementById('removeUser');
-const changePassword= document.getElementById('savePassword');
+const changePassword = document.getElementById('savePassword');
 
 
 if (showUserBtn) {
@@ -204,6 +204,7 @@ if (showUserBtn) {
         addUsers.style.display = 'none';
         welcomeMessage.style.display = 'none';
         userDetailsModel.style.display = 'none';
+        changePasswordModel.style.display = "none";
         showUser.style.display = 'block';
         appendData();
     })
@@ -212,18 +213,22 @@ if (showUserBtn) {
         showUser.style.display = 'none';
         welcomeMessage.style.display = 'none';
         userDetailsModel.style.display = 'none';
+        changePasswordModel.style.display = "none";
         addUsers.style.display = 'block';
+        console.log("im heree");
     })
     backAddUsers.addEventListener('click', () => {
         addUsers.style.display = 'none';
         showUser.style.display = 'none';
         userDetailsModel.style.display = 'none';
+        changePasswordModel.style.display = "none";
         welcomeMessage.style.display = 'block';
     })
     backShowUsers.addEventListener('click', () => {
         addUsers.style.display = 'none';
         showUser.style.display = 'none';
         userDetailsModel.style.display = 'none';
+        changePasswordModel.style.display = "none";
         welcomeMessage.style.display = 'block';
     })
 
@@ -270,7 +275,6 @@ if (showUserBtn) {
     });
 
 
-
     removeUser.addEventListener("click", async () => {
         const data = {
             email: document.getElementById('userEmailDetails').value
@@ -290,74 +294,79 @@ if (showUserBtn) {
     })
 
     async function appendData() {
-        const response = await fetch(`${host}/admin/showAllUsers`, {
-            method: "GET",
-            headers: {
-                "Content-Type": "application/json",
-            },
-        });
-        const data = await response.json();
-        const table = document.createElement('table');
-        const thead = document.createElement('thead');
-        const tbody = document.createElement('tbody');
-        const userTitle = document.createElement('tr');
-        const nameHeading = document.createElement('th');
-        nameHeading.innerHTML = "Name";
-        const emailHeading = document.createElement('th');
-        emailHeading.innerHTML = "E-mail";
-        const typeHeading = document.createElement('th');
-        typeHeading.innerHTML = "Type";
-        const statusHeading = document.createElement('th');
-        statusHeading.innerHTML = "Status";
-
-        table.appendChild(thead);
-        table.appendChild(tbody);
+        if (document.getElementById("usersTable") === null) {
+            const response = await fetch(`${host}/admin/showAllUsers`, {
+                method: "GET",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+            });
+            const data = await response.json();
+            const table = document.createElement('table');
+            const thead = document.createElement('thead');
+            thead.setAttribute("id", "usersTable");
+            const tbody = document.createElement('tbody');
+            const userTitle = document.createElement('tr');
+            const nameHeading = document.createElement('th');
+            nameHeading.innerHTML = "Name";
+            const emailHeading = document.createElement('th');
+            emailHeading.innerHTML = "E-mail";
+            const typeHeading = document.createElement('th');
+            typeHeading.innerHTML = "Type";
+            const statusHeading = document.createElement('th');
+            statusHeading.innerHTML = "Status";
+            table.appendChild(thead);
+            table.appendChild(tbody);
 
 // Adding the entire table to the body tag
-        const myData = document.getElementById("myData").appendChild(table);
+            const myData = document.getElementById("myData").appendChild(table);
 
-        userTitle.appendChild(nameHeading);
-        userTitle.appendChild(emailHeading);
-        userTitle.appendChild(typeHeading);
-        userTitle.appendChild(statusHeading);
-        thead.appendChild(userTitle);
-
-        const userDbBtn = document.createElement('button');
-        for (let i = 0; i < data.length; i++) {
+            userTitle.appendChild(nameHeading);
+            userTitle.appendChild(emailHeading);
+            userTitle.appendChild(typeHeading);
+            userTitle.appendChild(statusHeading);
+            thead.appendChild(userTitle);
 
             const userDbBtn = document.createElement('button');
-            let userDb = myData.insertRow(i);
-            userDbBtn.classList.add("userDbBtn");
-            userDbBtn.setAttribute("onclick", "userDetails(value)");
-            userDbBtn.setAttribute('value', data[i].email);
-            userDbBtn.setAttribute('type', "button");
+            for (let i = 0; i < data.length; i++) {
 
-            let userDbRow_1 = document.createElement('td');
-            userDbRow_1.innerHTML = data[i].name;
-            let userDbRow_2 = document.createElement('td');
-            userDbRow_2.innerHTML = data[i].email;
-            let userDbRow_3 = document.createElement('td');
-            userDbRow_3.innerHTML = data[i].type;
-            let userDbRow_4 = document.createElement('td');
-            userDbRow_4.innerHTML = data[i].status;
-            userDbBtn.innerHTML = "Show User";
+                const userDbBtn = document.createElement('button');
+                let userDb = myData.insertRow(i);
+                userDbBtn.classList.add("userDbBtn");
+                userDbBtn.setAttribute("onclick", "userDetails(value)");
+                userDbBtn.setAttribute('value', data[i].email);
+                userDbBtn.setAttribute('type', "button");
 
-            userDb.appendChild(userDbRow_1);
-            userDb.appendChild(userDbRow_2);
-            userDb.appendChild(userDbRow_3);
-            userDb.appendChild(userDbRow_4);
-            userDb.appendChild(userDbBtn);
-            tbody.appendChild(userDb);
+                let userDbRow_1 = document.createElement('td');
+                userDbRow_1.innerHTML = data[i].name;
+                let userDbRow_2 = document.createElement('td');
+                userDbRow_2.innerHTML = data[i].email;
+                let userDbRow_3 = document.createElement('td');
+                userDbRow_3.innerHTML = data[i].type;
+                let userDbRow_4 = document.createElement('td');
+                userDbRow_4.innerHTML = data[i].status;
+                userDbBtn.innerHTML = "Show User";
+
+                userDb.appendChild(userDbRow_1);
+                userDb.appendChild(userDbRow_2);
+                userDb.appendChild(userDbRow_3);
+                userDb.appendChild(userDbRow_4);
+                userDb.appendChild(userDbBtn);
+                tbody.appendChild(userDb);
+            }
+
+            const showUserToEdit = document.querySelectorAll('.userDbBtn');
+            for (let i = 0; i < data.length; i++) {
+                showUserToEdit[i].addEventListener('click', () => {
+                    addUsers.style.display = 'none';
+                    showUser.style.display = 'none';
+                    userDetailsModel.style.display = 'block';
+                })
+            }
+        } else {
+            alert("Users table are up to date");
         }
 
-        const showUserToEdit = document.querySelectorAll('.userDbBtn');
-        for (let i = 0; i < data.length; i++) {
-            showUserToEdit[i].addEventListener('click', () => {
-                addUsers.style.display = 'none';
-                showUser.style.display = 'none';
-                userDetailsModel.style.display = 'block';
-            })
-        }
     }
 }
 
@@ -379,7 +388,7 @@ const suspensionTime = document.getElementById('suspensionTime');
 if (editUser) {
     editUser.addEventListener('click', () => {
         userNameDetails.readOnly = false;
-        userPermissions.disable = 0;
+        userPermissions.disabled = false;
         userStatusDetails.readOnly = false;
         userNameDetails.style.backgroundColor = "white";
         userStatusDetails.style.backgroundColor = "white";
@@ -414,12 +423,19 @@ if (backDetailsUsers) {
     backDetailsUsers.addEventListener('click', () => {
         addUsers.style.display = 'none';
         userDetailsModel.style.display = 'none';
-        showUser.style.display = 'block';
         changePasswordModel.style.display = "none";
+        showUser.style.display = 'block';
         userNameDetails.readOnly = false;
-        userPermissions.disable = false;
+        userPermissions.disabled = false;
         userStatusDetails.readOnly = false;
+        saveUser.style.display = "none";
+        radioUserStatus.style.display = "none";
+        removeUser.style.display = "block";
+        editUser.style.display = "block";
         userNameDetails.style.backgroundColor = "rgba(171, 171, 171, 0.37)";
+        userStatusDetails.style.backgroundColor = "rgba(171, 171, 171, 0.37)";
+        userPermissions.style.backgroundColor = "rgba(171, 171, 171, 0.37)";
+        closeTimeModel();
     })
 }
 if (saveUser) {
@@ -429,23 +445,27 @@ if (saveUser) {
         saveUser.style.display = "none"
         changePasswordModel.style.display = "none";
         userNameDetails.readOnly = true;
-        userPermissions.disable = true;
+        userPermissions.disabled = true;
         userStatusDetails.readOnly = true;
         userNameDetails.style.backgroundColor = "rgba(171, 171, 171, 0.37)";
         showUser.style.display = 'block';
         removeUser.style.display = "block";
         editUser.style.display = "block";
+        radioUserStatus.style.display = "none";
+        closeTimeModel();
     })
-    if(userStatusDetails){
-        userStatusDetails.addEventListener('focus' , (event)=>{
+    if (userStatusDetails) {
+        userStatusDetails.addEventListener('focus', (event) => {
             radioUserStatus.style.display = "block";
         })
     }
-    function openTimeSuspension(){
+
+    function openTimeSuspension() {
         suspensionModel.style.display = "block";
         suspensionTime.style.backgroundColor = "white";
     }
-    function closeTimeModel(){
+
+    function closeTimeModel() {
         suspensionModel.style.display = "none";
     }
 }
