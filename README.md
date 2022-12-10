@@ -1,8 +1,10 @@
 # Full-Stack-Team IAM-Phase2
 
 ## Description
-Identity & Access Management system, the service will support registration, login, forgot password and actions on users (suspend, edit and more).
-<br>Users sessions and premissions managed by JWT cookie.
+Identity & Access Management system, the service will support:
+<br>registration, login, forgot password and actions on users (suspend user by admin, edit details and more).
+<br>The service is using Google API to allow login in with gmail.
+<br>Users sessions and permission are managed by JWT cookie.
 The service will authenticate users with an email verification code.
 Data is stored on Mongo Atlas cloud.
 
