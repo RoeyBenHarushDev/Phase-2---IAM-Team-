@@ -8,13 +8,13 @@ Identity & Access Management system, the service will support:
 <br>The service will authenticate users with an email verification code.
 <br>Data is stored on Mongo Atlas cloud.
 
+## Before you start, you should know:
+* passwords and codes sent to email can end up in the spam folder
+* api requests that contain body in postman should be formatted as JSON  
 ## Prequisites
 ```bash
   Node.js 16v
 ```
-## Before you start, you should know:
-* passwords and codes sent to email can end up in the spam folder
-* api requests that contain body in postman should be formatted as JSON  
 ## Run with render
 ```bash
   https://iam-team.onrender.com/
