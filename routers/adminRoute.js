@@ -6,10 +6,10 @@ const adminRoute = new express.Router()
 adminRoute.post('/suspension', suspendController.handleSuspend);
 adminRoute.post('/addUser', suspendController.handleAddUser);
 
-adminRoute.get('/showAllUsers', suspendController.handleShowAllUsers);
+adminRoute.get('/showUsers', suspendController.handleShowAllUsers);
 adminRoute.get('/showUser/:email', suspendController.handleShowUser);
 
-adminRoute.put('/saveUpdateAdmin', suspendController.handleSaveUpdateAdmin);
-adminRoute.delete('/removeUser', suspendController.handleDeleteUser);
+adminRoute.put('/updateUser', suspendController.handleSaveUpdate);
+adminRoute.delete('/deleteUser', suspendController.handleDeleteUser);
 
 module.exports= { adminRoute }

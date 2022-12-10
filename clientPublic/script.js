@@ -27,12 +27,12 @@ const host = window.location.origin
 
 
 const getUserEmail =  () => {
-const email = document.cookie.split(";").sort()[0].split("=")[1].split("%40");
+const email = document.cookie.match("email=[^;]*").toString().split("=")[1].split("%40");
 return email[0] + "@" + email[1];
 }
 
 const getUserType = () => {
-    const type = document.cookie.split(";").sort()[1].split("=")[1]
+    const type = document.cookie.match("type=[^;]*").toString().split("=")[1]
     return type;
 }
 
@@ -103,7 +103,8 @@ if (selectButton) {
             window.location.replace("/homePage");
         }
         const body = await response.json();
-        if (body.message) {
+        if (body.message && response.status!=200)
+        {
             alert((body.message));
         }
     })
@@ -163,8 +164,9 @@ if (selectButton) {
             body: JSON.stringify(data)
         })
         const body = await response.json();
-        if (body.message) {
-            alert((body.message));
+        if (body.message && response.status!=200)
+        {
+            alert(body.message);
             location.reload();
         }
     }
@@ -290,7 +292,7 @@ if (showUserBtn) {
             email: document.getElementById('userEmailDetails').value
         };
 
-        const response = await fetch(`${host}/admin/saveUpdateAdmin`, {
+        const response = await fetch(`${host}/admin/updateUser`, {
             method: "PUT",
             headers: {
                 "Content-Type": "application/json",
@@ -309,7 +311,7 @@ if (showUserBtn) {
         const data = {
             email: document.getElementById('userEmailDetails').value
         }
-        const response = await fetch(`${host}/admin/removeUser`, {
+        const response = await fetch(`${host}/admin/deleteUser`, {
             method: "DELETE",
             headers: {
                 "Content-Type": "application/json",
@@ -325,7 +327,7 @@ if (showUserBtn) {
 
     async function appendData() {
         if (document.getElementById("usersTable") === null) {
-            const response = await fetch(`${host}/admin/showAllUsers`, {
+            const response = await fetch(`${host}/admin/showUsers`, {
                 method: "GET",
                 headers: {
                     "Content-Type": "application/json",
@@ -399,9 +401,6 @@ if (showUserBtn) {
 
     }
 }
-
-// const myData = document.getElementById('myData');
-
 
 const editUser = document.getElementById('editUser');
 const changePasswordUser = document.getElementById("changePasswordUser");
@@ -522,30 +521,6 @@ if (saveUser) {
         suspensionModel.style.display = "none";
     }
 }
-
-const suspension = async () => {
-    const suspendedBut = document.querySelector('input[name="userStatus"]:checked').value;
-    let suspensionTime = 0
-    if (suspendedBut === "suspended") {
-        suspensionTime = document.getElementById("start").value
-    }
-    const data = {
-        "email": document.getElementById("userChangeEmail").value,
-        "suspensionTime": suspensionTime,
-        "userStatus": suspendedBut
-    };
-    const response = await fetch(`${host}/admin/suspension`, {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json",
-        },
-        body: JSON.stringify(data),
-    });
-    const body = await response.json();
-    if (body.message) {
-        alert((body.message));
-    }
-};
 
 const userDetails = async (email) => {
     const response = await fetch(host + '/admin/showUser/' + email, {

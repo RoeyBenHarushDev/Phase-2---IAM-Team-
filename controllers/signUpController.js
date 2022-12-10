@@ -11,7 +11,8 @@ async function handleSignUp(req, res) {
         }
         await signUp.userExist(user.email)
         await signUp.sendEmail(req.body)
-        return  res.status(200);
+        return res.status(200).json({"message": "code has been sent"});
+
 
     } catch (e) {
         return  res.status(401).json({message: e.message});

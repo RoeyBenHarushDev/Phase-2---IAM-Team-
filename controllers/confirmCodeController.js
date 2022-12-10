@@ -10,8 +10,8 @@ async function handleConfirmCode(req, res) {
             throw new Error("user already exists");
         }
         await confirmCode.otpCompare(user);
-        // mailer.sendMail(user.email, "welcome", emailPath);
-        return res.status(200).json({message: "Add user"});
+
+        return res.status(200).json({message: "User was added"});
     } catch (e) {
         return res.status(401).json({message: e.message});
     }

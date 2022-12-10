@@ -18,7 +18,9 @@ const loginControl = async (req, res, next) => {
         res.cookie('email', userFind.email, {httponly: true});
         res.cookie('type', userFind.type, {httponly: true});
 
-        res.status(200).json();
+       return res.status(200).json({'status':200, 'message': 'validaion succeeded! welcome' });
+
+
     } catch (err) {
         console.log(err);
         return res.status(401).json({message: err.message});
@@ -34,6 +36,7 @@ const Permissions = async (req, res, next) => {
         if (!user) {
             throw new Error("user not exists");
         }
+        return res.send("The user exists");
     } catch (e) {
         return res.send(e.message);
     }

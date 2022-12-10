@@ -52,17 +52,20 @@ async function handleShowUser(req, res){
     return res.send(JSON.stringify(user));
 }
 
-async function handleSaveUpdateAdmin(req, res){
+async function handleSaveUpdate(req, res){
     try {
-        console.log(req.body)
-        await dbHandler.updateUser(req.body.email,req.body);
-        return res.status(200).json({message: "user update"})
+        if(req.body.type === 'admin' || req.body.type === 'user') {
+            await dbHandler.updateUser(req.body.email, req.body);
+            return res.status(200).json({message: "user update"})
+        }else {
+            throw new Error("Invalid permission! Please choose a user or admin \nChanges are not saved")
+        }
     }catch (err){
         return res.status(401).json({message: err.message})
     }
 }
 
-module.exports = {handleSuspend, handleAddUser, handleShowUser,handleShowAllUsers, handleDeleteUser, handleSaveUpdateAdmin}
+module.exports = {handleSuspend, handleAddUser, handleShowUser,handleShowAllUsers, handleDeleteUser, handleSaveUpdate}
 
 
 
