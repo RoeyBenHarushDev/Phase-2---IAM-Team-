@@ -65,20 +65,6 @@ app.get('/',(req,res)=> {
 });
 app.use('/googleLogIn',passport.authenticate('google', {scope : ['email','profile']}));
 
-
-
-//app.use( '/google/callback',passport.authenticate('google',{successRedirect : '/googleJWT',failureRedirect:'/authFailure'}));
-// app.use('/google/callback',passport.authenticate('google', {},async (err, user, data) => {
-//
-//     console.log("res" + user);
-//     console.log("res.email" + user.email)
-//     console.log(data)
-//     // const userFind = await dbHandler.getUserByEmail(res._doc.email);
-//     // const user = new userClass(userFind._id, userFind.type, userFind.email);
-//     // const accessToken = jwt.sign({user}, process.env.ACCESS_TOKEN_SECRET, {expiresIn: '15m'});
-//     // res.cookie('token', accessToken, {httponly: true});
-// }))
-
 app.get('/google/callback',passport.authenticate('google', { failureRedirect: '/error' }),
     function(req, res) {
         res.cookie("token",req.authInfo.token)
