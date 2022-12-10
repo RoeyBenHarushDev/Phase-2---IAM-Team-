@@ -19,7 +19,7 @@ Identity & Access Management system, the service will support:
 ```
 ## Run with render
 ```bash
-  https://iam-team-pr-48.onrender.com
+  https://iam-team.onrender.com
 ```
 ## Local run
 ### Install
