@@ -38,9 +38,7 @@ type in url borwser: http://localhost:5000
 ```
 ## API documantion
 ```bash
-  https://api.postman.com/collections/24057770-a61e2dcc-4d2e-4745-88dc-40a3e212951f?access_key=PMAT-01GJTG9D99M5ACVYCWHS90XJNG
-  or
-  https://interstellar-star-937701.postman.co/workspace/0a4b2104-369b-4054-af81-0fca62a17530/collection/24057770-a61e2dcc-4d2e-4745-88dc-40a3e212951f?ctx=documentation
+  https://www.postman.com/interstellar-star-937701/workspace/iam/request/24057770-d7e4b5fb-6fe7-4508-9987-c7ba1ad3a9be
 ```
 ## Built with
 * nodejs
