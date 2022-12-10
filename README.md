@@ -38,7 +38,7 @@ type in url borwser: http://localhost:5000
 ```
 ## API documantion
 ```bash
-  [https://www.postman.com/interstellar-star-937701/workspace/iam/request/24057770-d7e4b5fb-6fe7-4508-9987-c7ba1ad3a9be](https://documenter.getpostman.com/view/24057770/2s8YzTTMkM)
+https://documenter.getpostman.com/view/24057770/2s8YzTTMkM
 ```
 ## Built with
 * nodejs
