@@ -24,10 +24,11 @@ passport.use(new GoogleStrategy({
             email: email,
         } = profile;
 
-        const findUser = await dbHandler.getUserByEmail(email);
+        let findUser = await dbHandler.getUserByEmail(email);
         if (!findUser) {
             const newUser = new User({'googleId': googleId, 'name': username, 'email': email, 'password': 'null', 'loginDate': new Date()});
             await dbHandler.addDoc(newUser)
+            findUser = await dbHandler.getUserByEmail(email);
         }
         const user = new userClass(findUser._id, findUser.type, findUser.email);
         const token = jwt.sign({user}, process.env.ACCESS_TOKEN_SECRET, { expiresIn: '15m' })
