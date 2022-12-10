@@ -3,11 +3,12 @@ const dbHandler = require("../data/dbHandler");
 const jwt = require("jsonwebtoken");
 const path = require("path");
 const userClass = require("../models/userClass")
-let refreshTokens = [];
 
 require('dotenv').config({path: path.join(process.cwd() + "/data/", ".env")});
 
+
 const loginControl = async (req, res, next) => {
+
     try {
         await loginService.handleLogin(req, res, next);
         const userFind = await dbHandler.getUserByEmail(req.body.email);

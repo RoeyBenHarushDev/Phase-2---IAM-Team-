@@ -16,6 +16,11 @@ const fs = require('fs');
 const logout = require('./logoutRoute');
 const cookieParser = require('cookie-parser');
 const jwt = require("jsonwebtoken");
+
+const dbHandler = require('../data/dbHandler');
+const userClass = require("../models/userClass");
+const Url = require("url");
+
 const accessLogStream = fs.createWriteStream(path.join(__dirname,'logs.log'),{flags: 'a'})
 
 
@@ -49,9 +54,27 @@ app.use((req, res, next) => {
 
 
 app.use(bodyParser.json());
-app.get('/',(req,res)=>{res.sendFile("index.html")});
+app.get('/',(req,res)=> {
+    const token = req.cookies.token;
+    try {
+        const userObj = jwt.verify(token, process.env.ACCESS_TOKEN_SECRET).user;
+        if (userObj)
+            res.sendFile(path.join(__dirname, "..", "client", "homePage.html"));
+        else res.sendFile("index.html");
+    }catch (err) {
+        res.sendFile("index.html");
+    }
+});
 app.use('/googleLogIn',passport.authenticate('google', {scope : ['email','profile']}));
-app.use('/google/callback',passport.authenticate('google', {successRedirect : '/homePage',failureRedirect:'/authFailure'}));
+
+app.get('/google/callback',passport.authenticate('google', { failureRedirect: '/error' }),
+    function(req, res) {
+        res.cookie("token",req.authInfo.token)
+        res.cookie("email",req.authInfo.email)
+        res.cookie("type",req.authInfo.type)
+        res.redirect('/homePage');
+    });
+
 app.get('/authFailure',(req,res)=>{console.log("google auth failed"); res.send('Something Went Wrong..')});
 app.use('/login',login.loginRouter);
 app.use('/homePage', login.loginRouter);
