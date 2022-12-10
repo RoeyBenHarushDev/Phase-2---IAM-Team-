@@ -1,3 +1,4 @@
+
 const selectButton = document.getElementById("SelectButton");
 const openRegisterForm = document.getElementById("SelectRegister");
 const openLoginForm = document.getElementById("SelectLogin");
@@ -24,7 +25,21 @@ const addUser = document.getElementById('addUser');
 const host = window.location.origin
 
 
+
+const getUserEmail =  () => {
+const email = document.cookie.split(";").sort()[0].split("=")[1].split("%40");
+return email[0] + "@" + email[1];
+}
+
+const getUserType = () => {
+    const type = document.cookie.split(";").sort()[1].split("=")[1]
+    return type;
+}
+
+
+
 if (selectButton) {
+
     openLoginForm.addEventListener('click', () => {
         selectButton.style.display = "none";
         loginForm.style.display = "block"
@@ -196,17 +211,33 @@ const changePassword = document.getElementById('savePassword');
 
 
 if (showUserBtn) {
+    if (getUserType() === 'user'){
+        document.getElementById("addUserBtn").style.display = "none";
+    }
+
     logOutBtn.addEventListener("click", async () => {
         await fetch(`${host}/logout`);
         window.location.replace(`${host}/index.html`);
     });
     showUserBtn.addEventListener('click', () => {
-        addUsers.style.display = 'none';
-        welcomeMessage.style.display = 'none';
-        userDetailsModel.style.display = 'none';
-        changePasswordModel.style.display = "none";
-        showUser.style.display = 'block';
-        appendData();
+        if (getUserType() == 'admin') {
+            addUsers.style.display = 'none';
+            welcomeMessage.style.display = 'none';
+            userDetailsModel.style.display = 'none';
+            changePasswordModel.style.display = "none";
+            showUser.style.display = 'block';
+            appendData();
+        }
+        if (getUserType() == 'user') {
+            addUsers.style.display = 'none';
+            welcomeMessage.style.display = 'none';
+            userDetailsModel.style.display = 'none';
+            changePasswordModel.style.display = "none";
+            userDetailsModel.style.display = 'block';
+            document.getElementById("removeUser").style.display = "none";
+            userStatusDetails.readOnly = true;
+            userDetails(getUserEmail())
+        }
     })
 
     addUserBtn.addEventListener('click', () => {
@@ -215,7 +246,6 @@ if (showUserBtn) {
         userDetailsModel.style.display = 'none';
         changePasswordModel.style.display = "none";
         addUsers.style.display = 'block';
-        console.log("im heree");
     })
     backAddUsers.addEventListener('click', () => {
         addUsers.style.display = 'none';
@@ -438,6 +468,28 @@ if (backDetailsUsers) {
         closeTimeModel();
     })
 }
+if(changePassword){
+    changePassword.addEventListener("click", async () => {
+        const data = {
+            password: document.getElementById('oldPassword').value,
+            newPassword: document.getElementById('newPassword').value
+        }
+        const response = await fetch(`${host}/changePassword`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(data),
+        });
+        const body = await response.json();
+        if (body.message) {
+            alert((body.message));
+            location.reload();
+        }
+    })
+}
+
+
 if (saveUser) {
     saveUser.addEventListener('click', () => {
         addUsers.style.display = 'none';
@@ -456,7 +508,8 @@ if (saveUser) {
     })
     if (userStatusDetails) {
         userStatusDetails.addEventListener('focus', (event) => {
-            radioUserStatus.style.display = "block";
+            if (getUserType() === 'admin')
+                radioUserStatus.style.display = "block";
         })
     }
 
@@ -508,3 +561,5 @@ const userDetails = async (email) => {
     document.getElementById('userEmailDetails').value = user.email;
     document.getElementById('userLastLoginDetails').value = user.loginDate;
 }
+
+
