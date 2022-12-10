@@ -4,6 +4,7 @@ const otpGenerator = require('otp-generator')
 const ejs = require("ejs");
 const path = require("path");
 const OTP = require('../models/OTPPass');
+const USERS = require('../models/users')
 const dbHandler = require('../data/dbHandler');
 
 ///////////////////////////////////////////////////////////////
@@ -26,7 +27,7 @@ const transporter = node.createTransport(smtp({
 ///////////////////////////////////////////////////////////////
 
 async function userExist(mail) {
-    const exist = await OTP.findOne({email: mail});
+    const exist = await USERS.findOne({email: mail});
     if (exist) {
         throw new Error("Email already exists");
     }
