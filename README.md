@@ -17,7 +17,7 @@ Data is stored on Mongo Atlas cloud.
 ## Local run
 ### Install
 ```bash
-  run npm install
+  npm install
 ```
 ### Start server
 ```bash
