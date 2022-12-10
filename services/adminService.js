@@ -1,28 +1,36 @@
 const dbHandler = require("../data/dbHandler");
 
-async function ifClosed(user) {
+async function ifClosed(userData) {
+    const user = await dbHandler.getUserByEmail(userData.email);
     if (user.status === "closed") {
         throw new Error("user is closed");
     }
 }
 
-function changeUserStatus(user, action) {
-    if (action.userStatus == "suspended") {
-        user.suspensionDate = new Date(),
-            user.suspensionTime = action.suspensionTime,
-            user.status = "suspended"
+function changeUserStatus(userData) {
+    let data;
+    if (userData.userStatus == "suspended") {
+        data = {
+            "suspensionDate": new Date(),
+            "suspensionTime": userData.suspensionTime,
+            "status": "suspended"
+        }
     }
-    if (action.userStatus == "closed") {
-            user.suspensionDate = new Date(),
-            user.suspensionTime = 0,
-            user.status = "closed"
+    if (userData.userStatus == "closed") {
+        data = {
+            "suspensionDate": new Date(),
+            "suspensionTime": 0,
+            "status": "closed"
+        }
     }
-    if (action.userStatus == "active") {
-        user.suspensionDate = 0,
-            user.suspensionTime = 0,
-            user.status = "active"
+    if (userData.userStatus == "active") {
+        data = {
+            "suspensionDate": 0,
+            "suspensionTime": 0,
+            "status": "active"
+        }
     }
-    return user
+    return data
 }
 
 

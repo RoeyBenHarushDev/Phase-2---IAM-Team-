@@ -31,12 +31,13 @@ passport.use(new GoogleStrategy({
         if (!findUser) {
             const user = new User({'googleId': googleId, 'name': username, 'email': email, 'password': 'null', 'loginDate': new Date()});
             await dbHandler.addDoc(user)
-            return done(null, user);
+            return done(null,user);
         }
-        // const user = new userClass(findUser._id, findUser.type, findUser.email);
-        // const token = jwt.sign({user}, process.env.ACCESS_TOKEN_SECRET, { expiresIn: '15m' })
+        const user = new userClass(findUser._id, findUser.type, findUser.email);
+        const token = jwt.sign({user}, process.env.ACCESS_TOKEN_SECRET, { expiresIn: '15m' })
+        const data = {"token" : token, "email":email,"type":findUser.type}
         // cookie('token', token, {httponly:true});
-        return done(null,findUser);
+        return done(null,findUser,data);
 
     }
 ));

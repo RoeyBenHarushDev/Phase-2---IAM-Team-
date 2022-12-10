@@ -36,7 +36,7 @@ const handleLogin = async (req, res, next) => {
     }
     const suspend = await isSuspend(user);
     if(suspend)
-        { throw new Error(`User is suspended until ${suspend}`)}
+        { throw new Error(`User is suspended until ${isSuspend}`)}
     if (!await bcrypt.compare(userPassword, user.password))
         { throw new Error("incorrect password")}
     const today=new Date();
