@@ -68,16 +68,24 @@ app.use('/googleLogIn',passport.authenticate('google', {scope : ['email','profil
 
 
 //app.use( '/google/callback',passport.authenticate('google',{successRedirect : '/googleJWT',failureRedirect:'/authFailure'}));
-app.use( '/google/callback',passport.authenticate('google', async (req, res) => {
-    let q = Url.parse(req.url,true).query;
-    console.log("q");
-/*    console.log(res);
-    const userFind = await dbHandler.getUserByEmail(res._doc.email);
-    const user = new userClass(userFind._id, userFind.type, userFind.email);
-    const accessToken = jwt.sign({user}, process.env.ACCESS_TOKEN_SECRET, {expiresIn: '15m'});
-    res.cookie('token', accessToken, {httponly: true});
-    res.redirect('/homePage');*/
-}))
+// app.use('/google/callback',passport.authenticate('google', {},async (err, user, data) => {
+//
+//     console.log("res" + user);
+//     console.log("res.email" + user.email)
+//     console.log(data)
+//     // const userFind = await dbHandler.getUserByEmail(res._doc.email);
+//     // const user = new userClass(userFind._id, userFind.type, userFind.email);
+//     // const accessToken = jwt.sign({user}, process.env.ACCESS_TOKEN_SECRET, {expiresIn: '15m'});
+//     // res.cookie('token', accessToken, {httponly: true});
+// }))
+
+app.get('/google/callback',passport.authenticate('google', { failureRedirect: '/error' }),
+    function(req, res) {
+        res.cookie("token",req.authInfo.token)
+        res.cookie("email",req.authInfo.email)
+        res.cookie("type",req.authInfo.type)
+        res.redirect('/homePage');
+    });
 
 app.get('/authFailure',(req,res)=>{console.log("google auth failed"); res.send('Something Went Wrong..')});
 app.use('/login',login.loginRouter);
