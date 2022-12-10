@@ -37,8 +37,8 @@ async function handleDeleteUser(req, res) {
         await User.findOneAndDelete({'email': email});
         await OTP.findOneAndDelete({'email': email});
         return res.status(200).json({message: "The user has been deleted"})
-    } catch (err) {
-        return res.status(401).json({message: "User cannot be deleted because does not exist"})
+    } catch (e) {
+        return res.status(401).json({message: e.message})
     }
 }
 
