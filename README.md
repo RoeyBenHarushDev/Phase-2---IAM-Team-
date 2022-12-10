@@ -10,15 +10,23 @@ Data is stored on Mongo Atlas cloud.
 ```bash
   Node.js 16v
 ```
+## run with render
+```bash
+  https://iam-team.onrender.com/
+```
+## local run
 ## Install
 install dependancies
 ```bash
   npm install
 ```
-## Usage
-Start run
+## start server
 ```bash
   npm start
+```
+## start client
+```bash
+type in url borwser: http://localhost:5000 
 ```
 other dependancies
 ```bash
