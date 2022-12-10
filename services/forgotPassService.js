@@ -1,9 +1,7 @@
 const node = require("nodemailer");
 const smtp = require("nodemailer-smtp-transport");
 const ejs = require("ejs");
-const path = require("path");
 
-require("dotenv").config({ path: path.join(process.cwd() + "/data/","....env") });
 const emailSMTP = process.env.email;
 
 const transporter = node.createTransport(smtp({
