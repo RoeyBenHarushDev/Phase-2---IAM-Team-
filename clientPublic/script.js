@@ -1,4 +1,3 @@
-
 const selectButton = document.getElementById("SelectButton");
 const openRegisterForm = document.getElementById("SelectRegister");
 const openLoginForm = document.getElementById("SelectLogin");
@@ -25,17 +24,15 @@ const addUser = document.getElementById('addUser');
 const host = window.location.origin
 
 
-
-const getUserEmail =  () => {
-const email = document.cookie.match("email=[^;]*").toString().split("=")[1].split("%40");
-return email[0] + "@" + email[1];
+const getUserEmail = () => {
+    const email = document.cookie.match("email=[^;]*").toString().split("=")[1].split("%40");
+    return email[0] + "@" + email[1];
 }
 
 const getUserType = () => {
     const type = document.cookie.match("type=[^;]*").toString().split("=")[1]
     return type;
 }
-
 
 
 if (selectButton) {
@@ -103,8 +100,7 @@ if (selectButton) {
             window.location.replace("/homePage");
         }
         const body = await response.json();
-        if (body.message && response.status!=200)
-        {
+        if (body.message && response.status != 200) {
             alert((body.message));
         }
     })
@@ -164,8 +160,7 @@ if (selectButton) {
             body: JSON.stringify(data)
         })
         const body = await response.json();
-        if (body.message && response.status!=200)
-        {
+        if (body.message && response.status != 200) {
             alert(body.message);
             location.reload();
         }
@@ -213,7 +208,7 @@ const changePassword = document.getElementById('savePassword');
 
 
 if (showUserBtn) {
-    if (getUserType() === 'user'){
+    if (getUserType() === 'user') {
         document.getElementById("addUserBtn").style.display = "none";
     }
 
@@ -285,13 +280,19 @@ if (showUserBtn) {
 
 //update user details
     saveUser.addEventListener('click', async () => {
+        const suspendedBut = document.querySelector('input[name="userStatus"]:checked').value;
+        let suspensionTime = 0
+        if (suspendedBut === "suspended")
+            suspensionTime = document.getElementById("suspensionTime").value
+
         const data = {
             name: document.getElementById('userNameDetails').value,
-            status: document.getElementById('userStatusDetails').value,
             type: document.getElementById('userPermissions').value,
-            email: document.getElementById('userEmailDetails').value
+            email: document.getElementById('userEmailDetails').value,
+            status: suspendedBut,
+            suspensionTime: suspensionTime
         };
-
+console.log(data)
         const response = await fetch(`${host}/admin/updateUser`, {
             method: "PUT",
             headers: {
@@ -467,7 +468,7 @@ if (backDetailsUsers) {
         closeTimeModel();
     })
 }
-if(changePassword){
+if (changePassword) {
     changePassword.addEventListener("click", async () => {
         const data = {
             password: document.getElementById('oldPassword').value,
