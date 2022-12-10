@@ -28,11 +28,11 @@ install dependancies
 ```bash
 type in url borwser: http://localhost:5000 
 ```
-other dependancies
+### other dependancies
 ```bash
   create .env file with secrets that will pass by demand 
 ```
-api documantion
+## api documantion
 ```bash
   https://api.postman.com/collections/24057770-a61e2dcc-4d2e-4745-88dc-40a3e212951f?access_key=PMAT-01GJTG9D99M5ACVYCWHS90XJNG
   or
