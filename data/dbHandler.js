@@ -1,6 +1,5 @@
 const User = require('../models/users');
 const bcrypt = require("bcrypt");
-const jwt = require("jsonwebtoken");
 
 
 const getUserByEmail = async (mail) => {
@@ -44,10 +43,5 @@ function typeUser(user) {
     await addDoc(newUser);
 }
 
- const tokenData = (req)=> {
-    const token = req.cookies.token;
-    const userObj = jwt.verify(token, process.env.ACCESS_TOKEN_SECRET).user;
-    return userObj;
-}
 
-module.exports = {getUserByEmail, updateUser, addDoc, addUser, tokenData};
+module.exports = {getUserByEmail, updateUser, addDoc, addUser};

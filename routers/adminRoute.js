@@ -3,6 +3,7 @@ const suspendController = require("../controllers/adminController")
 
 const adminRoute = new express.Router()
 
+adminRoute.post('/suspension', suspendController.handleSuspend);
 adminRoute.post('/addUser', suspendController.handleAddUser);
 
 adminRoute.get('/showAllUsers', suspendController.handleShowAllUsers);

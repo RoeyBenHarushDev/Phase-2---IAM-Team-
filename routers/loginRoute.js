@@ -7,7 +7,6 @@ const path = require("path");
 loginRouter.use(express.json());
 
 loginRouter.post('/', login_controller.loginControl)
-
 loginRouter.get('/', (req,res)=>{
     const token = req.cookies.token;
     try {

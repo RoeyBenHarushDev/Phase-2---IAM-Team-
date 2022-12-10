@@ -86,7 +86,6 @@ if (selectButton) {
         })
         if (response.status === 200) {
             window.location.replace("/homePage");
-
         }
         const body = await response.json();
         if (body.message) {
@@ -193,7 +192,7 @@ const logOutBtn = document.getElementById('logOutBtn');
 const userDetailsModel = document.getElementById('userDetailsModel');
 const saveUser = document.getElementById('saveUser');
 const removeUser = document.getElementById('removeUser');
-const changePassword = document.getElementById('savePassword');
+const changePassword= document.getElementById('savePassword');
 
 
 if (showUserBtn) {
@@ -249,17 +248,11 @@ if (showUserBtn) {
 
 //update user details
     saveUser.addEventListener('click', async () => {
-        const suspendedBut = document.querySelector('input[name="userStatus"]:checked').value;
-        let suspensionTime = 0
-        if (suspendedBut === "suspended") {
-            suspensionTime = document.getElementById("suspensionTime").value
-        }
         const data = {
             name: document.getElementById('userNameDetails').value,
+            status: document.getElementById('userStatusDetails').value,
             type: document.getElementById('userPermissions').value,
-            email: document.getElementById('userEmailDetails').value,
-            "suspensionTime": suspensionTime,
-            "userStatus": suspendedBut
+            email: document.getElementById('userEmailDetails').value
         };
 
         const response = await fetch(`${host}/admin/saveUpdateAdmin`, {
@@ -275,6 +268,7 @@ if (showUserBtn) {
             location.reload();
         }
     });
+
 
 
     removeUser.addEventListener("click", async () => {
@@ -318,6 +312,7 @@ if (showUserBtn) {
 
         table.appendChild(thead);
         table.appendChild(tbody);
+
 // Adding the entire table to the body tag
         const myData = document.getElementById("myData").appendChild(table);
 
@@ -441,22 +436,43 @@ if (saveUser) {
         removeUser.style.display = "block";
         editUser.style.display = "block";
     })
-    if (userStatusDetails) {
-        userStatusDetails.addEventListener('focus', (event) => {
+    if(userStatusDetails){
+        userStatusDetails.addEventListener('focus' , (event)=>{
             radioUserStatus.style.display = "block";
         })
     }
-
-    function openTimeSuspension() {
+    function openTimeSuspension(){
         suspensionModel.style.display = "block";
         suspensionTime.style.backgroundColor = "white";
     }
-
-    function closeTimeModel() {
+    function closeTimeModel(){
         suspensionModel.style.display = "none";
     }
 }
 
+const suspension = async () => {
+    const suspendedBut = document.querySelector('input[name="userStatus"]:checked').value;
+    let suspensionTime = 0
+    if (suspendedBut === "suspended") {
+        suspensionTime = document.getElementById("start").value
+    }
+    const data = {
+        "email": document.getElementById("userChangeEmail").value,
+        "suspensionTime": suspensionTime,
+        "userStatus": suspendedBut
+    };
+    const response = await fetch(`${host}/admin/suspension`, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+    });
+    const body = await response.json();
+    if (body.message) {
+        alert((body.message));
+    }
+};
 
 const userDetails = async (email) => {
     const response = await fetch(host + '/admin/showUser/' + email, {

@@ -14,8 +14,7 @@ const loginControl = async (req, res, next)=> {
             const user = new userClass(userFind._id, userFind.type, userFind.email);
             const accessToken = jwt.sign({user}, process.env.ACCESS_TOKEN_SECRET, { expiresIn: '15m' })
             res.cookie('token', accessToken, {httponly:true});
-            res.cookie('type', userFind.type, {httponly:true});
-            res.status(200).json();
+            res.status(200).json({});
     } catch (err) {
         console.log(err);
         return res.status(401).json({message: err.message});

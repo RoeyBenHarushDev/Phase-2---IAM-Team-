@@ -1,4 +1,3 @@
-const jwt = require("jsonwebtoken");
 module.exports = class userClass {
     constructor(_id,type,email) {
         this._id=_id;
@@ -6,3 +5,5 @@ module.exports = class userClass {
         this.email = email;
     }
 }
+
+
