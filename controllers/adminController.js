@@ -3,6 +3,7 @@ const adminService = require("../services/adminService");
 const User = require("../models/users");
 const OTP = require("../models/OTPPass");
 const mailerAPI = require("../growth/mailerAPI");
+const jwt = require("jsonwebtoken");
 
 
 async function handleAddUser(req, res) {
@@ -28,8 +29,13 @@ async function handleShowAllUsers(req, res) {
 
 async function handleDeleteUser(req, res) {
     try {
-        await User.findOneAndDelete({'email': req.body.email});
-        await OTP.findOneAndDelete({'email': req.body.email});
+        const token = req.cookies.token;
+        const userObj = jwt.verify(token, process.env.ACCESS_TOKEN_SECRET).user;
+        const email = req.body.email;
+        if(email === userObj.email){ throw new Error("Unable to delete yourself")}
+
+        await User.findOneAndDelete({'email': email});
+        await OTP.findOneAndDelete({'email': email});
         return res.status(200).json({message: "The user has been deleted"})
     } catch (err) {
         return res.status(401).json({message: "User cannot be deleted because does not exist"})
