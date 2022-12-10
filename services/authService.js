@@ -7,7 +7,7 @@ const userClass = require('../models/users');
 
 const GOOGLE_CLIENT_ID = process.env.ClientId;
 const GOOGLE_CLIENT_SECRET = process.env.ClientSecret;
-const runningPath = process.env.running_path
+const runningPath = process.env.runningPath
 
 passport.use(new GoogleStrategy({
         clientID:     GOOGLE_CLIENT_ID,
