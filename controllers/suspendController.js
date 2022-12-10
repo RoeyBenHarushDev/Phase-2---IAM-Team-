@@ -1,4 +1,5 @@
 const dbHandler = require("../data/dbHandler")
+const mailerAPI = require('../growth/mailerAPI');
 
 
 async function handleSuspend(request, response) {
@@ -7,10 +8,8 @@ async function handleSuspend(request, response) {
         await ifClosed(user);
         const data = changeUserStatus(user);
         await dbHandler.updateUser(user.email, data);
-        console.log(await dbHandler.getUserByEmail(user.email));
-        if(findUser){
-            throw new Error("user already exists");
-        }
+        // Growth team API(mailerAPI) - sending email after suspending a user.
+        await mailerAPI.sendMail(user.email, 'suspend',' <h1>User suspended</h1>');
         return response.status(200);
     } catch (e) {
         return response.status(401).json({message: e.message})
