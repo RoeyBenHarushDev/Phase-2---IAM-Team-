@@ -2,7 +2,7 @@
 
 ## Description
 Identity & Access Management system, the service will support:
-<br>registration, login, forgot password and actions on users (suspend user by admin, edit details and more).
+<br>registration, login, forgot password and actions on users (by admin).
 <br>The service is using Google API to allow login in with gmail.
 <br>Users sessions and permission are managed by JWT cookie.
 <br>The service will authenticate users with an email verification code.
